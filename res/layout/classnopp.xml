@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Choose your class"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <RadioGroup
+        android:id="@+id/rg1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+    <RadioButton
+        android:id="@+id/rbSumarai1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Samurai" />
+
+    <RadioButton
+        android:id="@+id/rbNinja1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ninja" />
+</RadioGroup>
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Choose your Opponets class"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+<RadioGroup
+        android:id="@+id/rg2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+    <RadioButton
+        android:id="@+id/rbSamurai2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Samurai" />
+
+    <RadioButton
+        android:id="@+id/rbNinja2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ninja" />
+	</RadioGroup>
+
+<Button
+    android:id="@+id/bFight"
+    android:layout_width="92dp"
+    android:layout_height="wrap_content"
+    android:text="Fight" />
+
+</LinearLayout>

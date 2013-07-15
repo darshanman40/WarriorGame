@@ -84,7 +84,7 @@ public class BattleArena extends Activity implements OnClickListener{
 		switch(arg0.getId()){
 		case R.id.bAttack:
 			int rgACheckedId = rgAttacks.getCheckedRadioButtonId();
-			//RadioButton rbtemp = (RadioButton)findViewById(rgACheckedId);
+		
 			switch(rgACheckedId){
 			case R.id.rbattack1:
 				aCode=0;
@@ -95,38 +95,40 @@ public class BattleArena extends Activity implements OnClickListener{
 			}
 			
 			hps = (Integer[])b.initialize(aCode);
-			pbCHp.setProgress((int)((hps[1]*100)/maxhps[1]));
-			pbPHp.setProgress((int)((hps[0]*100)/maxhps[0]));
 			
-			try{
-			if(Integer.valueOf(hps[0])<0){
-		  		  //System.out.println("player1 is fainted");
-				Toast t = Toast.makeText(getApplicationContext(), PName+" fainted", Toast.LENGTH_LONG);
+			pbCHp.setProgress((int)((hps[1]*100)/maxhps[1]));
+			
+			if(Integer.valueOf(hps[1])<0){
+		  		  
+				Toast t = Toast.makeText(getApplicationContext(), "Computer fainted", Toast.LENGTH_LONG);
 				t.show();
 				finish();
 				break;
-		  	  }else if(Integer.valueOf(hps[1])<0){
-		  		Toast t = Toast.makeText(getApplicationContext(), "Computer fainted", Toast.LENGTH_LONG);
+			}
+			
+			hps = (Integer[])b.initialize("");
+			pbPHp.setProgress((int)((hps[0]*100)/maxhps[0]));
+			
+		  	  if(Integer.valueOf(hps[0])<0){
+		  		Toast t = Toast.makeText(getApplicationContext(), PName+" fainted", Toast.LENGTH_LONG);
 				t.show();
 				finish();
 		  		break;
-		  	  }else{
-		  		Toast t = Toast.makeText(getApplicationContext(), PName+" hp= "+hps[0]+"\n Com hp= "+hps[1], Toast.LENGTH_SHORT);
-		  		t.show();
-		  		//t = Toast.makeText(getApplicationContext(), , Toast.LENGTH_SHORT);
-		  		//t.show();
-		  		
+		  	 
 		  	  }
-			}catch(Exception e){
-				System.err.println(e);
-				Toast t = Toast.makeText(getApplicationContext(), "err", Toast.LENGTH_LONG);
-				t.show();
-			}
+
+			
+			
 			break;
+			
+			
+			
 		}
+		
+		
 	}
 	
 	
-
+	
 	
 }

@@ -52,39 +52,41 @@ public class Battle {
   	 
   	 
   	  	  p1ACo = aCode;
-  		  p2ACo = Com.ranPick();
+  		
   		  pla2att[0] = newHp(pla1att,pla2att,p1ACo);
-  		  pla1att[0] = newHp(pla2att,pla1att,p2ACo);
+  		 
   		  Integer[] hps = new Integer[2];
-  		  hps[0] = pla1att[0];
+  		 
   		  hps[1] = pla2att[0];
-  		  //System.out.println("player1 hp = "+pla1att[0]+"\nplayer2 hp = "+pla2att[0]);
-  	  //}
-  		  /*
-  	  if(Integer.valueOf((String)pla2att[0])>0){
-  		  System.out.println("player1 is fainted");
-  	  }else
-  		  System.out.println("player2 is fainted");
-  	  */
+  		
   	  return hps;
     	}
+	Integer[] initialize(String aCode){
+	  	 
+	  	 
+	  	  //p1ACo = aCode;
+		  p2ACo = Com.ranPick();
+		  //pla2att[0] = newHp(pla1att,pla2att,p1ACo);
+		  pla1att[0] = newHp(pla2att,pla1att,p2ACo);
+		  Integer[] hps = new Integer[2];
+		  hps[0] = pla1att[0];
+		  
+	  return hps;
+  	}
 	
 	public int newHp(Integer[] attacker, Integer[] defender, int playerAttack){
-		//try{
+		
 			
 		int hp =Integer.valueOf(defender[0]);
 		int damage = Integer.valueOf(defender[2]) - (Integer.valueOf(attacker[playerAttack+2])*3);
-		//System.out.println(damage);
+		
 		
 		if(damage<0)
 			hp = hp-((damage*(-1)));
 		else
 			hp = hp-(damage);
 		return hp;
-		//}catch(Exception e){
-		//	System.err.println(e+"battle");
-		//}
-		//return 0;
+		
 	}
 	
  }

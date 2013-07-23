@@ -4,23 +4,58 @@ import java.lang.reflect.Method;
 import java.util.Random;
 
 public class Player {
-
-
 	String playerClass;
 	String name;
-	int id;
-	int lvl;
+	int id,lvl;
+	double str,speed,maxHp,maxMana,skill; 
+	Integer[] inv = new Integer[8];
+	Integer[] eqInv = new Integer[4];
+	Integer[] poInv = new Integer[2];
+	
 	Warrior war = new Warrior();
 	
 		//real Player
-		public Player(String name,int id, int lvl, Warrior x,String pc){
+		public Player(String name,int id, int lvl, Warrior x,String pc, Integer[] majAtt){
 			this.name = name;
 			this.id = id;
 			this.lvl = lvl;
 			this.war = x;
 			this.playerClass=pc;
+			
+			str=majAtt[0];
+			speed = majAtt[1];
+			maxHp = majAtt[2];
+			maxMana = majAtt[3];
+			skill = majAtt[4];
 		}
 		
+		public Player(String name,int id, int lvl, Warrior x,String pc, Integer[] majAtt, Integer[] inv, Integer[] eqInv, Integer[] poInv){
+			this.name = name;
+			this.id = id;
+			this.lvl = lvl;
+			this.war = x;
+			this.playerClass=pc;
+		
+			str=majAtt[0];
+			speed = majAtt[1];
+			maxHp = majAtt[2];
+			maxMana = majAtt[3];
+			skill = majAtt[4];
+			for(int i=0;i<2;i++){
+				this.inv[i]=inv[i];
+				this.eqInv[i]=eqInv[i];
+				this.poInv[i]=poInv[i];
+			}
+			for(int i=2;i<4;i++){
+				this.inv[i]=inv[i];
+				this.eqInv[i]=eqInv[i];
+			}
+			for(int i=4;i<8;i++){
+				this.inv[i]=inv[i];
+			}
+				
+			
+		}
 		//Computer Player
 		public Player(int lvl, Warrior x,String pc){
 			this.name="Computer";
@@ -46,22 +81,35 @@ public class Player {
 		}
 		
 		public Integer[] hellyeah(Warrior war){
-			Object[] retval2 = new Object[8];
+			
 			Integer[] retobj= new Integer[10];
 				try {
 		           		Class cls = Class.forName("com.darshan.warriorgame.Warrior");
 		           		Class argType[]=new Class[1];
 		           		argType[0]=Integer.TYPE;
 		           		Method meth = cls.getMethod(playerClass,argType);	
-			            //retobj =new Integer[10]; 
+			           
 			            retobj= (Integer[]) meth.invoke(war,lvl);
-			          //  retval2 = retobj;
-			           // System.out.println("Player class "+retval2[0]+"\n");
+			          
 		         }
 		         catch (Throwable e) {
 		            System.err.println(e);
 		         }
 				 return (Integer[])retobj; 
 			}
+		
+		public Integer[] pInv(){
+			Integer[] inve = new Integer[8];
+			
+			
+			return inve;
+		}
+		
+		public Integer[] eInv(){
+			Integer[] inve = new Integer[4];
+			
+			
+			return inve;
+		}
 		
 }

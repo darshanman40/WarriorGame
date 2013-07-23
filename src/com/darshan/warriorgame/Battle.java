@@ -26,14 +26,11 @@ public class Battle {
 	  	  player = new Warrior();
 	  	  computer= new Warrior();
 	  	  Com = new Player(Plvl,computer,CClass);
-	  	  Osairas = new Player("Osairas",1,Plvl,player,PClass);
+	  	 // Osairas = new Player("Osairas",1,Plvl,player,PClass);
 	  	 
 	  	  pla1att = Osairas.hellyeah(player);
-	  	  //  \/
 	  	  pla2att = Com.hellyeah(computer);
-	  	  
-	  	 
-	  	  
+	    	  
 	}
 	
 	Integer[] playerData(){
@@ -64,9 +61,8 @@ public class Battle {
 	Integer[] initialize(String aCode){
 	  	 
 	  	 
-	  	  //p1ACo = aCode;
+	  	  
 		  p2ACo = Com.ranPick();
-		  //pla2att[0] = newHp(pla1att,pla2att,p1ACo);
 		  pla1att[0] = newHp(pla2att,pla1att,p2ACo);
 		  Integer[] hps = new Integer[2];
 		  hps[0] = pla1att[0];

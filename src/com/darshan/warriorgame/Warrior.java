@@ -3,13 +3,15 @@ package com.darshan.warriorgame;
 public class Warrior {
 float lvl;
 	
-	public Integer[] Samurai(int i){
+	public Integer[] Balanced(int i){
 		lvl=(float)i;
 
 		double hp = 100 * (lvl*0.75);
 		double mana = 100 * (lvl*0.25);
 		double attack = 10 * (lvl*0.5);
-		double defense = 10 * (lvl*0.75);
+		double mgAttack = 10 * (lvl*0.5);
+		double mgDefense = 10 * (lvl*0.75);
+		double phDefense = 10 * (lvl*0.75);
 		double dodgerate = 10 * (lvl*0.25);
 		double accuracy = 10 * (lvl*0.5);
 		double exp = 200*lvl; 
@@ -18,10 +20,11 @@ float lvl;
     	att[0]=(int)hp;
     	att[1]=(int)mana;
     	att[2]=(int)accuracy;
-    	att[3]=(int)defense;
-    	att[4]=(int)dodgerate;
-    	att[5]=(int)exp;
-    	att[6]=(int)attack;
+    	att[3]=(int)phDefense;
+    	att[4]=(int)mgDefense;
+    	att[5]=(int)dodgerate;
+    	att[6]=(int)exp;
+    	att[7]=(int)attack;
     	
     	
     	if(lvl >= 15 && lvl < 20){
@@ -94,7 +97,7 @@ float lvl;
     	
     }
 	
-	public Integer[] Spearman(int i){
+	public Integer[] Magic(int i){
 		lvl=(float)i;
 		double hp = 100 * (lvl*0.75);
 		double mana = 100 * (lvl*0.5);
@@ -138,7 +141,7 @@ float lvl;
     	return att;
     }
 	
-	public Integer[] Archer(int i){
+	public Integer[] Juggernaut(int i){
 		lvl=(float)i;
 		double hp = 100 * (lvl*0.25);
 		double mana = 100 * (lvl*0.75);

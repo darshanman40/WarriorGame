@@ -85,6 +85,34 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+         <activity
+            android:name=".AndroidSQLite"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="com.darshan.warriorgame.sqltest" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".CsvTest"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="com.darshan.warriorgame.csvtest" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".SkillTest"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="com.darshan.warriorgame.skilltest" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        
     </application>
 
 </manifest>

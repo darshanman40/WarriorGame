@@ -25,11 +25,11 @@ public class Battle {
 		pla2att = new Integer[7];
 	  	  player = new Warrior();
 	  	  computer= new Warrior();
-	  	  Com = new Player(Plvl,computer,CClass);
+	  	//  Com = new Player(Plvl,computer,CClass);
 	  	 // Osairas = new Player("Osairas",1,Plvl,player,PClass);
 	  	 
-	  	  pla1att = Osairas.hellyeah(player);
-	  	  pla2att = Com.hellyeah(computer);
+	  	//  pla1att = Osairas.hellyeah(player);
+	  	 // pla2att = Com.hellyeah(computer);
 	    	  
 	}
 	
@@ -62,7 +62,7 @@ public class Battle {
 	  	 
 	  	 
 	  	  
-		  p2ACo = Com.ranPick();
+		 /// p2ACo = Com.ranPick();
 		  pla1att[0] = newHp(pla2att,pla1att,p2ACo);
 		  Integer[] hps = new Integer[2];
 		  hps[0] = pla1att[0];

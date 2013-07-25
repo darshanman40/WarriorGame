@@ -17,7 +17,8 @@ public class AndroidSQLite extends Activity {
 	        
 	        String test="";
 	        ItemTest it =new ItemTest();
-	        String[] att = it.printData("inventory");
+	        String[] att = new String[10];
+	        // = it.printData("inventory");
 	        
 	        
 	        mySQLiteAdapter = new SQLiteAdapter(this,att[0]);
@@ -40,9 +41,17 @@ public class AndroidSQLite extends Activity {
 	         */
 	        mySQLiteAdapter = new SQLiteAdapter(this,att[0]);
 	        mySQLiteAdapter.openToRead();
-	        String contentRead = mySQLiteAdapter.queueAll();
+	        //String contentRead = mySQLiteAdapter.queueAll();
 	        //*/
 	        //String contentRead = mySQLiteAdapter.colNamesChk();
+	       
+	        Integer[] eqps = {101,201,301,401};
+	        double[] data = mySQLiteAdapter.getItemAtts(eqps);
+	        String contentRead="";
+	        for(int i=0;i<data.length;i++)
+	        	contentRead = contentRead + String.valueOf(data[i])+"\n";
+	       // */	
+	        
 	        mySQLiteAdapter.close();
 	        
 	        listContent.setText(contentRead);

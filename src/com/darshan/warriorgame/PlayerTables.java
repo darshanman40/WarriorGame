@@ -4,12 +4,15 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.database.sqlite.SQLiteDatabase.CursorFactory;
 
-public class SkillList {
+//import com.darshan.warriorgame.SkillList.SQLiteHelper;
+
+public class PlayerTables {
+	
 		 public static final String MYDATABASE_NAME = "Inventory";
-		 public static final String MYDATABASE_TABLE = "allskills";
+		 public static final String MYDATABASE_TABLE = "allplayer";
 		 public static final int MYDATABASE_VERSION = 1;
 		 public static final String KEY_CONTENT = "Content";
 
@@ -17,26 +20,26 @@ public class SkillList {
 		 public String cols;
 		 //create table MY_DATABASE (ID integer primary key, Content text not null);
 		 private static final String SCRIPT_CREATE_DATABASE =
-				 "CREATE TABLE 'allskills' ('skill_id' INTEGER PRIMARY KEY  NOT NULL  UNIQUE , 'skills' VARCHAR, 'mana' DOUBLE,'accuracy' DOUBLE, 'operation' DOUBLE, 'stat' VARCHAR, 'effect' DOUBLE, 'add_dam' DOUBLE, 'preq_skillid_1' DOUBLE, 'preq_skillid_2' DOUBLE);";
+				 "CREATE TABLE 'allplayer' ('player_id' INTEGER PRIMARY KEY  NOT NULL  UNIQUE , 'player_name' VARCHAR, 'player_class' VARCHAR, 'level' DOUBLE,'str' DOUBLE, 'speed' DOUBLE, 'max_hp' DOUBLE, 'max_mana' DOUBLE, 'max_xp' DOUBLE, 'xp' DOUBLE);";
 		 
 		 private SQLiteHelper sqLiteHelper;
 		 private SQLiteDatabase sqLiteDatabase;
 
 		 private Context context;
 		 
-		 public SkillList(Context c, String colNames){
+		 public PlayerTables(Context c, String colNames){
 		  context = c;
 		  cols=colNames;
 		  this.colNames=colNames.split(" ");
 		 }
 		
-		 public SkillList openToRead() throws android.database.SQLException {
+		 public PlayerTables openToRead() throws android.database.SQLException {
 		  sqLiteHelper = new SQLiteHelper(context, MYDATABASE_NAME, null, MYDATABASE_VERSION);
 		  sqLiteDatabase = sqLiteHelper.getReadableDatabase();
 		  return this; 
 		 }
 		 
-		 public SkillList openToWrite() throws android.database.SQLException {
+		 public PlayerTables openToWrite() throws android.database.SQLException {
 		  sqLiteHelper = new SQLiteHelper(context, MYDATABASE_NAME, null, MYDATABASE_VERSION);
 		  sqLiteDatabase = sqLiteHelper.getWritableDatabase();
 		  return this; 
@@ -51,7 +54,7 @@ public class SkillList {
 			 String atts[] = content.split(" "); 
 			  ContentValues contentValues = new ContentValues();
 			  try{
-			  for(int i=0; i<8;i++)
+			  for(int i=0; i<10;i++)
 				  contentValues.put(colNames[i], atts[i]);
 			  return sqLiteDatabase.insert(MYDATABASE_TABLE, null, contentValues);
 			 }catch(Exception e){
@@ -66,18 +69,18 @@ public class SkillList {
 		  return sqLiteDatabase.delete(MYDATABASE_TABLE, null, null);
 		 }
 		 public void dropTable(){
-			  sqLiteDatabase.execSQL("Drop Table If Exists 'allskills'");
+			  sqLiteDatabase.execSQL("Drop Table If Exists 'allplayer'");
 			  sqLiteDatabase.execSQL(SCRIPT_CREATE_DATABASE);
 			 }
-		 
+		 //-------------------------------------------------------------
 		 public String queueAll(){
 		 // String[] columns=colNames;
 			 String result = "";
 			 
 			 try{
-		  Cursor cursor = sqLiteDatabase.query("allskills", new String[]{"skill_id","skills","mana","accuracy","operation","stat","effect","add_dam","preq_skillid_1","preq_skillid_2"},null, null, null, null, null);
+		  Cursor cursor = sqLiteDatabase.query("allplayer", new String[]{"player_id","player_name","player_class","level","str","speed","max_hp","max_mana","max_xp","xp"},null, null, null, null, null);
 		  
-		  int index[] = new int[colNames.length];
+		  int index[] = new int[10];
 		  
 		  for(int i=0;i<10;i++)
 			  index[i]= cursor.getColumnIndex(colNames[i]);
@@ -94,12 +97,12 @@ public class SkillList {
 		 
 		  return result;
 		 }
-		 
+		 //---------------------------------------------------------------------------
 		 public String colNamesChk(){
 			 
 			 
 			 String res="";
-			 Cursor cursor = sqLiteDatabase.rawQuery("SELECT sql FROM sqlite_master WHERE tbl_name = 'allskills' AND type = 'table'", null);
+			 Cursor cursor = sqLiteDatabase.rawQuery("SELECT sql FROM sqlite_master WHERE tbl_name = 'allplayer' AND type = 'table'", null);
 			  int ind = cursor.getColumnIndex("sql");
 			  for(cursor.moveToFirst(); !(cursor.isAfterLast()); cursor.moveToNext()){
 				  res = res+cursor.getString(ind)+"\n";
@@ -110,7 +113,7 @@ public class SkillList {
 		 }
 		 
 		 public void dropQueries(){
-			sqLiteDatabase.execSQL("Drop Table If Exists 'allskills'");
+			sqLiteDatabase.execSQL("Drop Table If Exists 'allplayer'");
 			
 			 
 		 }
@@ -134,13 +137,11 @@ public class SkillList {
 		  @Override
 		  public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 		   // TODO Auto-generated method stub
-			  db.rawQuery("Drop Table If Exists 'allskills'", null);
+			  db.rawQuery("Drop Table If Exists 'allplayer'", null);
 			  onCreate(db);
 		  }
 
 		 }
 		 
-		}
+}
 
-	
-//}

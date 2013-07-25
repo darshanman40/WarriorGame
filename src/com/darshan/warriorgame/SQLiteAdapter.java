@@ -87,8 +87,8 @@ public class SQLiteAdapter {
 		 String result = "";
 		 
 		 try{
-	  Cursor cursor = sqLiteDatabase.query("allitems", //columns,null,null,null,null,null);
-			  new String[]{"item_id","item","str","ph_dam","mag_dam","ph_def","mag_def","e_s_dam","s_hp","b_mana","speed","cost","selling_price","hp_plus","mana_plus"},null, null, null, null, null);
+	  Cursor cursor = sqLiteDatabase.query("allitems",columns,null,null,null,null,null);
+			 // new String[]{"item_id","item","str","ph_dam","mag_dam","ph_def","mag_def","e_s_dam","s_hp","b_mana","speed","cost","selling_price","hp_plus","mana_plus"},null, null, null, null, null);
 			// Cursor cursor = sqLiteDatabase.rawQuery("select 'item' from 'allitems'",null);
 	  int index[] = new int[colNames.length];
 	  
@@ -127,6 +127,34 @@ public class SQLiteAdapter {
 		 return res;
 		 
 	 }
+	 public double[] getItemAtts(Integer[] eqps){
+		 double[] atts = {0,0,0,0,0,0,0,0,0,0,0,0,0};
+		 
+		 String[] colNames={"item_id","str","ph_dam","mag_dam","ph_def","mag_def","e_s_dam","s_hp","b_mana","speed"};
+		 try{
+			 Cursor c = sqLiteDatabase.query("allitems", new String[]{"item_id","str","ph_dam","mag_dam","ph_def","mag_def","e_s_dam","s_hp","b_mana","speed"}, null, null,null, null, null);
+		 
+			 
+			 int[] index = new int[colNames.length];
+		 
+			 for(int j=0;j<colNames.length;j++)
+				  index[j]= c.getColumnIndex(colNames[j]);
+			 
+			 for(c.moveToFirst(); !(c.isAfterLast()); c.moveToNext()){
+				 
+				  if(c.getInt(index[0]) == eqps[0] || c.getInt(index[0]) == eqps[1]|| c.getInt(index[0]) == eqps[2] || c.getInt(index[0]) == eqps[3]){
+					 
+				 for(int j=1;j<colNames.length;j++)
+					 atts[j-1] = atts[j-1]+Double.parseDouble(c.getString(index[j]));
+				
+			}
+		 }
+		 }catch(Exception e){
+			 System.err.print(e);
+		 }
+		 return atts;
+	 }
+	 
 	 
 	 public class SQLiteHelper extends SQLiteOpenHelper {
 

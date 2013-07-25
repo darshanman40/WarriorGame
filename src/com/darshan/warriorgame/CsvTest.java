@@ -21,32 +21,48 @@ public class CsvTest extends Activity{
 		
         ItemTest it =new ItemTest();
         String[] att = it.printData("inventory");
-        
-        
-       // mySQLiteAdapter = new SQLiteAdapter(this,att[0]);
        
-       // mySQLiteAdapter.openToWrite();
-       // mySQLiteAdapter.dumTable();
-      //  mySQLiteAdapter.deleteAll();
-       for(int i=0;i<att.length;i++){
-        //	mySQLiteAdapter.insertQuery(att[i]);
-    	   s=s+att[i]+" ";
-       }
-    //   mySQLiteAdapter.close();
-
+        mySQLiteAdapter = new SQLiteAdapter(this,att[0]);
+       
+        mySQLiteAdapter.openToWrite();
+        //mySQLiteAdapter.dumTable();
+        mySQLiteAdapter.deleteAll();
+        s="";
+        //try{
+         for(int i=1;i<att.length;i++){
+        	// String[] rows = att[i].split(" ");
+        	mySQLiteAdapter.insertQuery(att[i]);
+        	 //s=s+att[i]+" ";
+         }
+         
+         mySQLiteAdapter.close();
+       // }catch(Exception e){
+        //	System.err.print(e);
+        //	tvCT.setText(e.toString());
+        //}
         /*
          *  Open the same SQLite database
          *  and read all it's content.
-         
-        mySQLiteAdapter = new SQLiteAdapter(this,att[0],"allskills");
+         */
+        
+       String contentRead ="no value";
+       try{
+        mySQLiteAdapter = new SQLiteAdapter(this,att[0]);
+        
         mySQLiteAdapter.openToRead();
-        String contentRead = mySQLiteAdapter.queueAll();
+        contentRead = mySQLiteAdapter.queueAll();
         //
        //String contentRead = mySQLiteAdapter.colNamesChk();
-        */
-        tvCT.setText(s);
+        //
+        mySQLiteAdapter.close();
+        }catch(Exception e){
+        	tvCT.setText(e.toString());
+        	System.err.print(e);
+        }
+       // */
+        tvCT.setText(contentRead);
         
-       // mySQLiteAdapter.close();
+        
         
 	}
 

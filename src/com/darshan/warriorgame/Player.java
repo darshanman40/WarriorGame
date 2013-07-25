@@ -14,6 +14,13 @@ public class Player {
 	
 	Warrior war = new Warrior();
 	
+	public void newPlayer(String name, String pClass){
+		
+	}
+
+	
+	
+	/*
 		//real Player
 		public Player(String name,int id, int lvl, Warrior x,String pc, Integer[] majAtt){
 			this.name = name;
@@ -111,5 +118,5 @@ public class Player {
 			
 			return inve;
 		}
-		
+	*/	
 }

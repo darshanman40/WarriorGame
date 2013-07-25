@@ -19,13 +19,15 @@ public class SkillTest extends Activity {
 		tvST = (TextView)findViewById(R.id.tvSkillTest);
 		
 		 ItemTest it =new ItemTest();
-	        String[] att = it.printData("skills");
+	        String[] att = new String[10];
+	        //= it.printData("skills");
 		
 	        
 	        skl = new SkillList(this,att[0]);
 	        
 	        skl.openToWrite();
-	        //skl.somDumQueries();
+	        //skl.dropQueries();
+	        //skl.cretQueries();
 	        skl.deleteAll();
 		    //   for(int i=0;i<19;i++)
 	        for(int i=1;i<19;i++)

@@ -1,110 +1,105 @@
 package com.darshan.warriorgame;
 
 public class Warrior {
-double lvl;
+//double lvl;
 	
-	public double strMighty(double lvl, double att ){
-		//double iniAtt[] = new double[4];
-		att=att+3;
-		if((int)(lvl%5)==0)
-			att=att+3;
+public Integer[] Mighty(int lv,int attCode, Integer[] att){
+	if(lv%5==0){
+		att[0]=att[0]+3;
+		att[1]=att[1]+1;
+		att[2]=att[2]+15;
+		att[3]=att[3]+5;
+	}
+	
+	switch(attCode){
+	case 0:
+		att[0]=att[0]+3;
+		break;
+	case 1:
+		att[1]=att[1]+1;
+		break;
+	case 2:
+		att[2]= att[2]+15;
+		break;
+	case 3:
+		att[3]=att[3]+5;
+		break;
+	}
+	return att;
+}
+	
+	public double[] Ninja(int lv,int attCode, double[] att){
+		if(lv%5==0){
+			att[0]=att[0]+1;
+			att[1]=att[1]+3;
+			att[2]=att[2]+5;
+			att[3]=att[3]+10;
+		}
+		
+		switch(attCode){
+		case 0:
+			att[0]=att[0]+1;
+			break;
+		case 1:
+			att[1]=att[1]+3;
+			break;
+		case 2:
+			att[2]= att[2]+5;
+			break;
+		case 3:
+			att[3]=att[3]+10;
+			break;
+		}
 		return att;
 	}
-	public double spdMighty(double lvl, double att ){
-		att=att+1;
-		if((int)(lvl%5)==0)
-			att=att+1;
+	
+	public double[] Wizard(int lv,int attCode, double[] att){
+		if(lv%5==0){
+			att[0]=att[0]+1;
+			att[1]=att[1]+2;
+			att[2]=att[2]+10;
+			att[3]=att[3]+15;
+		}
+		
+		switch(attCode){
+		case 0:
+			att[0]=att[0]+1;
+			break;
+		case 1:
+			att[1]=att[1]+2;
+			break;
+		case 2:
+			att[2]= att[2]+10;
+			break;
+		case 3:
+			att[3]=att[3]+15;
+			break;
+		}
 		return att;
 	}
-	public double hpMighty(double lvl, double att ){
-		//double iniAtt[] = new double[4];
-		att=att+15;
-		if((int)(lvl%5)==0)
-			att=att+15;
-		return att;
-	}
-	public double manaMighty(double lvl, double att ){
-		att=att+5;
-		if((int)(lvl%5)==0)
-			att=att+5;
-		return att;
-	}
-	public double strBalanced(double lvl, double att ){
-		//double iniAtt[] = new double[4];
-		att=att+2;
-		if((int)(lvl%5)==0)
-			att=att+2;
-		return att;
-	}
-	public double spdBalanced(double lvl, double att ){
-		att=att+2;
-		if((int)(lvl%5)==0)
-			att=att+2;
-		return att;
-	}
-	public double hpBalanced(double lvl, double att ){
-		//double iniAtt[] = new double[4];
-		att=att+10;
-		if((int)(lvl%5)==0)
-			att=att+10;
-		return att;
-	}
-	public double manaBalanced(double lvl, double att ){
-		att=att+10;
-		if((int)(lvl%5)==0)
-			att=att+10;
-		return att;
-	}
-	public double strNinja(double lvl, double att ){
-		//double iniAtt[] = new double[4];
-		att=att+1;
-		if((int)(lvl%5)==0)
-			att=att+1;
-		return att;
-	}
-	public double spdNinja(double lvl, double att ){
-		att=att+3;
-		if((int)(lvl%5)==0)
-			att=att+3;
-		return att;
-	}
-	public double hpNinja(double lvl, double att ){
-		//double iniAtt[] = new double[4];
-		att=att+5;
-		if((int)(lvl%5)==0)
-			att=att+5;
-		return att;
-	}
-	public double manaNinja(double lvl, double att ){
-		att=att+10;
-		if((int)(lvl%5)==0)
-			att=att+10;
-		return att;
-	}
-	public double strWizard(double lvl, double att ){
-		//double iniAtt[] = new double[4];
-		att=att+1;
-		if((int)(lvl%5)==0)
-			att=att+1;
-		return att;
-	}
-	public double spdWizard(double lvl, double att ){
-		att=att+1;
-		if((int)(lvl%5)==0)
-			att=att+1;
-		return att;
-	}
-	public double hpWizard(double lvl, double att ){
-		//double iniAtt[] = new double[4];
-		att=att+5;
-		if((int)(lvl%5)==0)
-			att=att+5;
-		return att;
-	}
-	public double manaWizard(double lvl, double att ){
-		att=att+15;
-		if((int)(lvl%5)==0)
-			att=att+15;
+	
+	public double[] Balanced(int lv,int attCode, double[] att){
+		if(lv%5==0){
+			att[0]=att[0]+2;
+			att[1]=att[1]+2;
+			att[2]=att[2]+10;
+			att[3]=att[3]+10;
+		}
+		
+		switch(attCode){
+		case 0:
+			att[0]=att[0]+2;
+			break;
+		case 1:
+			att[1]=att[1]+2;
+			break;
+		case 2:
+			att[2]= att[2]+10;
+			break;
+		case 3:
+			att[3]=att[3]+10;
+			break;
+		}
 		return att;
 	}
 	

@@ -18,7 +18,8 @@ public class ItemTest {
 	    //String [] rowData = new String[7500];
 	    int i=0;
 	    StringBuilder total = new StringBuilder();
-	    //line = reader.readLine();
+	    line = reader.readLine();
+	    total.append(line+"\n");
 	    while ((line = reader.readLine()) != null){
 	    	String[] rowData = line.split(",");
 	    	for(int j=0;j<rowData.length;j++)

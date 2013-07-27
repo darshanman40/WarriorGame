@@ -1,2 +1,3 @@
+CREATE TABLE 'playersinv' ('player_id' INTEGER PRIMARY KEY  NOT NULL  UNIQUE , 'inv_1' INTEGER, 'inv_2' INTEGER, 'inv_3' INTEGER,'inv_4' INTEGER, 'inv_5' INTEGER, 'inv_6' INTEGER, 'inv_7' INTEGER, 'inv_8' INTEGER, 'eq_inv_1' INTEGER, 'eq_inv_2' INTEGER, 'eq_inv_3' INTEGER, 'eq_inv_4' INTEGER, 'po_inv_1' INTEGER, 'po_inv_2' INTEGER);
 player_id,inv_1,inv_2,inv_3,inv_4,inv_5,inv_6,inv_7,inv_8,eq_inv_1,eq_inv_2,eq_inv_3,eq_inv_4,po_inv_1,po_inv_2
-1,0,0,0,0,0,0,0,0,101,201,301,401,5,6
+1,0,0,0,0,0,0,0,0,0,0,0,0,5,5

@@ -1,3 +1,4 @@
+CREATE TABLE 'allitems' ('item_id' INTEGER PRIMARY KEY  NOT NULL  UNIQUE , 'item' VARCHAR, 'str' DOUBLE, 'ph_dam' DOUBLE, 'mag_dam' DOUBLE, 'ph_def' DOUBLE, 'mag_def' DOUBLE, 'e_s_dam' DOUBLE, 's_hp' DOUBLE, 'b_mana' DOUBLE, 'speed' DOUBLE, 'cost' DOUBLE, 'selling_price' DOUBLE, 'hp_plus' DOUBLE, 'mana_plus' DOUBLE);
 item_id,item,str,ph_dam,mag_dam,ph_def,mag_def,e_s_dam,s_hp,b_mana,speed,cost,selling_price,hp_plus,mana_plus
 101,silver_dagger,10,10,0,0,0,0,0,0,0,30,15,0,0
 102,spiked_axe,16,11,0,0,0,5,0,0,0,60,30,0,0

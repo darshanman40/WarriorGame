@@ -4,45 +4,46 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.database.sqlite.SQLiteDatabase.CursorFactory;
 
 
 
-public class SQLiteAdapter {
-
-	 public static final String MYDATABASE_NAME = "Inventory";
-	 public static final String MYDATABASE_TABLE = "allitems";
-	 public static final int MYDATABASE_VERSION = 1;
-	 public static final String KEY_CONTENT = "Content";
+public class DBManager {
+	public String MYDATABASE_NAME = "Inventory";
+	 public String MYDATABASE_TABLE;
+	 public int MYDATABASE_VERSION = 1;
+	 
 
 	 public String[] colNames; 
 	 public String cols;
 	 //create table MY_DATABASE (ID integer primary key, Content text not null);
-	 private static final String SCRIPT_CREATE_DATABASE =
-			 "CREATE TABLE 'allitems' ('item_id' INTEGER PRIMARY KEY  NOT NULL  UNIQUE , 'item' VARCHAR, 'str' DOUBLE, 'ph_dam' DOUBLE, 'mag_dam' DOUBLE, 'ph_def' DOUBLE, 'mag_def' DOUBLE, 'e_s_dam' DOUBLE, 's_hp' DOUBLE, 'b_mana' DOUBLE, 'speed' DOUBLE, 'cost' DOUBLE, 'selling_price' DOUBLE, 'hp_plus' DOUBLE, 'mana_plus' DOUBLE);";
+	 private String SCRIPT_CREATE_DATABASE;// =
+			 //"CREATE TABLE 'allitems' ('item_id' INTEGER PRIMARY KEY  NOT NULL  UNIQUE , 'item' VARCHAR, 'str' DOUBLE, 'ph_dam' DOUBLE, 'mag_dam' DOUBLE, 'ph_def' DOUBLE, 'mag_def' DOUBLE, 'e_s_dam' DOUBLE, 's_hp' DOUBLE, 'b_mana' DOUBLE, 'speed' DOUBLE, 'cost' DOUBLE, 'selling_price' DOUBLE, 'hp_plus' DOUBLE, 'mana_plus' DOUBLE);";
 	 
 	 private SQLiteHelper sqLiteHelper;
 	 private SQLiteDatabase sqLiteDatabase;
 
 	 private Context context;
 	 
-	 public SQLiteAdapter(Context c, String colNames){
+	 public DBManager(Context c, String colNames,String tblName,String creatTbl){
 	  context = c;
 	  cols=colNames;
 	  this.colNames=colNames.split(" ");
+	  SCRIPT_CREATE_DATABASE=creatTbl;
+	  MYDATABASE_TABLE=tblName;
 	 }
 	/* public SQLiteAdapter(Context c){
 		  context = c;
 		 }
 	 */
-	 public SQLiteAdapter openToRead() throws android.database.SQLException {
+	 public DBManager openToRead() throws android.database.SQLException {
 	  sqLiteHelper = new SQLiteHelper(context, MYDATABASE_NAME, null, MYDATABASE_VERSION);
 	  sqLiteDatabase = sqLiteHelper.getReadableDatabase();
 	  return this; 
 	 }
 	 
-	 public SQLiteAdapter openToWrite() throws android.database.SQLException {
+	 public DBManager openToWrite() throws android.database.SQLException {
 	  sqLiteHelper = new SQLiteHelper(context, MYDATABASE_NAME, null, MYDATABASE_VERSION);
 	  sqLiteDatabase = sqLiteHelper.getWritableDatabase();
 	  return this; 
@@ -59,17 +60,29 @@ public class SQLiteAdapter {
 	  return sqLiteDatabase.insert(MYDATABASE_TABLE, null, contentValues);
 	 }
 	*/ 
+	 
+	 
 	 public long insertQuery(String content){
 		  String atts[] = content.split(" "); 
 		  ContentValues contentValues = new ContentValues();
 		  try{
-		  for(int i=0; i<15;i++)
+		  for(int i=0; i<colNames.length;i++)
 			  contentValues.put(colNames[i], atts[i]);
 		  return sqLiteDatabase.insert(MYDATABASE_TABLE, null, contentValues);
 		 }catch(Exception e){
 			 System.err.print(e+" colName6= "+colNames[6]);
 		 }
 		  return 0;
+	 }
+	 
+	 public long updateTable(String content, String where){
+		 String[] cols = content.split(" ");
+		 ContentValues cvalues = new ContentValues();
+		 
+		 for(int i=1; i<colNames.length;i++)
+			 cvalues.put(colNames[i], cols[i]);
+		 //sqLiteDatabase.up
+		 return sqLiteDatabase.update(MYDATABASE_TABLE, cvalues, where, null);
 	 }
 		 
 	 //}
@@ -78,47 +91,75 @@ public class SQLiteAdapter {
 	  return sqLiteDatabase.delete(MYDATABASE_TABLE, null, null);
 	 }
 	 public void dropTable(){
-		  sqLiteDatabase.execSQL("Drop Table If Exists 'allitems'");
+		  sqLiteDatabase.execSQL("Drop Table If Exists "+MYDATABASE_TABLE);
+		  //sqLiteDatabase.execSQL(SCRIPT_CREATE_DATABASE);
+		 }
+	 public void cretTable(){
 		  sqLiteDatabase.execSQL(SCRIPT_CREATE_DATABASE);
+		  //sqLiteDatabase.execSQL(SCRIPT_CREATE_DATABASE);
 		 }
 	 
 	 public String queueAll(){
-	 String[] columns=colNames;
+	 //String[] columns=colNames;
 		 String result = "";
 		 
 		 try{
-	  Cursor cursor = sqLiteDatabase.query("allitems",columns,null,null,null,null,null);
-			 // new String[]{"item_id","item","str","ph_dam","mag_dam","ph_def","mag_def","e_s_dam","s_hp","b_mana","speed","cost","selling_price","hp_plus","mana_plus"},null, null, null, null, null);
-			// Cursor cursor = sqLiteDatabase.rawQuery("select 'item' from 'allitems'",null);
+	  Cursor cursor = sqLiteDatabase.query(MYDATABASE_TABLE,colNames,null,null,null,null,null);
 	  int index[] = new int[colNames.length];
-	  
 	  for(int i=0;i<colNames.length;i++)
 		  index[i]= cursor.getColumnIndex(colNames[i]);
-	  
-	  //int index_1 = cursor.getColumnIndex(colNames[0]);
-	  //int index_2 = cursor.getColumnIndex(colNames[1]);
 	  for(cursor.moveToFirst(); !(cursor.isAfterLast()); cursor.moveToNext()){
-		  for(int i=0;i<15;i++)
+		  for(int i=0;i<colNames.length;i++)
 			  result = result + cursor.getString(index[i])+" ";// + " "+cursor.getString(index[1]) + "\n";
 		  result=result+"\n";
 	  }
-	 
-	  
-	 // for(int i=0; i< colNames.length;i++)
-		//  result= result + colNames[i]+" ";
-	  
 	  return result;
 		 }catch(Exception e){
 		 System.err.print(e+" colNames6= "+colNames[6]);
 		 }
 		 return null;
 	 }
+	 public String queueAll(String row){
+		 //String[] columns=colNames;
+			 String result = "";
+			 
+			 try{
+		  Cursor cursor = sqLiteDatabase.query(MYDATABASE_TABLE,colNames,null,null,null,null,null);
+		  int index[] = new int[colNames.length];
+		  for(int i=0;i<colNames.length;i++)
+			  index[i]= cursor.getColumnIndex(colNames[i]);
+		  for(cursor.moveToFirst(); !(cursor.isAfterLast()); cursor.moveToNext()){
+			  if(row.compareTo(String.valueOf(cursor.getInt(index[0])))==0){
+			  for(int i=0;i<colNames.length;i++)
+				  result = result + cursor.getString(index[i])+" ";// + " "+cursor.getString(index[1]) + "\n";
+			  result=result+"\n";
+			  }
+		  }
+		  return result;
+			 }catch(Exception e){
+			 System.err.print(e+" colNames6= "+colNames[6]);
+			 }
+			 return "ur dumbass";
+		 }
 	 
 	 public String colNamesChk(){
 		 
 		 
 		 String res="";
-		 Cursor cursor = sqLiteDatabase.rawQuery("SELECT sql FROM sqlite_master WHERE tbl_name = 'allitems' AND type = 'table'", null);
+		 Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM sqlite_master WHERE tbl_name = "+MYDATABASE_TABLE+" AND type = 'table'", null);
+		  int ind = cursor.getColumnIndex("sql");
+		  for(cursor.moveToFirst(); !(cursor.isAfterLast()); cursor.moveToNext()){
+			  res = res+cursor.getString(ind)+"\n";
+		  }
+		  
+		 return res;
+		 
+	 }
+ public String tblNamesChk(){
+		 
+		 
+		 String res="";
+		 Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM sqlite_master WHERE type = 'table'", null);
 		  int ind = cursor.getColumnIndex("sql");
 		  for(cursor.moveToFirst(); !(cursor.isAfterLast()); cursor.moveToNext()){
 			  res = res+cursor.getString(ind)+"\n";
@@ -173,10 +214,9 @@ public class SQLiteAdapter {
 	  @Override
 	  public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 	   // TODO Auto-generated method stub
-		  db.rawQuery("Drop Table If Exists 'allitems'", null);
+		  db.rawQuery("Drop Table If Exists "+MYDATABASE_TABLE, null);
 		  onCreate(db);
 	  }
 
 	 }
-	 
-	}
+}

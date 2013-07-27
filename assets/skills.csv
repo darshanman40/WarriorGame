@@ -1,3 +1,4 @@
+CREATE TABLE 'allskills' ('skill_id' INTEGER PRIMARY KEY  NOT NULL  UNIQUE , 'skills' VARCHAR, 'mana' DOUBLE,'accuracy' DOUBLE, 'operation' DOUBLE, 'stat' VARCHAR, 'effect' DOUBLE, 'add_dam' DOUBLE, 'preq_skillid_1' DOUBLE, 'preq_skillid_2' DOUBLE);
 skill_id,skills,mana,accuracy,operation,stat,effect,add_dam,preq_skillid_1,preq_skillid_2
 1001,stab,15,1,1,ph_dam,4,4,0,0
 1011,double_strike,20,1,1,ph_dam,60,8,1001,0

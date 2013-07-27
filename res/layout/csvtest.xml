@@ -4,24 +4,74 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="DB Check Panel"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <Button
+            android:id="@+id/bPInv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/textView1"
+            android:text="Player Inv" />
+
+        <Button
+            android:id="@+id/bSkills"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/bPInv"
+            android:layout_alignBottom="@+id/bPInv"
+            android:layout_toRightOf="@+id/bPInv"
+            android:text="Skills" />
+
+        <Button
+            android:id="@+id/bPlayers"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textView1"
+            android:layout_toRightOf="@+id/bSkills"
+            android:text="Players" />
+
+        <Button
+            android:id="@+id/bItems"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/bPlayers"
+            android:layout_alignBottom="@+id/bPlayers"
+            android:layout_toRightOf="@+id/bPlayers"
+            android:text="Items" />
+
+    </RelativeLayout>
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
+       
     <ScrollView
         android:id="@+id/scrollView1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical" >
-
-            <TextView
-                android:id="@+id/tvCSVTEST"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Large Text"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
-
-        </LinearLayout>
+         <TextView
+            android:id="@+id/tvTbl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tablel"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+            
+            
     </ScrollView>
+        
+        </LinearLayout>
+    
    
 </LinearLayout>

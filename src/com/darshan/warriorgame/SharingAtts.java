@@ -1,9 +1,11 @@
 package com.darshan.warriorgame;
 
 import android.app.Application;
+import android.content.Context;
 
 public class SharingAtts extends Application {
 
+	Context c;
 	String playerClass;
 	String name;
 	int id,lvl;
@@ -14,14 +16,30 @@ public class SharingAtts extends Application {
 	Integer[] skills;
 	Integer[] skilllvl;
 	
+	public void setId(int id){
+		this.id=id;
+	}
+	
 	public void setSkills(String[] skil, String[] sLvl){
 		skills = new Integer[skil.length];
-		skilllvl = new Integer[skil.length];
+		skilllvl = new Integer[sLvl.length-1];
 		for(int i=0;i<skil.length;i++){
-			skills[i]=Integer.valueOf(skil[i]);
-		//}
-		//for(int i=0;i<sLvl.length;i++){
-			skilllvl[i]=Integer.valueOf(sLvl[i]);
+			//String[] b = skil[i].split("");
+			//if(!(skil[i].trim()))
+			try{
+				skills[i]=Integer.valueOf(skil[i].trim());
+			}catch(Exception e){
+				//i++;
+			}
+		}
+		for(int i=1;i<sLvl.length;i++){
+			//String[] a=sLvl[i].split("");
+			//if(!(sLvl[i]).contentEquals(""))
+			try{
+				skilllvl[i-1]=Integer.valueOf(sLvl[i]);
+			}catch(Exception e){
+				//i++;
+			}
 		}
 	}
 	public void setName(String n){
@@ -30,26 +48,26 @@ public class SharingAtts extends Application {
 	public void setPlaAtts(String[] att){
 		id=Integer.valueOf(att[0]);
 		name=att[1];
-		playerClass=att[2];
-		lvl=Integer.valueOf(att[3]);
-		str=Double.valueOf(att[4]);
-		speed=Double.valueOf(att[5]);
-		maxHp=Double.valueOf(att[6]);
-		maxMana=Double.valueOf(att[7]);
-		maxXp=Double.valueOf(att[8]);
-		hp=Double.valueOf(att[9]);
-		mana=Double.valueOf(att[10]);
-		xp=Double.valueOf(att[11]);
-		gold=Double.valueOf(att[12]);
+		playerClass=att[3];
+		lvl=Integer.valueOf(att[4]);
+		str=Double.valueOf(att[5]);
+		speed=Double.valueOf(att[6]);
+		maxHp=Double.valueOf(att[7]);
+		maxMana=Double.valueOf(att[8]);
+		maxXp=Double.valueOf(att[9]);
+		hp=Double.valueOf(att[10]);
+		mana=Double.valueOf(att[11]);
+		xp=Double.valueOf(att[12]);
+		gold=Double.valueOf(att[13]);
 	}
 	
 	public void setAllInv(String[] allInv){
 		for(int i=0;i<inv.length;i++)
-			inv[i]=Integer.valueOf(allInv[i]);
+			inv[i]=Integer.valueOf(allInv[i+1]);
 		for(int i=0;i<eqInv.length;i++)
-			eqInv[i]=Integer.valueOf(allInv[i+8]);
+			eqInv[i]=Integer.valueOf(allInv[i+9]);
 		for(int i=0;i<poInv.length;i++)
-			poInv[i]=Integer.valueOf(allInv[i+4+8]);		
+			poInv[i]=Integer.valueOf(allInv[i+4+9]);		
 	}
 	//--------------------------------------------------------------------------
 	
@@ -95,7 +113,9 @@ public class SharingAtts extends Application {
 	public String getPClass(){
 		return playerClass;
 	}
-	
+	public int getId(){
+		return id;
+	}
 	public Integer getSkillLevel(Integer skillId){
 		int i=0;
 		while(skills[i]!=skillId)
@@ -121,6 +141,24 @@ public class SharingAtts extends Application {
 			allInv[i+inv.length+eqInv.length]=poInv[i];
 		return allInv;
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	/*
 	SharingAtts appState = ((SharingAtts)getApplicationContext());

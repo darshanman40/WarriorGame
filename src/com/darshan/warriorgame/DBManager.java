@@ -61,7 +61,22 @@ public class DBManager {
 	 }
 	*/ 
 	 
-	 
+	 public void autoRecover(String[] s2){
+		 openToWrite();
+		 dropTable();
+		 cretTable();
+		 for(int i=2;i<s2.length;i++)
+			 insertQuery(s2[i]);
+		 close();		 
+	 }
+	 public void recover(String[] s2){
+		 openToWrite();
+		 //dropTable();
+		 cretTable();
+		 for(int i=2; i<s2.length;i++)
+			 insertQuery(s2[i]);
+		 close();		 
+	 }
 	 public long insertQuery(String content){
 		  String atts[] = content.split(" "); 
 		  ContentValues contentValues = new ContentValues();
@@ -99,6 +114,26 @@ public class DBManager {
 		  //sqLiteDatabase.execSQL(SCRIPT_CREATE_DATABASE);
 		 }
 	 
+	 public String queueFew(String[] custCNames){
+		 //String[] columns=colNames;
+			 String result = "";
+			 
+			 try{
+		  Cursor cursor = sqLiteDatabase.query(MYDATABASE_TABLE,custCNames,null,null,null,null,null);
+		  int index[] = new int[custCNames.length];
+		  for(int i=0;i<custCNames.length;i++)
+			  index[i]= cursor.getColumnIndex(custCNames[i]);
+		  for(cursor.moveToFirst(); !(cursor.isAfterLast()); cursor.moveToNext()){
+			  for(int i=0;i<custCNames.length;i++)
+				  result = result + (cursor.getString(index[i]))+" ";// + " "+cursor.getString(index[1]) + "\n";
+			  result=result+"\n";
+		  }
+		  return result;
+			 }catch(Exception e){
+			 System.err.print(e+" colNames6= "+colNames[6]);
+			 }
+			 return null;
+	 }
 	 public String queueAll(){
 	 //String[] columns=colNames;
 		 String result = "";
@@ -132,21 +167,46 @@ public class DBManager {
 			  if(row.compareTo(String.valueOf(cursor.getInt(index[0])))==0){
 			  for(int i=0;i<colNames.length;i++)
 				  result = result + cursor.getString(index[i])+" ";// + " "+cursor.getString(index[1]) + "\n";
-			  result=result+"\n";
+			 // result=result+"\n";
 			  }
 		  }
 		  return result;
 			 }catch(Exception e){
 			 System.err.print(e+" colNames6= "+colNames[6]);
+			 return e+"ur dumbass";
 			 }
-			 return "ur dumbass";
+			// return "ur dumbass";
+		 }
+	 public int queueAll(String row1, String row2){
+		 //String[] columns=colNames;
+			 //String result = "";
+		try{
+		  Cursor cursor = sqLiteDatabase.query(MYDATABASE_TABLE,colNames,null,null,null,null,null);
+		  int index[] = new int[colNames.length];
+		  //long count=0;
+		  for(int i=0;i<colNames.length;i++)
+			  index[i]= cursor.getColumnIndex(colNames[i]);
+		  for(cursor.moveToFirst(); !(cursor.isAfterLast()); cursor.moveToNext()){
+			  if(row1.compareTo(String.valueOf(cursor.getString(index[1])))==0 && row2.compareTo(String.valueOf(cursor.getString(index[2])))==0){
+				  return cursor.getInt(index[0]);
+				  //for(int i=0;i<colNames.length;i++)
+				  //result = result + cursor.getString(index[i])+" ";// + " "+cursor.getString(index[1]) + "\n";
+				  
+			  //result=result+"\n";
+			  }
+		  }
+		  
+			 }catch(Exception e){
+			 System.err.print(e+" colNames6= "+colNames[6]);
+			 }
+			 return 0;
 		 }
 	 
 	 public String colNamesChk(){
 		 
 		 
 		 String res="";
-		 Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM sqlite_master WHERE tbl_name = "+MYDATABASE_TABLE+" AND type = 'table'", null);
+		 Cursor cursor = sqLiteDatabase.rawQuery("SELECT sql FROM sqlite_master WHERE tbl_name = "+MYDATABASE_TABLE+" AND type = 'table'", null);
 		  int ind = cursor.getColumnIndex("sql");
 		  for(cursor.moveToFirst(); !(cursor.isAfterLast()); cursor.moveToNext()){
 			  res = res+cursor.getString(ind)+"\n";

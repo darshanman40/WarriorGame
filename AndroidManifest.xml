@@ -122,6 +122,24 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".LoadGame"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="com.darshan.warriorgame.loadgame" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+         <activity
+            android:name=".InventoryStat"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="com.darshan.warriorgame.invstat" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
         
     </application>
 

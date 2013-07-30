@@ -16,7 +16,6 @@ public class CsvTest extends Activity implements OnClickListener{
 	Button bskill,bplayer,bpinv,bitms;
 	
 	ItemTest it;
-	//private SQLiteAdapter mySQLiteAdapter;
 	DBManager itms;//,attacks;
 	SharingAtts sa;
 	Player pl;
@@ -44,16 +43,17 @@ public class CsvTest extends Activity implements OnClickListener{
 		sa.setState("Sharing atts");
 		
 		*/
+		/*
 		Player pl = new Player(this,1);
 		sa=((SharingAtts)getApplication());
 		sa.setName("Dragon");
-		//s="";
-		//String gg=pl.loadPlayerMaj(this,1);
+		s="Idiot";
+		//String[] gg=pl.loadPlayerMaj(this,1);
 		//try{
 		//String[] ggg=pl.allSkills();
 		
-//		for(int i=0;i<gg.length;i++)
-	//		s=s+gg[i];
+		//for(int i=0;i<gg.length;i++)
+		//	s=s+gg[i]+".";
 			
 		sa.setPlaAtts(pl.loadPlayerMaj(this, 1));
 		
@@ -64,19 +64,26 @@ public class CsvTest extends Activity implements OnClickListener{
 		String[] sb = pl.loadPlayerSkills();
 		String[] sasa = new String[(int)(sas.length/10)];
 		s="";
+		/*
 		for(int i=0; i< sas.length/10;i++){
 			sasa[i]=sas[i*10].replace("\n", "");
 			s=s+sasa[i]+".";
 		}
-		//String[] sasa=s.split(".");
+		for(int i=0; i< sas.length/10;i++){
+			sasa[i]=sas[i*10].replace("\n", "");
+			s=s+sasa[i]+".";
+		}
+		//
+		//String[] ss=s.split(".");
 		sa.setSkills(sasa,sb);
-		
-		//*/
+		//
+		//
 		//}catch(Exception e){
 		//	tvCT.setText(e.toString());//+gg[0]+" "+gg[1]);
 		//	
 		//}
-		tvCT.setText(String.valueOf(s));
+		tvCT.setText(s);
+		*/
     }
 	
 	@Override
@@ -124,7 +131,7 @@ public class CsvTest extends Activity implements OnClickListener{
 			itms.close();
 			tvCT.setText(affec+" rows are affected");
 			//*/
-			/*
+			
 			st = it.printData("players");
 			itms = new DBManager(this,st[1],"allplayer",st[0]);
 			String rows="";
@@ -132,7 +139,11 @@ public class CsvTest extends Activity implements OnClickListener{
 			Player pl =new Player(this,1);
 			
 			//rows=pl.savePlayer(this, new String[]{"1","Osairas","Samurai","1","17","15","80","70","150","0","250"}, null, null);
-			itms.openToRead();
+			itms.openToWrite();
+			itms.dropTable();
+			itms.cretTable();
+			for(int i=2;i<st.length;i++)
+				itms.insertQuery(st[i]);
 			s = itms.queueAll();
 			itms.close();
 			}catch(Exception e){
@@ -141,7 +152,7 @@ public class CsvTest extends Activity implements OnClickListener{
 			}
 			
 			tvCT.setText(sa.getNameOnly());
-			*/
+			//*/
 			//*/W
 			//tvCT.setText(rows);//+" rows are affected");
 			//*/
@@ -179,7 +190,7 @@ public class CsvTest extends Activity implements OnClickListener{
 				affec=itms.insertQuery(st[i]);
 			itms.close();
 			tvCT.setText(affec+" rows effected");
-			*/
+			
 			/*
 			st = it.printData("inventory");
 			itms = new DBManager(this,st[1],"allitems",st[0]);
@@ -188,7 +199,7 @@ public class CsvTest extends Activity implements OnClickListener{
 			itms.close();
 			tvCT.setText(s);
 			//*/
-			/*
+			
 			String[] s = it.printData("players");
 			//String[] inve = it.printData("player_inv");
 			//String[] pSkill = it.printData("player_skills");
@@ -199,14 +210,79 @@ public class CsvTest extends Activity implements OnClickListener{
 			mA=itms.queueAll(String.valueOf(1));
 			itms.close();
 			tvCT.setText(mA);
-			*/
+			
+			/*
 			String q="";
 			//Integer[] d=sa.getAllInv();
-			//Integer[] d=sa.getAllSkills();
-			Integer[] d=sa.getAllSkillsLvl();
+			double[] d=sa.getMajatt();
+			//Integer[] d=sa.getAllSkillsLvl();
 			for(int i=0; i<d.length;i++)
 				q=q+String.valueOf(d[i])+" ";
 			tvCT.setText(q);
+			*/
+			/*
+			String[] st1 = it.printData("players");
+			itms = new DBManager(this,st1[1],"allplayer",st1[0]);
+			//itms.recover(st1);
+			
+			itms.openToWrite();
+			itms.dropTable();
+			itms.cretTable();
+			for(int i=2;i<st1.length;i++)
+				itms.insertQuery(st1[i]);
+			
+			String s1 = itms.queueAll();
+			//s1 =itms.colNamesChk();
+			itms.close();	
+			String[] st2 = s1.split(" ");
+			//sa.setPlaAtts(st2);
+			
+			String[] st3 = it.printData("player_inv");
+			itms = new DBManager(this,st3[1],"playersinv",st3[0]);
+			//itms.recover(st3);
+			
+			itms.openToWrite();
+			itms.dropTable();
+			itms.cretTable();
+			for(int i=2;i<st3.length;i++)
+				itms.insertQuery(st3[i]);
+			String s2 = itms.queueAll();
+			//s2 = itms.colNamesChk();
+			itms.close();	
+			String[] st4 = s2.split(" ");
+			//sa.setAllInv(st4);
+			
+			String[] st5 = it.printData("player_skills");
+			itms = new DBManager(this,st5[1],"playerskill",st5[0]);
+			//itms.recover(st5);
+			itms.openToWrite();
+			itms.dropTable();
+			itms.cretTable();
+			for(int i=2;i<st5.length;i++)
+				itms.insertQuery(st5[i]);
+			String s3 = itms.queueAll();
+			//s3 = itms.colNamesChk();
+			itms.close();	
+			String[] st6 = s3.split(" ");
+			//sa.setAllInv(st6);
+			
+			String[] st7 = it.printData("skills");
+			itms = new DBManager(this,st7[1],"allskills",st7[0]);
+			//itms.recover(st7);
+			//itms.dropTable();
+			itms.openToWrite();
+			itms.dropTable();
+			itms.cretTable();
+			for(int i=2;i<st7.length;i++)
+				itms.insertQuery(st7[i]);
+			String s4 = itms.queueAll();
+			//s4=itms.colNamesChk();
+			itms.close();	
+			String[] st8 = s4.split(" ");
+			//sa.setSkills(st8,st6);
+			tvCT.setText(s1+"\n"+s2+"\n"+s3+"\n"+s4);
+			*/
+			
 			break;
 		case R.id.bSkills:
 			
@@ -232,8 +308,12 @@ public class CsvTest extends Activity implements OnClickListener{
 			//*/
 			//String ss=pl.loadPlayerMaj(this, 1);
 			pl = new Player(this,1);
-			tvCT.setText(String.valueOf(pl.id));
-			
+			//tvCT.setText(String.valueOf(pl.id));
+			Integer[] z=pl.calcAtts(new Integer[]{101,201,301,401});
+			String s1="";
+			for(int i=0;i<z.length;i++)
+				s1=s1+String.valueOf(z[i])+"\n";
+			tvCT.setText(s1);
 			break;
 		}
 	}

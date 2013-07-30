@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical" >
 
     <TextView
@@ -12,39 +12,53 @@
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <TextView
-        android:id="@+id/tvAttack"
+        android:id="@+id/tvStr"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Attack =       " />
+        android:text="Str =       " />
 
     <TextView
-        android:id="@+id/tvDef"
+        android:id="@+id/tvSpeed"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Defense =     " />
-
+        android:text="Magical Damage =     " />
+    
     <TextView
-        android:id="@+id/tvHP"
+        android:id="@+id/tvMaxHp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="HP =          " />
-
+        android:text="Max HP =     " />
+    
     <TextView
-        android:id="@+id/tvMana"
+        android:id="@+id/tvMaxMana"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Mana =        " />
+        android:text="Max Mana=     " />
 
-    <TextView
-        android:id="@+id/tvDR"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Dodge Rate = " />
     
      <TextView
-        android:id="@+id/tvAcc"
+        android:id="@+id/tvMaxExp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Accuracy =   " />
+        android:text="Max Exp =   " />
+
+     <ScrollView
+         android:id="@+id/scrollView1"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content" >
+
+         <LinearLayout
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:orientation="vertical" >
+
+             <TextView
+                 android:id="@+id/tvGold"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:text="Gold =     " />
+         </LinearLayout>
+
+     </ScrollView>
 
 </LinearLayout>

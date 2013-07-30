@@ -2,38 +2,102 @@ package com.darshan.warriorgame;
 
 
 
-//import java.lang.reflect.Method;
+
 
 import android.content.Context;
 
 public class Player {
 	String playerClass;
 	String name;
+	String password;
 	int id,lvl;
-	double str,speed,maxHp,maxMana,skill,maxXp,xp,gold; 
+	double str,speed,maxHp,maxMana,skill,maxXp,hp,mana,xp,gold; 
 	Integer[] inv = new Integer[8];
 	Integer[] eqInv = new Integer[4];
 	Integer[] poInv = new Integer[2];
-	Integer[] skills;
-	Integer[] skilllvl;
-	SharingAtts appState;
-	
+	Integer[] skills = new Integer[19];
+	Integer[] skilllvl= new Integer[]{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+	//SharingAtts sa;
+	Integer[] minorAtts;
 	Context c;
 	ItemTest it;
 	DBManager exisPlayerAtt,exisPlayerInv,exisPlayerSkill;
-	Warrior war;// = new Warrior();
+	//Warrior war;// = new Warrior();
 	
 	public Player(Context c,int id){
 		this.c=c;
 		this.id=id;
 		it = new ItemTest(); 
+		
 	}
 	
-	//----------------------Load all skills-------------------------
-	public String[] allSkills(){
+	
+	
+	public Player(Context c,String name, String pClass, String pass) {
+		// TODO Auto-generated constructor stub
 		it = new ItemTest();
+		this.name=name;
+		this.playerClass = pClass;
+		this.c= c;
+		password = pass;
+		newPlayer(name, pClass);
+		//skills = new Integer[19];
+		//skilllvl = new Integer[19];
+		
+	}
+
+
+
+	public Integer[] calcAtts(Integer[] eqInv){
+		//str,ph_dam,mag_dam,ph_def,mag_def,e_s_dam,s_hp,b_mana,speed
+		//8
+		//eqInv = new Integer[]{101,201,301,401};
+		//minorAtts[0]=(int) str;
+		minorAtts = new Integer[]{0,0,0,0,0,0,0,0,0};
+		for(int i=0;i<eqInv.length;i++){
+			if(eqInv[i]!=0){
+				String[] eqSel=itmAtts(eqInv[i]);
+				for(int j=1;j<minorAtts.length;j++){
+					minorAtts[j]=minorAtts[j]+Integer.valueOf(eqSel[j+2]);
+				}
+			}
+		}
+		skills=new Integer[]{1022,1031,2021};
+		skilllvl=new Integer[]{1,1,2};
+		for(int i=0; i<skills.length;i++){
+			if(skills[i]==1022 )
+				minorAtts[8]=minorAtts[8]+(getEffect(skills[i])*skilllvl[i]);
+			else if(skills[i]==1031)
+				minorAtts[1]=minorAtts[1]+(getEffect(skills[i])*skilllvl[i]);
+			else if(skills[i]==2021)
+				minorAtts[2]=minorAtts[2]+(getEffect(skills[i])*skilllvl[i]);
+		}
+		
+		return minorAtts;
+	} 
+	public Integer getEffect(Integer skillid){
 		String[] s = it.printData("skills");
 		exisPlayerAtt = new DBManager(c,s[1],"allskills",s[0]);
+		exisPlayerAtt.openToRead();
+		String st=exisPlayerAtt.queueAll(String.valueOf(skillid));
+		exisPlayerAtt.close();
+		String[] atts = st.split(" ");
+		
+		return Integer.valueOf(atts[6]);
+		
+	}
+	//----------------------Load all skills-------------------------
+	public String[] allSkills(){
+		//it = new ItemTest();
+		String[] s = it.printData("skills");
+		exisPlayerAtt = new DBManager(c,s[1],"allskills",s[0]);
+		
+		exisPlayerAtt.openToWrite();
+		exisPlayerAtt.cretTable();
+		for(int i=2; i<s.length;i++)
+			exisPlayerAtt.insertQuery(s[i]);
+		exisPlayerAtt.close();
+		
 		exisPlayerAtt.openToRead();
 		String st=exisPlayerAtt.queueAll();
 		exisPlayerAtt.close();
@@ -51,6 +115,7 @@ public class Player {
 		maxXp=150;
 		xp=0;
 		gold=250;
+		//
 		for(int i=0;i<eqInv.length;i++){
 			eqInv[i]=0;
 			inv[i]=0;
@@ -61,93 +126,49 @@ public class Player {
 		eqInv[0]=101;
 		poInv[0]=5;
 		poInv[1]=5;
-		if(pClass.compareToIgnoreCase("Samurai")==0){
+		
+		//return pClass;
+		
+		if(playerClass.contentEquals("Samurai")){
 			str=17;
 			speed=15;
 			maxHp=85;
 			maxMana=75;
-			skills[0]=1001;
-		}else if(pClass.compareToIgnoreCase("Ninja")==0){
+			skilllvl[0]=1;
+			skilllvl[9]=0;
+		}
+		else if(playerClass.compareToIgnoreCase("Ninja")==0){
 			str=15;
 			speed=17;
 			maxHp=80;
 			maxMana=85;
-			skills[0]=2001;
-		}else if(pClass.compareToIgnoreCase("Wizard")==0){
+			skilllvl[9]=1;
+			skilllvl[0]=0;
+		}else if(playerClass.compareToIgnoreCase("Wizard")==0){
 			str=15;
 			speed=16;
 			maxHp=80;
 			maxMana=85;
-			skills[0]=2001;
-		}else if(pClass.compareToIgnoreCase("Balanced")==0){
+			skilllvl[9]=1;
+			skilllvl[0]=0;
+		}else if(playerClass.compareToIgnoreCase("Balanced")==0){
 			str=16;
 			speed=16;
 			maxHp=80;
 			maxMana=80;
-			skills[0]=1001;
+			skilllvl[0]=1;
+			skilllvl[9]=0;
 		}
+		
+		//for(int i=1;i<9;i++)
+			
+		
+		hp=maxHp;
+		mana=maxMana;
+		//*/
 	}
 
-	//Existing Player
-	
-		
-		/*
-		//player major atts read
-		it = new ItemTest();
-		String[] s = it.printData("players");
-		exisPlayerAtt = new DBManager(c,s[1],"allplayer",s[0]);
-		exisPlayerAtt.openToRead();
-		String st=exisPlayerAtt.queueAll(String.valueOf(id));
-		exisPlayerAtt.close();
-		String[] atts = st.split(" ");
-		
-		name = atts[1];
-		playerClass=atts[2];
-		lvl = Integer.parseInt(atts[3]);
-		str = Double.parseDouble(atts[4]);
-		speed = Double.parseDouble(atts[5]);
-		maxHp = Double.parseDouble(atts[6]);
-		maxMana = Double.parseDouble(atts[7]);
-		maxXp = Double.parseDouble(atts[8]);
-		xp = Double.parseDouble(atts[9]);
-		gold = Double.parseDouble(atts[10]);
-		
-		//player inventory read
-		String[] s1 = it.printData("player_inv");
-		exisPlayerInv = new DBManager(c,s1[1],"playersinv",s1[0]);
-		exisPlayerInv.openToRead();
-		st=exisPlayerInv.queueAll(String.valueOf(id));
-		String[] inv=st.split(" ");
-		exisPlayerInv.close();
-		for(int i=0;i<this.inv.length;i++){
-			this.inv[i]=Integer.valueOf(inv[i]);
-		}
-		for(int i=0;i<this.eqInv.length;i++){
-			this.eqInv[i]=Integer.valueOf(inv[this.inv.length+i]);
-		}
-		for(int i=0;i<this.poInv.length;i++){
-			this.poInv[i]=Integer.valueOf(inv[this.inv.length+eqInv.length+i]);
-		}
-	
-		//Skills Read
-		String[] s2 = it.printData("player_skills");
-		exisPlayerSkill = new DBManager(c,s2[1],"playerskill",s2[0]);
-		exisPlayerSkill.openToRead();
-		st=exisPlayerInv.queueAll(String.valueOf(id));
-		String[] skills=st.split(" ");
-		exisPlayerSkill.close();
-		this.skills= new Integer[skills.length];
-		
-		for(int i=2;i<skills.length;i=i+3){
-			this.skills[i]=Integer.valueOf(skills[i]);
-			skilllvl[i]=Integer.valueOf(skills[i+1]);
-		}
-		
-		
-		//*/
-		//return st;
-	//}
-	//------------------------------------------------------save the player record in db--------------------------------------------------------
+	//-----------------------save the player record in db---------------------------------------------------------------------------------
 	public String  savePlayer(Context c, String[] majatts, String[] inv,String[] plaSkills){
 		it = new ItemTest();
 		String[] s = it.printData("players");
@@ -161,11 +182,11 @@ public class Player {
 		System.err.print(e);	
 		}
 		
-		String invValues="";
+		String invValues=String.valueOf(id)+" ";
 		for(int i=0;i<inv.length;i++)
 			invValues=invValues+String.valueOf(inv[i])+" ";
 		
-		String pSkills="";
+		String pSkills=String.valueOf(id)+" ";
 		for(int i=0;i<plaSkills.length;i++)
 			pSkills=pSkills+String.valueOf(plaSkills[i])+" ";
 		//*/
@@ -173,6 +194,9 @@ public class Player {
 		//Storing maj Attributes
 	exisPlayerAtt = new DBManager(c,s[1],"allplayer",s[0]);
 		exisPlayerAtt.openToWrite();
+		exisPlayerAtt.dropTable();
+		exisPlayerAtt.cretTable();
+		exisPlayerAtt.insertQuery(s[2]);
 		long rows = exisPlayerAtt.updateTable(majValues, "player_id = "+id);//+majatts[0]);
 		
 		String st=exisPlayerAtt.queueAll(String.valueOf(id));
@@ -181,6 +205,9 @@ public class Player {
 		
 		exisPlayerAtt = new DBManager(c,inve[1],"playersinv",inve[0]);
 		exisPlayerAtt.openToWrite();
+		exisPlayerAtt.dropTable();
+		exisPlayerAtt.cretTable();
+		exisPlayerAtt.insertQuery(inve[2]);
 		long row2 = exisPlayerAtt.updateTable(invValues, "player_id = "+id);//+majatts[0]);
 		
 		String st2=exisPlayerAtt.queueAll(String.valueOf(id));
@@ -189,10 +216,11 @@ public class Player {
 
 		exisPlayerAtt = new DBManager(c,pSkill[1],"playerskill",pSkill[0]);
 		exisPlayerAtt.openToWrite();
-		//exisPlayerAtt.dropTable();
-		//exisPlayerAtt.cretTable();
+		exisPlayerAtt.dropTable();
+		exisPlayerAtt.cretTable();
 		//try{
-		//exisPlayerAtt.insertQuery(pSkill[2]);
+		exisPlayerAtt.deleteAll();
+		exisPlayerAtt.insertQuery(pSkill[2]);
 		long row3 = exisPlayerAtt.updateTable(pSkills, "player_id = "+id);//+majatts[0]);
 		String st3=exisPlayerAtt.queueAll(String.valueOf(id));
 		exisPlayerAtt.close();
@@ -213,7 +241,7 @@ public class Player {
 
 		exisPlayerAtt.openToRead();
 		String mA="";
-		mA=exisPlayerAtt.queueAll(String.valueOf(id));
+		mA=exisPlayerAtt.queueAll();//String.valueOf(id));
 		exisPlayerAtt.close();
 		String[] majA=mA.split(" ");
 		//double[] pass=new double[majA.length];
@@ -266,11 +294,30 @@ public class Player {
 		*/
 		return majA;
 	}
+	//--------------------------------------------------------------------------
+	public String[] itmAtts(int id){
+		it = new ItemTest();
+		String[] inve = it.printData("inventory");
+		exisPlayerAtt= new DBManager(c,inve[1],"allitems",inve[0]);
+		exisPlayerAtt.openToWrite();
+		exisPlayerAtt.cretTable();
+		exisPlayerAtt.deleteAll();
+		for(int i=2;i<inve.length;i++)
+			exisPlayerAtt.insertQuery(inve[i]);
+		exisPlayerAtt.close();
+		exisPlayerAtt.openToRead();
+		String mA="";
+		mA=exisPlayerAtt.queueAll(String.valueOf(id));
+		exisPlayerAtt.close();
+		String[] majA=mA.split(" ");
+		return majA;
+		
+	}
 	
 	//-------------------------------------------------------NEW LEVEL---------------------------------------------------------------------------
 	public Integer[] newLevel(int lv,int attCode, Integer[] att, String pClass){
 		
-		if(pClass.compareTo("Mighty")==0){
+		if(pClass.compareTo("Samurai")==0){
 		if(lv%5==0){
 			att[0]=att[0]+3;
 			att[1]=att[1]+1;
@@ -366,6 +413,50 @@ public class Player {
 			return att;
 		}
 		return new Integer[]{0};
+	}
+	
+	//----------------------------------------------------------------------------------------------------
+	//----------------------------------------------------------------------------------------------------
+	//----------------------------------------------------------------------------------------------------
+	
+	public String[] getMajAtts(){
+		String[] majAtts = new String[14];
+		majAtts[0] = String.valueOf(id);
+		majAtts[1] = name;
+		majAtts[2] = password;
+		majAtts[3] = playerClass;
+		majAtts[4] = String.valueOf(lvl);
+		majAtts[5] = String.valueOf(str);
+		majAtts[6] = String.valueOf(speed);
+		majAtts[7] = String.valueOf(maxHp);
+		majAtts[8] = String.valueOf(maxMana);
+		majAtts[9] = String.valueOf(maxXp);
+		majAtts[10] = String.valueOf(hp);
+		majAtts[11] = String.valueOf(mana);
+		majAtts[12] = String.valueOf(xp);
+		majAtts[13] = String.valueOf(gold);
+		
+		return majAtts;
+		
+	} 
+	
+	public String[] getAllInv(){
+		String[] allInv = new String[inv.length+eqInv.length+poInv.length];
+		for(int i=0;i<inv.length;i++)
+			allInv[i]=String.valueOf(inv[i]);
+		for(int i=0;i<eqInv.length;i++)
+			allInv[i+inv.length]=String.valueOf(eqInv[i]);
+		for(int i=0;i<poInv.length;i++)
+			allInv[i+inv.length+eqInv.length]=String.valueOf(poInv[i]);
+		return allInv;
+	}
+	
+	public String[] getSkilLvl(){
+		String[] sklvl = new String[skilllvl.length];
+		for(int i=0; i<skilllvl.length;i++)
+			sklvl[i] = String.valueOf(skilllvl[i]); 
+		
+		return sklvl;
 	}
 	
 	

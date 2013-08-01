@@ -14,8 +14,10 @@ import android.widget.Toast;
 public class WelcomeScreen extends Activity implements OnClickListener{
 	//SharedPreferences someData;
 	TextView tvWel;
-	Button bInv,bStore,bBA,bQuit,bStatus;
+	Button bInv,bStore,bBS,bQuit,bStatus;
 	SharingAtts sa;
+	Intent i;
+	
 	String filename;
 	int id;
 	
@@ -30,7 +32,7 @@ public class WelcomeScreen extends Activity implements OnClickListener{
 		//filename=getIntent().getStringExtra("filename");
 		tvWel = (TextView)findViewById(R.id.tvWelcom);
 		bInv = (Button)findViewById(R.id.bInv);
-		bBA = (Button)findViewById(R.id.bBA);
+		bBS = (Button)findViewById(R.id.bBS);
 		bStore = (Button)findViewById(R.id.bStore);
 		bQuit = (Button)findViewById(R.id.bQuit);
 		bStatus = (Button)findViewById(R.id.bStatus);
@@ -38,7 +40,7 @@ public class WelcomeScreen extends Activity implements OnClickListener{
 		
 		bInv.setOnClickListener(this);
 		bStore.setOnClickListener(this);
-		bBA.setOnClickListener(this);
+		bBS.setOnClickListener(this);
 		bQuit.setOnClickListener(this);
 		bStatus.setOnClickListener(this);
 		
@@ -124,14 +126,21 @@ public class WelcomeScreen extends Activity implements OnClickListener{
 		
 		switch(arg0.getId()){
 		case R.id.bInv:
-			Intent i2 = new Intent("com.darshan.warriorgame.invstat");
-			
-			startActivity(i2);
-			break;
-		case R.id.bBA:
-			Intent i = new Intent("com.darshan.warriorgame.battlearena");
+			i = new Intent("com.darshan.warriorgame.invstat");
 			
 			startActivity(i);
+			break;
+		case R.id.bBS:
+			Class ourClass;
+			try {
+				ourClass = Class.forName("com.darshan.warriorgame.BattleStadium");
+			i =new Intent(WelcomeScreen.this,ourClass);
+			startActivity(i);
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
 			break;
 			
 		case R.id.bStatus:

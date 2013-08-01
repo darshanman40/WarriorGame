@@ -30,13 +30,13 @@
         android:text="Inventory" />
 
     <Button
-        android:id="@+id/bBA"
+        android:id="@+id/bBS"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/tvWelcom"
         android:layout_marginTop="28dp"
-        android:text="Battle Areana" />
+        android:text="Battle Stadium" />
 
     <Button
         android:id="@+id/bStore"

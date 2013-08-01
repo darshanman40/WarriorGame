@@ -60,13 +60,13 @@ public class Status extends Activity{
 		s="";
 		for(int i=0; i<t1.length;i++)
 			s=s+String.valueOf(tt[i])+"-"+t1[i]+"\n";
-		
+		/*
 		ItemTest it = new ItemTest();
 		String[] sss = it.printData("player_skills");
 		DBManager db = new DBManager(this,sss[1],"playerskill",sss[0]);
 		db.openToWrite();
-		db.deleteAll();
-		db.insertQuery("1 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20");
+		//db.deleteAll();
+		//db.insertQuery("1 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20");
 	
 		String s1 =db.queueAll(String.valueOf(sa.getId()));
 		String s3 = db.tblNamesChk();
@@ -78,7 +78,8 @@ public class Status extends Activity{
 		String[] y2 = sss[1].split("-");
 		for(int i=0; i<y2.length;i++)
 			s=s+(y1[i])+" - "+y2[i]+"\n";
-		
+		*/
+		/*
 		int i=0;
 		Integer[] a= new Integer[y1.length];
 		try{
@@ -91,7 +92,7 @@ public class Status extends Activity{
 		}
 		//*/
 		//tvGold.setText(s+"\n"+s1+"\n"+sss[2].replace(" ", "-")+"\n"+s3);
-		tvGold.setText(s+i);
+		tvGold.setText(s);
 		//*/
 		
 		

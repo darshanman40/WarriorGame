@@ -309,11 +309,14 @@ public class CsvTest extends Activity implements OnClickListener{
 			//String ss=pl.loadPlayerMaj(this, 1);
 			pl = new Player(this,1);
 			//tvCT.setText(String.valueOf(pl.id));
-			Integer[] z=pl.calcAtts(new Integer[]{101,201,301,401});
+			/*
+			 * Integer[] z=pl.calcAtts(new Integer[]{101,201,301,401});
+			 
 			String s1="";
 			for(int i=0;i<z.length;i++)
 				s1=s1+String.valueOf(z[i])+"\n";
 			tvCT.setText(s1);
+			*/
 			break;
 		}
 	}

@@ -91,6 +91,7 @@ public class SharingAtts extends Application {
 	public String getNameOnly(){
 		return name;
 	}
+	
 	public double[] getMajatt(){
 		double[] majAtts = new double[9];
 		majAtts[0]=str;
@@ -141,7 +142,20 @@ public class SharingAtts extends Application {
 			allInv[i+inv.length+eqInv.length]=poInv[i];
 		return allInv;
 	}
+	//--------------------------------------------------------------------------
 	
+	public void getPlaAtts(){
+		
+	}
+	
+	public void getPlaSkills(){
+		
+		
+	}
+	
+	public void getPlaInv(){
+		
+	}
 	
 	
 	

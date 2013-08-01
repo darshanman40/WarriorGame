@@ -84,9 +84,7 @@ public class NewGame extends Activity implements OnClickListener{
 			
 			 if(chkPass(etPass.getText().toString(),(etConPass.getText().toString()))){
 				pl = new Player(this,etName.getText().toString(),pClass,etPass.getText().toString());
-			//pl.newPlayer()
-				
-			//pl.newPlayer("Osairas", "Samurai");
+			
 			pl.newPlayer(etName.getText().toString(),pClass);
 			
 			String stat =pl.savePlayer(this, pl.getMajAtts(), pl.getAllInv(), pl.getSkilLvl());
@@ -109,48 +107,7 @@ public class NewGame extends Activity implements OnClickListener{
 			}}catch(Exception e){
 			//		Toast t2 = Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG);
 				//	t2.show();
-				}
-			
-				
-			//}
-			
-			/*
-			filename=etName.getText().toString();
-			someData=getSharedPreferences(filename,0);
-			filenames=getSharedPreferences("players",0);
-			editor = someData.edit();
-			fname = filenames.edit();
-			editor.putString("playername",filename);
-			fname.putString("player_1", filename);
-			
-			editor.putInt(filename+"_Level", 1);
-			editor.putString(filename+"_Class", pClass);
-			editor.putInt(filename+"_exp", 0);
-			editor.putInt(filename+"_maxExp", 200);
-			try{
-			Battle b = new Battle(1,1,"Samurai",pClass);
-			Integer[] p1Att =(Integer[]) b.playerData();
-			
-			for(int i=0;i<8;i++)
-				editor.putInt(filename+"_att_"+i,p1Att[i]);
-			}catch(Exception e){
-				Toast t =Toast.makeText(getApplicationContext(), "err "+e, Toast.LENGTH_LONG);
-				t.show();
 			}
-			editor.commit();
-			fname.commit();
-			try{
-			Intent i = new Intent("com.darshan.warriorgame.welcome");
-			i.putExtra("filename", filename);
-			startActivity(i);
-			}catch(Exception e){
-				Toast t2 = Toast.makeText(getApplicationContext(), "err2", Toast.LENGTH_SHORT);
-				t2.show();
-			}
-			finish();
-			
-			*/
-			
 			break;
 		case R.id.bClear:
 			etName.setText("");

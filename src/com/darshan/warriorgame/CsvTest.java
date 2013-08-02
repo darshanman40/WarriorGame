@@ -163,10 +163,10 @@ public class CsvTest extends Activity implements OnClickListener{
 			String[] inv = new String[]{"1","0","0","0","0","0","0","0","0","101","201","301","401","10","10"};
 			String[] skills = new String[]{"1","1","1","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0"};
 			Player p =new Player(this,1);
-			s=p.savePlayer(this, pla, inv, skills);
-			if(s.compareTo("")!=0)
+			//s=p.savePlayer(this, pla, inv, skills);
+			//if(s.compareTo("")!=0)
 				//tvCT.setText(affec+" rows arWe affected");
-				tvCT.setText(s);
+				//tvCT.setText(s);
 				//*/
 			//------------------------
 			/*

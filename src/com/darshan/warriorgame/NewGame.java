@@ -73,41 +73,95 @@ public class NewGame extends Activity implements OnClickListener{
 			RadioButton rb =(RadioButton)findViewById(cheked);
 			String pClass = rb.getText().toString();
 			
-			
-			//pl = new Player(this, "Osairas","Samurai","zan");
-			
-			//Toast t = Toast.makeText(getApplicationContext(), pl.playerClass, Toast.LENGTH_LONG);
-			//t.show();
-			//*/
-			
-			try{
+		//try{
 			
 			 if(chkPass(etPass.getText().toString(),(etConPass.getText().toString()))){
 				pl = new Player(this,etName.getText().toString(),pClass,etPass.getText().toString());
+				pl.newPlayer(etName.getText().toString(),pClass);
+				sa.setPlaAtts(pl.getNPlayerAtts());
+				sa.setAllInv(pl.getNPlayerInv());
+				sa.setSkills(pl.getNPlayerSkilvls());
+				
+				//-------------------------------------------------------------------
+				String[] s1=it.printData("players");
+				db = new DBManager(this,s1[1],"allplayer",s1[0]);
+				db.openToWrite();
+				db.dropTable();
+				db.cretTable();
+				for(int i=2;i<s1.length;i++)
+					db.insertQuery(s1[i]);
+				//String[] plats = pl.getNPlayerAtts();
+				String pts="";
+				for(int i=0;i<pl.getNPlayerAtts().length;i++)
+					pts=pts+pl.getNPlayerAtts()[i]+" ";
+				db.updateTable(pts, "player_id = "+String.valueOf(pl.id));
+				db.close();
+				
+				//----------------------------------------------------------------
+				String[] s2=it.printData("player_inv");
+				db = new DBManager(this,s2[1],"playersinv",s2[0]);
+				db.openToWrite();
+				db.dropTable();
+				db.cretTable();
+				for(int i=2;i<s2.length;i++)
+					db.insertQuery(s2[i]);
+				//String[] plats = pl.getNPlayerAtts();
+				pts=String.valueOf(pl.id)+" ";
+				for(int i=0;i<pl.getNPlayerInv().length;i++)
+					pts=pts+pl.getNPlayerInv()[i]+" ";
+				db.updateTable(pts, "player_id = "+String.valueOf(pl.id));
+				db.close();
+				
+				//----------------------------------------------
+				String[] s3=it.printData("player_skills");
+				db = new DBManager(this,s3[1],"playerskill",s3[0]);
+				db.openToWrite();
+				db.dropTable();
+				db.cretTable();
+				for(int i=2;i<s3.length;i++)
+					db.insertQuery(s3[i]);
+				//String[] plats = pl.getNPlayerAtts();
+				pts=String.valueOf(pl.id)+" ";
+				for(int i=0;i<pl.getNPlayerSkilvls().length;i++)
+					pts=pts+pl.getNPlayerSkilvls()[i]+" ";
+				db.updateTable(pts, "player_id = "+String.valueOf(pl.id));
+				db.close();
+				
+				//-----------------------------------------------------
+				String[] s4=it.printData("skills");
+				db = new DBManager(this,s4[1],"allskills",s4[0]);
+				db.openToWrite();
+				db.dropTable();
+				db.cretTable();
+				for(int i=2;i<s4.length;i++)
+					db.insertQuery(s4[i]);
+				db.close();
+				
+				//------------------------------------------------------------
+				String[] s5=it.printData("inventory");
+				db = new DBManager(this,s5[1],"allitems",s5[0]);
+				db.openToWrite();
+				db.dropTable();
+				db.cretTable();
+				for(int i=2;i<s5.length;i++)
+					db.insertQuery(s5[i]);
+				db.close();
+				
+				
+				//sa.setAllSkills(pl.)
+				Intent in = new Intent("com.darshan.warriorgame.welcome");
+				startActivity(in);
 			
-			pl.newPlayer(etName.getText().toString(),pClass);
+				sa.setId(pl.id);
 			
-			String stat =pl.savePlayer(this, pl.getMajAtts(), pl.getAllInv(), pl.getSkilLvl());
-			Toast t1 = Toast.makeText(getApplicationContext(), stat, Toast.LENGTH_LONG);
-			t1.show();
-			Intent in = new Intent("com.darshan.warriorgame.welcome");
-			startActivity(in);
-			// * 
-			 //*/
-			sa.setId(pl.id);
-			//}catch(Exception e){
-			//	Toast t2 = Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG);
-			//	t2.show();
-			//}
-			
-				//
 			}else{
 				Toast t = Toast.makeText(getApplicationContext(), "err", Toast.LENGTH_LONG);
 				t.show();
-			}}catch(Exception e){
+		}
+			 //}catch(Exception e){
 			//		Toast t2 = Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG);
-				//	t2.show();
-			}
+			//		t2.show();
+			//}
 			break;
 		case R.id.bClear:
 			etName.setText("");

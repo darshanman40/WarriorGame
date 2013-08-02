@@ -1,5 +1,7 @@
 package com.darshan.warriorgame;
 
+import java.util.Hashtable;
+
 import android.app.Application;
 import android.content.Context;
 
@@ -10,41 +12,40 @@ public class SharingAtts extends Application {
 	String name;
 	int id,lvl;
 	double str,speed,maxHp,maxMana,maxXp,hp,mana,xp,gold; 
-	Integer[] inv = new Integer[8];
-	Integer[] eqInv = new Integer[4];
-	Integer[] poInv = new Integer[2];
-	Integer[] skills;
+	Integer[] inv;// = new Integer[8];
+	Integer[] eqInv;// = new Integer[4];
+	Integer[] poInv;// = new Integer[2];
+	Integer[] skills = new Integer[]{1001,1011,1012,1021,1022,1031,1041,1042,1051,2001,2011,2012,2021,2022,2031,2032,2041,2042,2051};
 	Integer[] skilllvl;
+	Integer[] oppInv;// = new Integer[6];
+	Integer[] oppSkilllvl;// = new Integer[19];
+	Integer[] oppAtts;
+	
+	Hashtable<String,String[]> allSkills;
+	Hashtable<String,String[]> allItms;
+	//Hashtable<String,String[]> oppAtts;
+	//Hashtable<String,String[]> oppSkills;
+	//Hashtable<String,String[]> oppInv;
+	
 	
 	public void setId(int id){
 		this.id=id;
 	}
+
 	
-	public void setSkills(String[] skil, String[] sLvl){
-		skills = new Integer[skil.length];
+	public void setSkills(String[] sLvl){
 		skilllvl = new Integer[sLvl.length-1];
-		for(int i=0;i<skil.length;i++){
-			//String[] b = skil[i].split("");
-			//if(!(skil[i].trim()))
-			try{
-				skills[i]=Integer.valueOf(skil[i].trim());
-			}catch(Exception e){
-				//i++;
-			}
-		}
 		for(int i=1;i<sLvl.length;i++){
-			//String[] a=sLvl[i].split("");
-			//if(!(sLvl[i]).contentEquals(""))
 			try{
 				skilllvl[i-1]=Integer.valueOf(sLvl[i]);
-			}catch(Exception e){
-				//i++;
-			}
+				}catch(Exception e){}
 		}
 	}
+	
 	public void setName(String n){
 		name=n;
 	}
+	
 	public void setPlaAtts(String[] att){
 		id=Integer.valueOf(att[0]);
 		name=att[1];
@@ -62,27 +63,77 @@ public class SharingAtts extends Application {
 	}
 	
 	public void setAllInv(String[] allInv){
-		for(int i=0;i<inv.length;i++)
-			inv[i]=Integer.valueOf(allInv[i+1]);
-		for(int i=0;i<eqInv.length;i++)
-			eqInv[i]=Integer.valueOf(allInv[i+9]);
-		for(int i=0;i<poInv.length;i++)
-			poInv[i]=Integer.valueOf(allInv[i+4+9]);		
+		inv = new Integer[8];
+		eqInv = new Integer[4];
+		poInv = new Integer[2];
+		
+		
+		for(int i=0;i<8;i++)
+			inv[i]=Integer.valueOf(allInv[i]);
+		for(int i=0;i<4;i++)
+			eqInv[i]=Integer.valueOf(allInv[i+8]);
+		for(int i=0;i<2;i++)
+			poInv[i]=Integer.valueOf(allInv[i+4+8]);		
 	}
 	//--------------------------------------------------------------------------
 	
 	
 	
 	
-	public void setAllSkills(Integer[] skill, Integer[] skilllvl){
-		for(int i=0; i<skill.length;i=i+10){
-			skills[i]=skill[i];
-		}
+	public void setAllSkills(Integer[] skilllvl){
+		
 		for(int i=0;i<skilllvl.length;i++)
-			this.skilllvl[i]=skilllvl[i];
-		//}
-			
+			this.skilllvl[i]=skilllvl[i];		
 	}
+	
+	public void setAllItms(Hashtable<String,String[]> allItms){
+		this.allItms = allItms;
+	}
+	
+	public void setAllSkills(Hashtable<String,String[]> allSkills){
+		this.allSkills = allSkills;
+	}
+	
+	//--------------Set Opp Data
+	public void setOppAtts(Hashtable<String,String[]> oppAtts){
+		this.oppAtts = new Integer[5];
+		String[] sm;
+		for(String s: oppAtts.keySet()){
+			sm = oppAtts.get(s);
+			this.oppAtts[0] = Integer.valueOf(sm[5]);
+			this.oppAtts[1] = Integer.valueOf(sm[6]);
+			this.oppAtts[2] = Integer.valueOf(sm[7]);
+			this.oppAtts[3] = Integer.valueOf(sm[8]);
+			this.oppAtts[4] = Integer.valueOf(sm[9]);
+		}
+	}
+	
+	public void setOppInv(Hashtable<String,String[]> oppInv){
+		String[] sm;
+		this.oppInv = new Integer[6];
+		//this.oppInv = new Integer[19];
+		for(String s: oppInv.keySet()){
+			sm = oppInv.get(s);
+			for(int i=0; i<this.oppInv.length;i++){
+				this.oppInv[i] = Integer.valueOf(sm[i+9]);
+			}
+		}
+	}
+	
+	public void setOppSkills(Hashtable<String,String[]> oppSkills){
+		String[] sm;
+		this.oppSkilllvl = new Integer[19];
+		for(String s: oppSkills.keySet()){
+			sm = oppSkills.get(s);
+			for(int i=0; i<this.oppSkilllvl.length;i++){
+				this.oppSkilllvl[i] = Integer.valueOf(sm[i+1]);
+			}
+		}
+		
+	}
+	
+	
+	
 	//-----------------------------------------------------------------------------------------------------------------------------------------------
 	//-----------------------------------------------------------------------------------------------------------------------------------------------
 	//-----------------------------------------------------------------------------------------------------------------------------------------------
@@ -148,9 +199,17 @@ public class SharingAtts extends Application {
 		
 	}
 	
-	public void getPlaSkills(){
-		
-		
+	public String[] getAllItms(String sid){
+		//allSkills.
+		if(!sid.equals("0"))
+			return allItms.get(sid);
+		else
+			return new String[]{"0","0","0","0","0","0","0","0","0"};
+	}
+	
+	public String[] getAllSkills(String sid){
+		//allSkills.
+		return allSkills.get(sid);
 	}
 	
 	public void getPlaInv(){

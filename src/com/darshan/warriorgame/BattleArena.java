@@ -42,10 +42,11 @@ public class BattleArena extends Activity implements OnClickListener{
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.battlearena);
-		comId = getIntent().getIntExtra("comId", 0);
-		comPl = new Player(this,comId);
-		//pl = new Player()
 		sa = ((SharingAtts)getApplication());
+		//comId = getIntent().getIntExtra("comId", 0);
+		//comPl = new Player(this,comId);
+		//pl = new Player(this,sa.getMajatt(),sa.getAllInv(),sa.getAllSkillsLvl(),sa.name,sa.playerClass,sa.id);
+		
 		
 		pbPHp = (ProgressBar)findViewById(R.id.pbPHp);
 		pbCHp = (ProgressBar)findViewById(R.id.pbComHp);
@@ -58,10 +59,14 @@ public class BattleArena extends Activity implements OnClickListener{
 		tvPName = (TextView) findViewById(R.id.tvPName);
 		tvFStat = (TextView) findViewById(R.id.tvFStat);
 		
-		b= new Battle(this,sa,comPl);
-		p1name = b.getp1Name();
-		p2name = b.getp2Name();
-		
+		//b= new Battle(this,pl,comPl);
+		/*
+		for(int i = 0; i<sa.eqInv.length;i++)
+			b.setAllAtts(sa.getAllItms(String.valueOf(pl.eqInv[i])), sa.getAllItms(String.valueOf(comPl.eqInv[i])));
+		//*/
+		//p1name = b.getp1Name();
+		//p2name = b.getp2Name();
+		/*
 		pbPHp.setProgress((int)(sa.hp/sa.maxHp)*100);
 		pbCHp.setProgress((int)(comPl.hp/comPl.maxHp)*100);
 		tvCpClass.setText(comPl.playerClass);
@@ -69,7 +74,7 @@ public class BattleArena extends Activity implements OnClickListener{
 		tvPClass.setText(sa.playerClass);
 		tvPName.setText(sa.name);
 		tvPLevel.setText(String.valueOf(sa.lvl));
-		
+		*/
 		attack.setOnClickListener(this);
 			
 	}
@@ -79,25 +84,29 @@ public class BattleArena extends Activity implements OnClickListener{
 		// TODO Auto-generated method stub
 		switch(arg0.getId()){
 		case R.id.bAttack:
-			/*b.setp2hp();
-			pbCHp.setProgress((int)(comPl.hp/comPl.maxHp)*100);
-			*/
-			Integer[] p1 = b.getPla1atts();
-			String s="";
-			for(int i=0; i<p1.length;i++)
-				s=s+String.valueOf(p1[i]);
+			//tvFStat.setText(b.pla2att[0].toString());
+			//tvFStat.setText(String.valueOf(comPl.eqInv[0]));
 			
-			tvFStat.setText(s);
-			
-			break;
+			///for(int i = 0; i<sa.eqInv.length;i++)
 			/*
-			String[] s =b.getp1Atts();
+				String[] s =sa.getAllItms(String.valueOf(comPl.eqInv[1]));
 			String m="";
 			for(int i=0;i<s.length;i++)
 				m=m+s[i]+"\n";
-			tvFStat.setText(m);
+				*/
+			String s="";
+			for(int i=0;i<sa.oppAtts.length;i++)
+				s=s+String.valueOf(sa.oppAtts[i])+"  ";
+			s=s+"\n";
+			for(int i=0; i<sa.oppInv.length;i++)
+				s=s+String.valueOf(sa.oppInv[i])+"  ";
+			s=s+"\n";
+			for(int i=0;i<sa.oppSkilllvl.length;i++)
+				s=s+String.valueOf(sa.oppSkilllvl[i])+"  ";
 			
-		*/
+			tvFStat.setText(s);
+			break;
+		//*/
 		
 		
 		/*
@@ -145,7 +154,16 @@ public class BattleArena extends Activity implements OnClickListener{
 		}
 		
 		
+		
+		
 	}
+	
+	public void calcAtts(Player p){
+		for(int i=0;i<p.eqInv.length;i++){
+			
+		}	
+	}
+	
 	public void oldFxn(){
 		/*
 		aCode=0;

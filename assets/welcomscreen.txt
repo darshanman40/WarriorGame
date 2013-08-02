@@ -1,0 +1,181 @@
+package com.darshan.warriorgame;
+
+import java.util.Hashtable;
+
+import android.app.Activity;
+
+import android.view.View.OnClickListener;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
+
+public class WelcomeScreen extends Activity implements OnClickListener{
+	//SharedPreferences someData;
+	TextView tvWel;
+	Button bInv,bStore,bBS,bQuit,bStatus;
+	SharingAtts sa;
+	Intent i;
+	Hashtable<String,String[]> allItms,allSkills;
+	
+	String filename;
+	int id;
+	
+	ItemTest it;
+	DBManager itms;
+	
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.welcome);
+		//filename=getIntent().getStringExtra("filename");
+		tvWel = (TextView)findViewById(R.id.tvWelcom);
+		bInv = (Button)findViewById(R.id.bInv);
+		bBS = (Button)findViewById(R.id.bBS);
+		bStore = (Button)findViewById(R.id.bStore);
+		bQuit = (Button)findViewById(R.id.bQuit);
+		bStatus = (Button)findViewById(R.id.bStatus);
+		//someData=getSharedPreferences(filename,0);
+		
+		bInv.setOnClickListener(this);
+		bStore.setOnClickListener(this);
+		bBS.setOnClickListener(this);
+		bQuit.setOnClickListener(this);
+		bStatus.setOnClickListener(this);
+		
+		allItms= new Hashtable<String,String[]>();
+		allSkills= new Hashtable<String,String[]>();
+		sa=((SharingAtts)getApplication());
+		
+		id =sa.getId();
+		it= new ItemTest();
+		
+		String s,s2,s3,s4,s5,s6;
+		s="asshole";
+		s2="inv";
+		s3="pskils";
+		s4="skilid";
+		String[] st1 = it.printData("players");
+		itms = new DBManager(this,st1[1],"allplayer",st1[0]);
+		//itms.recover(st1);
+		itms.openToWrite();
+		
+		//for(int i=2;i<st1.length;i++)
+		//	itms.insertQuery(st1[i]);
+		 s = itms.queueAll(String.valueOf(id));
+		itms.close();	
+		String[] st2 = s.split(" ");
+		sa.setPlaAtts(st2);
+		try{
+		String[] st3 = it.printData("player_inv");
+		itms = new DBManager(this,st3[1],"playersinv",st3[0]);
+		//itms.recover(st3);
+		itms.openToWrite();
+		//itms.cretTable();
+		//for(int i=2;i<st3.length;i++)
+		//	itms.insertQuery(st3[i]);
+		s2 = itms.queueAll(String.valueOf(id));
+		itms.close();	
+		String[] st4 = s2.split(" ");
+		sa.setAllInv(st4);
+		
+		String[] st5 = it.printData("player_skills");
+		itms = new DBManager(this,st5[1],"playerskill",st5[0]);
+		//itms.recover(st5);
+		itms.openToWrite();
+		//itms.cretTable();
+		//for(int i=2;i<st5.length;i++)
+		//	itms.insertQuery(st5[i]);
+		s3 = itms.queueAll(String.valueOf(id));
+		itms.close();	
+		String[] st6 = s3.split(" ");
+		//sa.setAllInv(st6);
+		
+		String[] st7 = it.printData("skills");
+		itms = new DBManager(this,st7[1],"allskills",st7[0]);
+		//itms.recover(st7);
+		itms.openToWrite();
+		//itms.cretTable();
+		//for(int i=2;i<st7.length;i++)
+		//	itms.insertQuery(st7[i]);
+		s4 = itms.queueFew(new String[]{"skill_id"});
+		String s7 = itms.queueAll();
+		itms.close();	
+		//s4 = s4.replace(" ", "-");
+		String[] st8 = s4.split(" ");	
+		sa.setSkills(st8,st6);
+		
+		String[] st9 = s7.split("\n");
+		for(int i=0;i<st9.length;i++){
+			String ss[] = st9[i].split(" ");
+			allSkills.put(ss[0], ss);
+		}
+		sa.setAllSkills(allSkills);
+		
+		
+		String[] st10 = it.printData("inventory");
+		itms = new DBManager(this,st10[1],"allitems",st10[0]);
+		//itms.recover(st5);
+		itms.openToWrite();
+		//itms.cretTable();
+		//for(int i=2;i<st5.length;i++)
+		//	itms.insertQuery(st5[i]);
+		String s8 = itms.queueAll();
+		itms.close();
+		String[] st11 = s8.split("\n");
+		for(int i=0; i<st11.length;i++){
+			String ss[] = st11[i].split(" ");
+			allItms.put(ss[0], ss);
+		}
+		sa.setAllItms(allItms);
+		
+		
+		Toast t = Toast.makeText(getApplicationContext(), "Congratz", Toast.LENGTH_LONG);
+		t.show();
+		}catch(Exception e){
+			System.err.print(e);
+			Toast t = Toast.makeText(getApplicationContext(),s3+"   "+e.toString(), Toast.LENGTH_LONG);
+			t.show();
+		}
+	}
+
+
+	public void onClick(View arg0) {
+		// TODO Auto-generated method stub
+		
+		switch(arg0.getId()){
+		case R.id.bInv:
+			i = new Intent("com.darshan.warriorgame.invstat");
+			
+			startActivity(i);
+			break;
+		case R.id.bBS:
+			Class ourClass;
+			try {
+				ourClass = Class.forName("com.darshan.warriorgame.BattleStadium");
+			i =new Intent(WelcomeScreen.this,ourClass);
+			startActivity(i);
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			break;
+			
+		case R.id.bStatus:
+			Intent in = new Intent("com.darshan.warriorgame.status");
+			in.putExtra("filename", filename);
+			startActivity(in);
+			break;
+		}
+		
+	}
+
+
+	
+	}
+

@@ -14,20 +14,22 @@ public class Battle {
 	int p2ACo = 2;
 	int Plvl,Clvl;
 	String CClass, PClass;
-	Integer[] pla1att;
-	Integer[] pla2att;
+	Integer[] pla1att = new Integer[]{0,0,0,0,0,0,0,0,0};
+	Integer[] pla2att = new Integer[]{0,0,0,0,0,0,0,0,0};
 	double p1hp,p2hp,p1maxHp,p2maxHp;
 	Warrior player;//, computer ;
-	SharingAtts sa;
+	//SharingAtts sa;
 	Player pl,com;
 	Context c;
 	
-	public Battle(Context c,SharingAtts sa, Player com){
-		this.sa=sa;
-		this.com = com;
+	
+	
+	public Battle(Context c,Player p1, Player com){
+		//this.sa=sa;
+		//this.com = com;
 		this.c=c;
-		this.pl = new Player(c,sa.getMajatt(),sa.getAllInv(),sa.getAllSkillsLvl(),sa.name,sa.playerClass,sa.id);
-		this.com = new Player(c,com.id);
+		this.pl =  p1;//new Player(c,sa.getMajatt(),sa.getAllInv(),sa.getAllSkillsLvl(),sa.name,sa.playerClass,sa.id);
+		this.com = com;//new Player(c,com.id);
 		//setAllAtts();
 		
 	}
@@ -36,9 +38,29 @@ public class Battle {
 	//str,ph_dam,mag_dam,ph_def,mag_def,e_s_dam,s_hp,b_mana,speed
 	//size = 9   //  last index = 8
 	
-	public void setAllAtts(){
-		pla1att = pl.calcAtts();
-		pla2att = com.calcAtts();
+	public void setAllAtts(String[] p1Inv,String[] p2Inv){
+		//String[] p1Inv;// = new String[pl.eqInv.length];
+/*		//String[] p2Inv;// = new String[com.eqInv.length];
+		
+		//for(int i=0;i<pl.eqInv.length;i++){
+			//if(!pl.eqInv[i].equals("0")){
+				//p1Inv=sa.getAllItms(String.valueOf(pl.eqInv[i]));
+	*/
+				for(int j=1;j<pla1att.length;j++){
+					if(!p1Inv[j].equalsIgnoreCase("0"))
+					pla1att[j-1] = pla1att[j-1]+Integer.valueOf(p1Inv[j]);
+					if(!p2Inv[j].equalsIgnoreCase("0"))
+					pla2att[j-1] = pla2att[j-1]+Integer.valueOf(p2Inv[j]);
+			}
+			/*if(!com.eqInv[i].equals("0")){
+				p2Inv=sa.getAllItms(String.valueOf(com.eqInv[i]));
+				for(int j=0;j<pla2att.length;j++)
+					pla2att[j] =pla2att[j] + com.calcAtts(p2Inv)[j];
+			}*/
+		//}
+		
+		
+		
 		//
 		p1maxHp=Double.valueOf(pl.maxHp);
 		p2maxHp=Double.valueOf(this.com.maxHp);
@@ -69,10 +91,10 @@ public class Battle {
 	public String getp1Name(){
 		return pl.name;
 	}
-	
+	/*
 	public String[] getp1Atts(){
 		return pl.getMajAtts();
-	}
+	}*/
 	
 	public double getp1hp(){
 		return p1hp;
@@ -84,11 +106,11 @@ public class Battle {
 	public String getp2Name(){
 		return com.name;
 	}
-	
+	/*
 	public String[] getp2Atts(){
 		return com.getMajAtts();
 	}
-	
+	*/
 	public double getp2hp(){
 		return p2hp;
 	}

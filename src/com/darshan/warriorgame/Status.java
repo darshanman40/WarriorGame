@@ -41,7 +41,7 @@ public class Status extends Activity{
 		tvStr.setText(s+String.valueOf(atts[0]));
 		
 		s=tvSpeed.getText().toString();
-		tvSpeed.setText(s+String.valueOf(atts[1]));
+		tvSpeed.setText("Speed "+String.valueOf(atts[1]));
 		
 		s=tvMaxHp.getText().toString();
 		tvMaxHp.setText(s+String.valueOf(atts[2]));
@@ -58,8 +58,16 @@ public class Status extends Activity{
 		Integer[] tt =sa.getAllSkills();
 		Integer[] t1 = sa.getAllSkillsLvl();
 		s="";
-		for(int i=0; i<t1.length;i++)
+		
+		
+		for(int i=0; i<t1.length&& i<tt.length;i++)
 			s=s+String.valueOf(tt[i])+"-"+t1[i]+"\n";
+		s=s+"\n"+tt.length+"\n"+t1.length;
+		/*
+		String[] items = sa.getAllSkills("1011");
+		s="";
+		for(int i=1; i<items.length;i++)
+			s=s+items[i]+" ";
 		/*
 		ItemTest it = new ItemTest();
 		String[] sss = it.printData("player_skills");

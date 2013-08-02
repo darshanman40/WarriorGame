@@ -49,14 +49,15 @@ public class LoadGame extends Activity implements OnClickListener {
 			lin.openToWrite();
 			//lin.cretTable();
 			//lin.insertQuery(ss[2]);
-			int n =lin.queueAll(login,pas);
+			int id =lin.queueAll(login,pas);
 			lin.close();
 			sa=((SharingAtts)getApplication());
 			
-			if(n!=0){
+			if(id !=0){
 				Intent in = new Intent("com.darshan.warriorgame.welcome");
 				startActivity(in);
-				sa.setId(n);
+				sa.setId(id);
+				
 			}else{
 				Toast t;
 				t = Toast.makeText(getApplicationContext(), "Login Failed", Toast.LENGTH_LONG);

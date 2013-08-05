@@ -11,27 +11,23 @@ public class SharingAtts extends Application {
 	String playerClass;
 	String name;
 	int id,lvl;
-	double str,speed,maxHp,maxMana,maxXp,hp,mana,xp,gold; 
-	Integer[] inv;// = new Integer[8];
-	Integer[] eqInv;// = new Integer[4];
-	Integer[] poInv;// = new Integer[2];
+	double str,speed,maxHp,maxMana,maxXp,initMana,initSpeed,hp,mana,xp,gold; 
+	Integer[] inv;
+	Integer[] eqInv;
+	Integer[] poInv;
 	Integer[] skills = new Integer[]{1001,1011,1012,1021,1022,1031,1041,1042,1051,2001,2011,2012,2021,2022,2031,2032,2041,2042,2051};
 	Integer[] skilllvl;
-	Integer[] oppInv;// = new Integer[6];
-	Integer[] oppSkilllvl;// = new Integer[19];
-	Integer[] oppAtts;
+	Integer[] oppInv;
+	Integer[] oppSkilllvl;
+	Integer[] oppMajAtts;
+	Integer[] oppMinAtts;
 	
 	Hashtable<String,String[]> allSkills;
 	Hashtable<String,String[]> allItms;
-	//Hashtable<String,String[]> oppAtts;
-	//Hashtable<String,String[]> oppSkills;
-	//Hashtable<String,String[]> oppInv;
-	
 	
 	public void setId(int id){
 		this.id=id;
 	}
-
 	
 	public void setSkills(String[] sLvl){
 		skilllvl = new Integer[sLvl.length-1];
@@ -47,19 +43,24 @@ public class SharingAtts extends Application {
 	}
 	
 	public void setPlaAtts(String[] att){
+		//BattleArena ba = new BattleArena();
+		//Integer[] atts =ba.setPlaMinAtts();
 		id=Integer.valueOf(att[0]);
 		name=att[1];
 		playerClass=att[3];
 		lvl=Integer.valueOf(att[4]);
 		str=Double.valueOf(att[5]);
-		speed=Double.valueOf(att[6]);
+		initSpeed=Double.valueOf(att[6]);
 		maxHp=Double.valueOf(att[7]);
-		maxMana=Double.valueOf(att[8]);
+		initMana=Double.valueOf(att[8]);
 		maxXp=Double.valueOf(att[9]);
 		hp=Double.valueOf(att[10]);
 		mana=Double.valueOf(att[11]);
 		xp=Double.valueOf(att[12]);
 		gold=Double.valueOf(att[13]);
+		
+		//maxMana = initMana+atts[6];
+		//speed = initSpeed + atts[7];
 	}
 	
 	public void setAllInv(String[] allInv){
@@ -67,13 +68,22 @@ public class SharingAtts extends Application {
 		eqInv = new Integer[4];
 		poInv = new Integer[2];
 		
-		
+		if(allInv.length==14){
 		for(int i=0;i<8;i++)
 			inv[i]=Integer.valueOf(allInv[i]);
 		for(int i=0;i<4;i++)
 			eqInv[i]=Integer.valueOf(allInv[i+8]);
 		for(int i=0;i<2;i++)
 			poInv[i]=Integer.valueOf(allInv[i+4+8]);		
+	}else{
+		for(int i=1;i<9;i++)
+			inv[i-1]=Integer.valueOf(allInv[i]);
+		for(int i=1;i<5;i++)
+			eqInv[i-1]=Integer.valueOf(allInv[i+8]);
+		for(int i=1;i<3;i++)
+			poInv[i-1]=Integer.valueOf(allInv[i+4+8]);
+	
+		}
 	}
 	//--------------------------------------------------------------------------
 	
@@ -87,31 +97,47 @@ public class SharingAtts extends Application {
 	}
 	
 	public void setAllItms(Hashtable<String,String[]> allItms){
+		this.allItms= new Hashtable<String,String[]>();
 		this.allItms = allItms;
 	}
 	
 	public void setAllSkills(Hashtable<String,String[]> allSkills){
+		this.allSkills= new Hashtable<String,String[]>();
 		this.allSkills = allSkills;
 	}
 	
 	//--------------Set Opp Data
-	public void setOppAtts(Hashtable<String,String[]> oppAtts){
-		this.oppAtts = new Integer[5];
+	public void setMajOppAtts(Hashtable<String,String[]> oppAtts){
+		this.oppMajAtts = new Integer[6];
 		String[] sm;
 		for(String s: oppAtts.keySet()){
 			sm = oppAtts.get(s);
-			this.oppAtts[0] = Integer.valueOf(sm[5]);
-			this.oppAtts[1] = Integer.valueOf(sm[6]);
-			this.oppAtts[2] = Integer.valueOf(sm[7]);
-			this.oppAtts[3] = Integer.valueOf(sm[8]);
-			this.oppAtts[4] = Integer.valueOf(sm[9]);
+			this.oppMajAtts[0] = Integer.valueOf(sm[5]);
+			this.oppMajAtts[1] = Integer.valueOf(sm[6]);
+			this.oppMajAtts[2] = Integer.valueOf(sm[7]);
+			this.oppMajAtts[3] = Integer.valueOf(sm[8]);
+			this.oppMajAtts[4] = Integer.valueOf(sm[9]);
+			this.oppMajAtts[5] = Integer.valueOf(sm[13]);
+		}
+	}
+	
+	public void setMinOppAtts(Hashtable<String,String[]> oppAtts){
+		this.oppMinAtts = new Integer[6];
+		String[] sm;
+		for(String s: oppAtts.keySet()){
+			sm = oppAtts.get(s);
+			this.oppMinAtts[0] = Integer.valueOf(sm[5]);
+			this.oppMinAtts[1] = Integer.valueOf(sm[6]);
+			this.oppMinAtts[2] = Integer.valueOf(sm[7]);
+			this.oppMinAtts[3] = Integer.valueOf(sm[8]);
+			this.oppMinAtts[4] = Integer.valueOf(sm[9]);
+			this.oppMinAtts[5] = Integer.valueOf(sm[13]);
 		}
 	}
 	
 	public void setOppInv(Hashtable<String,String[]> oppInv){
 		String[] sm;
 		this.oppInv = new Integer[6];
-		//this.oppInv = new Integer[19];
 		for(String s: oppInv.keySet()){
 			sm = oppInv.get(s);
 			for(int i=0; i<this.oppInv.length;i++){
@@ -131,9 +157,6 @@ public class SharingAtts extends Application {
 		}
 		
 	}
-	
-	
-	
 	//-----------------------------------------------------------------------------------------------------------------------------------------------
 	//-----------------------------------------------------------------------------------------------------------------------------------------------
 	//-----------------------------------------------------------------------------------------------------------------------------------------------
@@ -143,17 +166,18 @@ public class SharingAtts extends Application {
 		return name;
 	}
 	
-	public double[] getMajatt(){
-		double[] majAtts = new double[9];
-		majAtts[0]=str;
-		majAtts[1]=speed;
-		majAtts[2]=maxHp;
-		majAtts[3]=maxMana;
-		majAtts[4]=maxXp;
-		majAtts[5]=hp;
-		majAtts[6]=mana;
-		majAtts[7]=xp;
-		majAtts[8]=gold;
+	public Integer[] getMajatt(){
+		updateStat();
+		Integer[] majAtts = new Integer[9];
+		majAtts[0]=(int)str;
+		majAtts[1]=(int)speed;
+		majAtts[2]=(int)maxHp;
+		majAtts[3]=(int)maxMana;
+		majAtts[4]=(int)maxXp;
+		majAtts[5]=(int)hp;
+		majAtts[6]=(int)mana;
+		majAtts[7]=(int)xp;
+		majAtts[8]=(int)gold;
 		
 		return majAtts;
 	}
@@ -193,11 +217,19 @@ public class SharingAtts extends Application {
 			allInv[i+inv.length+eqInv.length]=poInv[i];
 		return allInv;
 	}
+	public Integer[] getBattleInv(){
+		Integer[] Inv = new Integer[6];
+		for(int i=0;i<eqInv.length;i++)
+			Inv[i]=eqInv[i];
+		for(int i=0;i<poInv.length;i++)
+			Inv[i+eqInv.length]=poInv[i];
+		return Inv;
+	}
 	//--------------------------------------------------------------------------
 	
-	public void getPlaAtts(){
+	//public void getPlaAtts(){
 		
-	}
+	//}
 	
 	public String[] getAllItms(String sid){
 		//allSkills.
@@ -217,7 +249,40 @@ public class SharingAtts extends Application {
 	}
 	
 	
+	public void updateStat(){
+		//BattleArena ba = new BattleArena();
+		//ba.dumbass();
+		Integer[] atts= setPlaMinAtts();
+		maxMana = initMana+atts[6];
+		speed = initSpeed + atts[7];
+	}
 	
+	public Integer[] setPlaMinAtts(){
+		Integer[] ItemAtts = new Integer[]{0,0,0,0,0,0,0,0};
+		for(int i=0;i<4;i++){
+			String[] itmAtts=getAllItms(String.valueOf(eqInv[i]));
+			if(itmAtts[i]!=null){
+			for(int j=3;j<itmAtts.length-4;j++)
+				ItemAtts[j-3]=ItemAtts[j-3]+Integer.valueOf(itmAtts[j]);
+			}
+		}
+		maxMana = initMana+ItemAtts[6];
+		speed = initSpeed + ItemAtts[7];
+		
+		return ItemAtts;
+	}
+	
+	public Integer[] setOppMinAtts(){
+		Integer[] ItemAtts = new Integer[]{0,0,0,0,0,0,0,0};
+		for(int i=0;i<4;i++){
+			String[] itmAtts=getAllItms(String.valueOf(oppInv[i]));
+			if(itmAtts[i]!=null){
+			for(int j=3;j<itmAtts.length-4;j++)
+				ItemAtts[j-3]=ItemAtts[j-3]+Integer.valueOf(itmAtts[j]);
+			}
+		}
+		return ItemAtts;
+	}
 	
 	
 	

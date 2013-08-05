@@ -31,9 +31,11 @@ public class Status extends Activity{
 		tvGold = (TextView)findViewById(R.id.tvGold);
 		
 		sa=((SharingAtts)getApplication());
+		sa.updateStat();
+		
 		
 		String s="";
-		double[] atts = sa.getMajatt();
+		Integer[] atts = sa.getMajatt();
 		s=tvName.getText().toString();
 		tvName.setText(s+" "+sa.getName());
 		
@@ -59,10 +61,15 @@ public class Status extends Activity{
 		Integer[] t1 = sa.getAllSkillsLvl();
 		s="";
 		
+		//BattleArena ba = new BattleArena();
+		//ba.dumbass();
+		//Integer[] r =ba.setPlaMinAtts();
 		
-		for(int i=0; i<t1.length&& i<tt.length;i++)
-			s=s+String.valueOf(tt[i])+"-"+t1[i]+"\n";
-		s=s+"\n"+tt.length+"\n"+t1.length;
+		
+		
+		for(int i=0; i<t1.length;i++)
+			s=s+String.valueOf(t1[i])+" "+String.valueOf(t1[i])+"\n";
+		//s=s+"\n"+tt.length+"\n"+t1.length;
 		/*
 		String[] items = sa.getAllSkills("1011");
 		s="";

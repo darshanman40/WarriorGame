@@ -18,4 +18,4 @@ skill_id,skills,mana,accuracy,operation,stat,effect,add_dam,preq_skillid_1,preq_
 2032,heal,15,2,2,max_hp,25,8,2022,0
 2041,shadow_strike,40,2,1,mag_dam,85,85,2031,1022
 2042,annihilate,60,1,1,mag_dam,22,11,2032,2012
-2051,shadow_replicate,100,1,1,max_hp,100,100,2042,0
+2051,shadow_replicate,100,1,1,max_hp,100,10,2042,0

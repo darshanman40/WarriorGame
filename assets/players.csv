@@ -2,3 +2,5 @@ CREATE TABLE IF NOT EXISTS 'allplayer' ('player_id' INTEGER PRIMARY KEY  NOT NUL
 player_id,player_name,password,player_class,level,str,speed,max_hp,max_mana,max_xp,hp,mana,xp,gold
 1,Osairas,Zangetsu,Samurai,1,17,15,80,70,150,80,70,0,250
 2,Thief,null,Ninja,1,15,17,70,75,150,70,75,0,250
+3,allAtts,null,Balanced,1,30,17,70,75,150,70,75,0,250
+4,allSkills,null,Samurai,1,17,15,80,70,150,80,70,0,250

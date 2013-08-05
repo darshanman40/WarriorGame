@@ -75,10 +75,24 @@ public class BattleStadium extends Activity implements OnClickListener{
 			oppSkills.put(ss3[0], ss3);
 			*/
 			setOpp(this,"2");
-			
-			
+			//test.setText(String.valueOf(sa.getAllSkills("1001")));
+			String s="101";
+			//for(String saaa:sa.allItms.keySet()){
+				String[] sn = sa.allItms.get(s);
+				s=s+"\n";
+				for(int i =0;i<sn.length;i++){
+					s= s+ sn[i]+" ";
+				}
+		//		s=s+"\n";
+				//for(int i =0;i<sa.allItms.get(saaa).length;i++){
+				//	s=s+sa.allItms.get(saaa)[i]+"  ";
+			//	}
+			//}
+			test.setText(s);
 			i = new Intent("com.darshan.warriorgame.battlearena");
-			//i.putExtra("comId", 2);
+			i.putExtra("oppName", "Thief");
+			i.putExtra("oppClass", "Ninja");
+			i.putExtra("oppLevel", "1");
 			startActivity(i);
 			
 			break;
@@ -102,7 +116,7 @@ public class BattleStadium extends Activity implements OnClickListener{
 		//for(int i=0;i<ss1.length;i++)
 		
 		oppAtts.put(ss1[0], ss1);
-		sa.setOppAtts(oppAtts);
+		sa.setMajOppAtts(oppAtts);
 		
 	//}catch(Exception e){
 	//		Toast t = Toast.makeText(getApplicationContext(), "players table only", Toast.LENGTH_LONG);

@@ -143,6 +143,7 @@ public class Player {
 	
 	public String[] getNPlayerInv(){
 		String[] atts= new String[inv.length+eqInv.length+poInv.length];
+		//atts[0]="1";
 		for(int i=0;i<inv.length;i++){
 			atts[i]=String.valueOf(inv[i]);			
 		}

@@ -76,7 +76,8 @@ public class WelcomeScreen extends Activity implements OnClickListener{
 		String[] s4 = it.printData("skills");
 		itms = new DBManager(this,s4[1],"allskills",s4[0]);
 		itms.openToRead();
-		String st4=itms.queueFew(new String[]{"skill_id"});
+		//String st4=itms.queueFew(new String[]{"skill_id"});
+		String st6 = itms.queueAll();
 		itms.close();
 		sa.setSkills(st3.split(" "));
 		
@@ -87,8 +88,8 @@ public class WelcomeScreen extends Activity implements OnClickListener{
 		itms.close();
 		
 		
-		String[] ht1 = st4.split("\n");
-		String[] ht2 = st5.split("\n");
+		String[] ht1 = st5.split("\n");
+		String[] ht2 = st6.split("\n");
 		
 		for(int i=0;i<ht1.length;i++){
 			String[] s = ht1[i].split(" ");
@@ -99,8 +100,10 @@ public class WelcomeScreen extends Activity implements OnClickListener{
 			String[] s = ht2[i].split(" ");
 			allSkills.put(s[0], s);
 		}	
+		
 		sa.setAllItms(allItms);
 		sa.setAllSkills(allSkills);
+		sa.updateStat();
 		
 	}
 

@@ -64,59 +64,161 @@
         android:layout_height="wrap_content"
         android:text="Attack !" />
 
-    <LinearLayout 
-        android:layout_width="wrap_content"
-    	android:layout_height="wrap_content"
-    	android:orientation="vertical">
-        
-         <ScrollView
-             android:id="@+id/scrollView3"
-             android:layout_width="320dp"
-             android:layout_height="125dp" >
+    <ScrollView
+        android:id="@+id/scrollView1"
+        android:layout_width="match_parent"
+        android:layout_height="150dp" >
 
-        <TextView 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:orientation="vertical" >
+       
+
+        <TextView
             android:id="@+id/tvFStat"
-        	android:layout_width="wrap_content"
-        	android:layout_height="wrap_content"
-        	android:text="Fight Status"
-        	android:textAppearance="?android:attr/textAppearanceMedium"
-            />
-        </ScrollView>
-    </LinearLayout>
-    <SlidingDrawer
-        android:id="@+id/slidingDrawer1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:content="@+id/content"
-        android:handle="@+id/handle" 
-        >
-
-        <Button
-            android:id="@+id/handle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Handle" />
+            android:text="Fight Status"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+         </LinearLayout>
 
-        <RelativeLayout
-            android:id="@+id/content"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" 
-            android:orientation="vertical"
-            android:background="#000"
-            >
-            <Button
-                android:id = "@+id/bSkil1"
-                android:layout_width="wrap_content"
-            	android:layout_height="wrap_content"
-            	android:text="Stab"
-                />
-            <Button
-                android:id = "@+id/bSkil2"
-                android:layout_width="wrap_content"
-            	android:layout_height="wrap_content"
-            	android:text="Double Strike"
-                />
-        </RelativeLayout>
-    </SlidingDrawer>
+    </ScrollView>
+<ScrollView
+        android:id="@+id/scrollView2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical" >
+
+        <Button
+            android:id="@+id/bSkill1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:text="Stab" />
+
+        <Button
+            android:id="@+id/bSkill2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/bSkill1"
+            android:text="x2 Strike" />
+
+        <Button
+            android:id="@+id/bSkill3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/bSkill2"
+            android:text="Spd Strike" />
+
+        <Button
+            android:id="@+id/bSkill4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/bSkill3"
+            android:text="Ver Strike" />
+
+        <Button
+            android:id="@+id/bSkill5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/bSkill1"
+            android:text="Avenger" />
+
+        <Button
+            android:id="@+id/bSkill6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/bSkill2"
+            android:layout_toRightOf="@+id/bSkill5"
+            android:text="Split" />
+
+        <Button
+            android:id="@+id/bSkill7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/bSkill3"
+            android:layout_toRightOf="@+id/bSkill6"
+            android:text="Execution" />
+
+        <Button
+            android:id="@+id/bSkill8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/bSkill4"
+            android:layout_toRightOf="@+id/bSkill7"
+            android:text="Shurikens" />
+        
+        <Button
+            android:id="@+id/bSkill9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/bSkill5"
+            
+            android:text="Energy Shot" />
+        
+        <Button
+            android:id="@+id/bSkill10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/bSkill6"
+             android:layout_toRightOf="@+id/bSkill9"
+            android:text="Blast Fire" />
+        
+        <Button
+            android:id="@+id/bSkill11"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/bSkill7"
+             android:layout_toRightOf="@+id/bSkill10"
+            android:text="Charge" />
+        <Button
+            android:id="@+id/bSkill12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/bSkill8"
+             android:layout_toRightOf="@+id/bSkill11"
+            android:text="Mana Bomb" />
+        <Button
+            android:id="@+id/bSkill13"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/bSkill9"
+             
+            android:text="Heal" />
+        <Button
+            android:id="@+id/bSkill14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/bSkill10"
+             android:layout_toRightOf="@+id/bSkill113"
+            android:text="Shadow Strike" />
+        <Button
+            android:id="@+id/bSkill15"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/bSkill11"
+             android:layout_toRightOf="@+id/bSkill14"
+            android:text="Annihilate" />
+        <Button
+            android:id="@+id/bSkill16"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/bSkill12"
+             android:layout_toRightOf="@+id/bSkill15"
+            android:text="Shadow Replicate" />
+       
+        
+    </RelativeLayout>
+</ScrollView>
+    
 
 </LinearLayout>

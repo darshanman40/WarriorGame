@@ -61,56 +61,10 @@ public class Status extends Activity{
 		Integer[] t1 = sa.getAllSkillsLvl();
 		s="";
 		
-		//BattleArena ba = new BattleArena();
-		//ba.dumbass();
-		//Integer[] r =ba.setPlaMinAtts();
-		
-		
-		
 		for(int i=0; i<t1.length;i++)
 			s=s+String.valueOf(t1[i])+" "+String.valueOf(t1[i])+"\n";
-		//s=s+"\n"+tt.length+"\n"+t1.length;
-		/*
-		String[] items = sa.getAllSkills("1011");
-		s="";
-		for(int i=1; i<items.length;i++)
-			s=s+items[i]+" ";
-		/*
-		ItemTest it = new ItemTest();
-		String[] sss = it.printData("player_skills");
-		DBManager db = new DBManager(this,sss[1],"playerskill",sss[0]);
-		db.openToWrite();
-		//db.deleteAll();
-		//db.insertQuery("1 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20");
 	
-		String s1 =db.queueAll(String.valueOf(sa.getId()));
-		String s3 = db.tblNamesChk();
-		db.close();
-		
-		s1=s1.replace(" ", "-");
-		sss[1]=sss[1].replace(" ", "-");
-		String[] y1 = s1.split("-");
-		String[] y2 = sss[1].split("-");
-		for(int i=0; i<y2.length;i++)
-			s=s+(y1[i])+" - "+y2[i]+"\n";
-		*/
-		/*
-		int i=0;
-		Integer[] a= new Integer[y1.length];
-		try{
-		for(i=0; i<y1.length;i++){
-			a[i]=Integer.valueOf(y1[i]);
-		}
-		}catch(Exception e){
-			Toast t =Toast.makeText(getApplicationContext(), e.toString()+i, Toast.LENGTH_LONG);
-			t.show();
-		}
-		//*/
-		//tvGold.setText(s+"\n"+s1+"\n"+sss[2].replace(" ", "-")+"\n"+s3);
 		tvGold.setText(s);
-		//*/
-		
-		
 	}
 
 	

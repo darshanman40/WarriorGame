@@ -4,6 +4,8 @@ package com.darshan.warriorgame;
 
 
 
+import java.lang.reflect.Method;
+
 import android.content.Context;
 
 public class Player {
@@ -22,7 +24,7 @@ public class Player {
 	Context c;
 	ItemTest it;
 	//DBManager exisPlayerAtt,exisPlayerInv,exisPlayerSkill;
-	//Warrior war;// = new Warrior();
+	Warrior war;// = new Warrior();
 	
 	// for exis player
 	public Player(Context c,int id){
@@ -52,9 +54,13 @@ public class Player {
 		
 	}
 	
+	public Player(String pClass, int lvl){
+		playerClass = pClass;
+		this.lvl=lvl;
+	}
 	public void newPlayer(String name, String pClass){
 		lvl=1;
-		id=1;
+		id=21;
 		this.name=name;
 		playerClass=pClass;
 		maxXp=150;
@@ -714,21 +720,26 @@ public class Player {
 			return 1;
 		}
 		*/
-	/*
-		public Integer[] newLevel(Warrior war, int attCode, Integer[] atts, String playerClass){
+	
+		public Integer[] newLevel(Warrior war, int attCode, Integer[] atts){
 			
 			Integer[] retobj= new Integer[10];
 				try {
 		           		Class cls = Class.forName("com.darshan.warriorgame.Warrior");
 		           		Class argType[]=new Class[3];
+		           		
 		           		argType[0]=Integer.TYPE;
+		           		argType[1]=Integer.TYPE;
+		           		argType[2]=Integer[].class;
 		           		Method meth = cls.getMethod(playerClass,argType);	
 			           
-			            retobj= (Integer[]) meth.invoke(war,1,attCode, atts);
+			            retobj= (Integer[]) meth.invoke(war,lvl,attCode, atts);
 			          
 		         }
-		         catch (Throwable e) {
-		            System.err.println(e);
+		         //catch (Throwable e) {
+		        //    System.err.println(e);
+		         catch(Exception e){
+		        	 System.err.println(e);
 		         }
 				 return (Integer[])retobj; 
 			}

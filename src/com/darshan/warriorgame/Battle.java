@@ -27,28 +27,30 @@ public class Battle{
 	int p1hp,p2hp,p1mana,p2mana,maxp1hp,maxp2hp,maxp1mana,maxp2mana,p1damage,p2damage;
 	
 	private SkillEffects[] skillList= new SkillEffects[]{
-			new SkillEffects(){public void damage(int n){ newHpP2();}},
-			new SkillEffects(){public void damage(int n){ stab(n);}},
-			new SkillEffects(){public void damage(int n){ doubleStrike(n);}},
-			new SkillEffects(){public void damage(int n){ speedStrike(n);}},
-			new SkillEffects(){public void damage(int n){ verticalStrike(n);}},
-			new SkillEffects(){public void damage(int n){ avenger(n);}},
-			new SkillEffects(){public void damage(int n){ split(n);}},
-			new SkillEffects(){public void damage(int n){ execution(n);}},
-			new SkillEffects(){public void damage(int n){ shurikens(n);}},
-			new SkillEffects(){public void damage(int n){ energyShot(n);}},
-			new SkillEffects(){public void damage(int n){ blastFire(n);}},
-			new SkillEffects(){public void damage(int n){ charge(n);}},
-			new SkillEffects(){public void damage(int n){ manaBomb(n);}},
-			new SkillEffects(){public void damage(int n){ heal(n);}},
-			new SkillEffects(){public void damage(int n){ shadowStrike(n);}},
-			new SkillEffects(){public void damage(int n){ annihilate(n);}}
+			new SkillEffects(){public void damage(int n){ newHpP2(n);}},		//0
+			new SkillEffects(){public void damage(int n){ stab(n);}},			//1
+			new SkillEffects(){public void damage(int n){ doubleStrike(n);}},	//2
+			new SkillEffects(){public void damage(int n){ speedStrike(n);}},	//3
+			new SkillEffects(){public void damage(int n){ verticalStrike(n);}},	//4
+			new SkillEffects(){public void damage(int n){ avenger(n);}},		//5
+			new SkillEffects(){public void damage(int n){ split(n);}},			//6
+			new SkillEffects(){public void damage(int n){ execution(n);}},		//7
+			new SkillEffects(){public void damage(int n){ shurikens(n);}},		//8
+			new SkillEffects(){public void damage(int n){ energyShot(n);}},		//9
+			new SkillEffects(){public void damage(int n){ blastFire(n);}},		//10
+			new SkillEffects(){public void damage(int n){ charge(n);}},			//11
+			new SkillEffects(){public void damage(int n){ manaBomb(n);}},		//12
+			new SkillEffects(){public void damage(int n){ heal(n);}},			//13
+			new SkillEffects(){public void damage(int n){ shadowStrike(n);}},	//14
+			new SkillEffects(){public void damage(int n){ annihilate(n);}}		//15
 			
 	};
 	
 	public void damage(int i, int n){
 		skillList[i].damage(n);
 	}
+	
+	
 	
 	public Battle(Hashtable<String,Integer[]> P1,Hashtable<String,Integer[]> P2){
 		p1MinAtts = P1.get(arrayNames[0]);
@@ -72,14 +74,25 @@ public class Battle{
 		p2mana = maxp2mana;
 	}
 	
-	public void newHpP2(){
-		int damage = p1MinAtts[0]-(p2MinAtts[2]/10);
+	public void newHpP2(int id){
+		
+		int damage;
+		if(id==0){
+			damage = p1MinAtts[0]-(p2MinAtts[2]/10);
+		if(damage<=0)
+			damage=1;
 		p1damage = damage;
 		p2hp=p2hp-damage;
+		}else if(id==1){
+			newHpP1();
+		}
+		
 	}
 	
 	public void newHpP1(){
 		int damage = p2MinAtts[0]-(p1MinAtts[2]/10);
+		if(damage<=0)
+			damage=1;
 		p2damage = damage;
 		p1hp=p1hp-damage;
 	}
@@ -88,14 +101,18 @@ public class Battle{
 		int damage;
 		if(id == 0){
 			damage =  (p1MinAtts[0])-(p2MinAtts[2]/10);
+			if(damage<=0)
+				damage=1;
 			p1damage = damage+(p1Skills[0]*4);
 			p2hp = p2hp-damage;
-			p1mana = p1mana - 15;
+			//p1mana = p1mana - 15;
 		}else if(id == 1){
 			damage =  (p2MinAtts[0])-(p1MinAtts[2]/10);
+			if(damage<=0)
+				damage=1;
 			p2damage = damage+(p2Skills[0]*4);
 			p1hp = p1hp-damage;
-			p2mana = p2mana - 15;
+			//p2mana = p2mana - 15;
 		}
 	}
 	
@@ -105,15 +122,19 @@ public class Battle{
 		if(id == 0){
 			coeff = coeff+((p1Skills[1]-1)*8);
 			damage =  ((coeff*p1MinAtts[0])/100)-(p2MinAtts[2]/10);
+			if(damage<=0)
+				damage=1;
 			p1damage = 2*damage;
 			p2hp = p2hp-p1damage;
 			p1mana = p1mana - 20;
 		}else if(id == 1){
 			coeff = coeff+((p2Skills[1]-1)*8);
 			damage =  ((coeff*p2MinAtts[0])/100)-(p1MinAtts[2]/10);
+			if(damage<=0)
+				damage=1;
 			p2damage = 2*damage;
 			p1hp = p1hp-p2damage;
-			p2mana = p2mana - 20;
+			//p2mana = p2mana - 20;
 		}
 	}
 	
@@ -123,13 +144,17 @@ public class Battle{
 			
 			damage =  ((p1MajAtts[1]*p1Skills[2]*60)/100)-(p2MinAtts[2]/10);
 			p1damage = damage;
+			if(damage<=0)
+				damage=1;
 			p2hp = p2hp-p1damage;
 			p1mana = p1mana - 20;
 		}else if(id == 1){
 			damage =  ((p2MajAtts[1]*p2Skills[2]*60)/100)-(p1MinAtts[2]/10);
+			if(damage<=0)
+				damage=1;
 			p2damage = damage;
 			p1hp = p1hp-p2damage;
-			p2mana = p2mana - 20;
+			//p2mana = p2mana - 20;
 		
 		}
 	}
@@ -139,13 +164,17 @@ public class Battle{
 		if(id == 0){
 			damage =  ((p1MajAtts[0]*p1Skills[3]*80)/100)-(p2MinAtts[2]/10);
 			p1damage = damage;
+			if(damage<=0)
+				damage=1;
 			p2hp = p2hp-p1damage;
 			p1mana = p1mana - 20;
 		}else if(id == 1){
 			damage =  ((p2MajAtts[0]*p2Skills[3]*80)/100)-(p1MinAtts[2]/10);
+			if(damage<=0)
+				damage=1;
 			p2damage = damage;
 			p1hp = p1hp-p2damage;
-			p2mana = p2mana - 20;
+			//p2mana = p2mana - 20;
 		
 		}
 	}
@@ -156,14 +185,18 @@ public class Battle{
 		int coeff=200;
 		if(id == 0){
 			damage =  ((maxp1hp-p1hp)*((coeff+((p1Skills[6]-1)*100)))/100)-(p2MinAtts[2]/10);
+			if(damage<=0)
+				damage=1;
 			p1damage = damage;
 			p2hp = p2hp-p1damage;
 			p1mana = p1mana - 25;
 		}else if(id == 1){
 			damage =  ((maxp2hp-p2hp)*((coeff+((p2Skills[6]-1)*100)))/100)-(p1MinAtts[2]/10);
+			if(damage<=0)
+				damage=1;
 			p2damage = damage;
 			p1hp = p1hp-p2damage;
-			p2mana = p2mana - 25;
+			//p2mana = p2mana - 25;
 		}
 	}
 
@@ -173,14 +206,18 @@ public class Battle{
 		int coeff=16;
 		if(id == 0){
 			damage =  ((p2hp)*((coeff+((p1Skills[7]-1)*2)))/100)-(p2MinAtts[2]/10);
+			if(damage<=0)
+				damage=1;
 			p1damage = damage;
 			p2hp = p2hp-p1damage;
 			p1mana = p1mana - 25;
 		}else if(id == 1){
 			damage =  ((p1hp)*((coeff+((p2Skills[7]-1)*2)))/100)-(p2MinAtts[2]/10);
+			if(damage<=0)
+				damage=1;
 			p2damage = damage;
 			p1hp = p1hp-p2damage;
-			p2mana = p2mana - 25;
+			//p2mana = p2mana - 25;
 		}
 	}
 	
@@ -190,15 +227,19 @@ public class Battle{
 		if(id == 0){
 			coeff = coeff+((p1Skills[8]-1)*5);
 			damage =  ((coeff*p1MinAtts[0])/100)-(p2MinAtts[2]/10);
+			if(damage<=0)
+				damage=1;
 			p1damage = 4*damage;
 			p2hp = p2hp-p1damage;
 			p1mana = p1mana - 70;
 		}else if(id == 1){
 			coeff = coeff+((p2Skills[8]-1)*5);
 			damage =  ((coeff*p2MinAtts[0])/100)-(p1MinAtts[2]/10);
+			if(damage<=0)
+				damage=1;
 			p2damage = 4*damage;
 			p1hp = p1hp-p2damage;
-			p2mana = p2mana - 70;
+			//p2mana = p2mana - 70;
 		}
 	}
 	//------------------------------------------------------------------------------------------------------------------
@@ -209,14 +250,18 @@ public class Battle{
 		p1MinAtts[1]=p1MinAtts[1]+1;
 		if(id == 0){
 			damage =  ((p1MinAtts[1]+(22*p1Skills[9])))-(p2MinAtts[3]/10);
+			if(damage<=0)
+				damage=1;
 			p1damage = damage;
 			p2hp = p2hp-p1damage;
 			p1mana = p1mana - 20;
 		}else if(id == 1){
 			damage =  ((p2MinAtts[1]+(22*p2Skills[9])))-(p1MinAtts[3]/10);
+			if(damage<=0)
+				damage=1;
 			p2damage = damage;
 			p1hp = p1hp-p2damage;
-			p2mana = p2mana - 20;
+			//p2mana = p2mana - 20;
 		}
 	}
 	
@@ -225,14 +270,18 @@ public class Battle{
 		p1MinAtts[1]=p1MinAtts[1]+1;
 		if(id == 0){
 			damage =  ((p1MinAtts[1]+(49*p1Skills[10])))-(p2MinAtts[3]/10);
+			if(damage<=0)
+				damage=1;
 			p1damage = damage;
 			p2hp = p2hp-p1damage;
 			p1mana = p1mana - 25;
 		}else if(id == 1){
 			damage =  ((p2MinAtts[1]+(49*p2Skills[10])))-(p1MinAtts[3]/10);
+			if(damage<=0)
+				damage=1;
 			p2damage = damage;
 			p1hp = p1hp-p2damage;
-			p2mana = p2mana - 25;
+			//p2mana = p2mana - 25;
 		}
 	}
 	
@@ -242,23 +291,28 @@ public class Battle{
 		p1MinAtts[1]=p1MinAtts[1]+1;
 		if(id == 0){
 			damage =  ((coeff+p1MinAtts[1])+(6*(p1Skills[11]-1)))-(p2MinAtts[3]/10);
+			if(damage<=0)
+				damage=1;
 			p1damage = 2*damage;
 			p2hp = p2hp-p1damage;
 			p1mana = p1mana - 25;
 		}else if(id == 1){
 			damage =  ((coeff+p2MinAtts[1])+(6*(p2Skills[11]-1)))-(p1MinAtts[3]/10);
+			if(damage<=0)
+				damage=1;
 			p2damage = 2*damage;
 			p1hp = p1hp-p2damage;
-			p2mana = p2mana - 25;
+			//p2mana = p2mana - 25;
 		}
 	}
 	
 	public void charge(int id){
 		p1MinAtts[1]=p1MinAtts[1]+1;
 		if(id == 0 ){ //&& p1mana!=0){
-			p1mana = p1mana+(maxp1mana * (p1Skills[13]*25))/100;
+			p1mana = p1mana+((maxp1mana * (p1Skills[13]*25))/100);
 		}else if(id == 1){
-			p2mana = p2mana+(maxp2mana * (p2Skills[13]*25))/100;
+			//p2mana = p2mana+(maxp2mana * (p2Skills[13]*25))/100;
+			blastFire(id);
 		}
 	}
 	
@@ -266,14 +320,17 @@ public class Battle{
 		int damage;
 		if(id == 0){
 			damage = (((p1mana-1)*150*p1Skills[14])/100) -(p2MinAtts[3]/10);
+			if(damage<=0)
+				damage=1;
 			p1damage = damage;
 			p2hp = p2hp-p1damage;
 			p1mana=0;
 		}else if(id == 1){
-			damage = (((p2mana-1)*150*p2Skills[14])/100)-(p2MinAtts[3]/10);
-			p2damage = damage;
-			p1hp = p1hp-p2damage;
-			p2mana=0;
+			blastFire(id);
+			//damage = (((p2mana-1)*150*p2Skills[14])/100)-(p2MinAtts[3]/10);
+			//p2damage = damage;
+			//p1hp = p1hp-p2damage;
+			//p2mana=0;
 		}
 	}
 	
@@ -281,11 +338,11 @@ public class Battle{
 		int coeff =25;
 		p1MinAtts[1]=p1MinAtts[1]+1;
 		if(id == 0){
-			p1hp = ((maxp1hp * (coeff+(p1Skills[15]*8)))/100);
+			p1hp = p1hp+((maxp1hp * (coeff+(p1Skills[15]*8)))/100);
 			p1mana = p1mana - 15;
 		}else if(id == 1){
-			p2hp = ((maxp2hp * (coeff+(p2Skills[15]*8)))/100);
-			p2mana = p2mana - 15;
+			p2hp = p2hp+((maxp2hp * (coeff+(p2Skills[15]*8)))/100);
+			//p2mana = p2mana - 15;
 		}
 	}
 	
@@ -294,14 +351,18 @@ public class Battle{
 		p1MinAtts[1]=p1MinAtts[1]+1;
 		if(id == 0){
 			damage =  ((p1MinAtts[1]+(85*p1Skills[16])))-(p2MinAtts[3]/10);
+			if(damage<=0)
+				damage=1;
 			p1damage = damage;
 			p2hp = p2hp-p1damage;
 			p1mana = p1mana - 40;
 		}else if(id == 1){
 			damage =  ((p2MinAtts[1]+(85*p2Skills[16])))-(p1MinAtts[3]/10);
+			if(damage<=0)
+				damage=1;
 			p2damage = damage;
 			p1hp = p1hp-p2damage;
-			p2mana = p2mana - 40;
+			//p2mana = p2mana - 40;
 		}
 	}
 	
@@ -311,27 +372,31 @@ public class Battle{
 		p1MinAtts[1]=p1MinAtts[1]+1;
 		if(id == 0){
 			damage =  ((coeff+p1MinAtts[1])+(11*(p1Skills[17]-1)))-(p2MinAtts[3]/10);
+			if(damage<=0)
+				damage=1;
 			p1damage = 3*damage;
 			p2hp = p2hp-p1damage;
 			p1mana = p1mana - 60;
 		}else if(id == 1){
 			damage =  ((coeff+p2MinAtts[1])+(11*(p2Skills[17]-1)))-(p1MinAtts[3]/10);
+			if(damage<=0)
+				damage=1;
 			p2damage = 3*damage;
 			p1hp = p1hp-p2damage;
-			p2mana = p2mana - 60;
+			//p2mana = p2mana - 60;
 		}
 	}
 	
 	//--------------------------------------------------------
-	public void newHpP1(int damage){
+	//public void newHpP1(int damage){
 		//p2damage = damage;
-		p1hp=p1hp-damage;
-	}
+	//	p1hp=p1hp-damage;
+	//}
 	//--------------------------------------------------
-	public void newHpP2(int damage){
+	//public void newHpP2(int damage){
 		//p2damage = damage;
-		p2hp=p2hp-damage;
-	}
+	//	p2hp=p2hp-damage;
+	//}
 	/*
 	public void damageSkill1Calc(int aCode){
 		int damage;
@@ -522,7 +587,7 @@ public class Battle{
 		int damage = Integer.valueOf(defender[2]) - (Integer.valueOf(attacker[playerAttack+2])*3);
 		
 		
-		if(damage<0)
+		if(damage<=0)
 			hp = hp-((damage*(-1)));
 		else
 			hp = hp-(damage);

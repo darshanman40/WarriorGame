@@ -3,7 +3,7 @@ package com.darshan.warriorgame;
 public class Warrior {
 //double lvl;
 	
-public Integer[] Mighty(int lv,int attCode, Integer[] att){
+public Integer[] Samurai(int lv,int attCode, Integer[] att){
 	if(lv%5==0){
 		att[0]=att[0]+3;
 		att[1]=att[1]+1;
@@ -28,7 +28,7 @@ public Integer[] Mighty(int lv,int attCode, Integer[] att){
 	return att;
 }
 	
-	public double[] Ninja(int lv,int attCode, double[] att){
+	public Integer[] Ninja(int lv,int attCode, Integer[] att){
 		if(lv%5==0){
 			att[0]=att[0]+1;
 			att[1]=att[1]+3;

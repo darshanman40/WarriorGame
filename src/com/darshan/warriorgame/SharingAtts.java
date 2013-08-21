@@ -25,6 +25,9 @@ public class SharingAtts extends Application {
 	Hashtable<String,String[]> allSkills;
 	Hashtable<String,String[]> allItms;
 	
+	public void setPlaInv(Integer[] inv){
+		this.inv=inv;
+	}
 	public void setId(int id){
 		this.id=id;
 	}
@@ -43,8 +46,6 @@ public class SharingAtts extends Application {
 	}
 	
 	public void setPlaAtts(String[] att){
-		//BattleArena ba = new BattleArena();
-		//Integer[] atts =ba.setPlaMinAtts();
 		id=Integer.valueOf(att[0]);
 		name=att[1];
 		playerClass=att[3];
@@ -58,9 +59,14 @@ public class SharingAtts extends Application {
 		mana=Double.valueOf(att[11]);
 		xp=Double.valueOf(att[12]);
 		gold=Double.valueOf(att[13]);
+	}
+	
+	public void setPlaMajAtts(Integer[] att){
 		
-		//maxMana = initMana+atts[6];
-		//speed = initSpeed + atts[7];
+		str=Double.valueOf(att[0]);
+		initSpeed=Double.valueOf(att[1]);
+		maxHp=Double.valueOf(att[2]);
+		initMana=Double.valueOf(att[3]);
 	}
 	
 	public void setAllInv(String[] allInv){
@@ -182,6 +188,18 @@ public class SharingAtts extends Application {
 		return majAtts;
 	}
 	
+	public Integer[] getPlaUpatt(){
+		updateStat();
+		Integer[] majAtts = new Integer[9];
+		majAtts[0]=(int)str;
+		majAtts[1]=(int)initSpeed;
+		majAtts[2]=(int)maxHp;
+		majAtts[3]=(int)initMana;
+		//majAtts[4]=(int)maxXp;
+		
+		return majAtts;
+	}
+	
 	public String getName(){
 		return name;
 	}
@@ -252,9 +270,13 @@ public class SharingAtts extends Application {
 	public void updateStat(){
 		//BattleArena ba = new BattleArena();
 		//ba.dumbass();
+		//double oldMana = maxMana;
 		Integer[] atts= setPlaMinAtts();
 		maxMana = initMana+atts[6];
 		speed = initSpeed + atts[7];
+		if(mana>maxMana){
+			mana=maxMana;
+		}
 	}
 	
 	public Integer[] setPlaMinAtts(){

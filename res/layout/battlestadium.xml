@@ -1,27 +1,187 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/tvPS1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="BattleStadium"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
-    <Button
-        android:id="@+id/bThief1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Thief Lv 1" />
-
     <TextView
         android:id="@+id/tvTest"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
         android:text="Large Text"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
-</LinearLayout>
+    <Button
+        android:id="@+id/bThief1"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/tvPS1"
+        android:text="Thief" />
+
+    <Button
+        android:id="@+id/bSwordsman"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/bThief1"
+        android:layout_toRightOf="@+id/bThief1"
+        android:text="Swordsman" />
+    
+    <Button
+        android:id="@+id/bSeer"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/bSwordsman"
+        android:layout_toRightOf="@+id/bSwordsman"
+        android:text="Seer" />
+    
+    <Button
+        android:id="@+id/bAgent"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/bThief1"
+        android:text="Agent" />
+
+     <Button
+         android:id="@+id/bBandit"
+         android:layout_width="80dp"
+         android:layout_height="wrap_content"
+         android:layout_below="@+id/bSwordsman"
+         android:layout_toLeftOf="@+id/bSeer"
+         android:text="Bandit" />
+
+     <Button
+         android:id="@+id/bWarrior"
+         android:layout_width="80dp"
+         android:layout_height="wrap_content"
+         android:layout_alignLeft="@+id/bSeer"
+         android:layout_below="@+id/bSeer"
+         android:text="Warrior" />
+
+     <Button
+         android:id="@+id/bShaman"
+         android:layout_width="80dp"
+         android:layout_height="wrap_content"
+         android:layout_alignLeft="@+id/bSeer"
+         android:layout_below="@+id/bSeer"
+         android:text="Shaman" />
+
+     <Button
+         android:id="@+id/bMercenery"
+         android:layout_width="80dp"
+         android:layout_height="wrap_content"
+         android:layout_below="@+id/bAgent"
+         android:layout_toLeftOf="@+id/bBandit"
+         android:text="Mercenery" />
+
+     <Button
+         android:id="@+id/bSamurai"
+         android:layout_width="80dp"
+         android:layout_height="wrap_content"
+         android:layout_alignBaseline="@+id/bMercenery"
+         android:layout_alignBottom="@+id/bMercenery"
+         android:layout_alignLeft="@+id/bWarrior"
+         android:text="Samurai" />
+
+     <Button
+         android:id="@+id/bMage"
+         android:layout_width="80dp"
+         android:layout_height="wrap_content"
+         android:layout_below="@+id/bAgent"
+         android:layout_marginTop="52dp"
+         android:layout_toLeftOf="@+id/bRonin"
+         android:text="Mage" />
+
+     <Button
+         android:id="@+id/bRonin"
+         android:layout_width="80dp"
+         android:layout_height="wrap_content"
+         android:layout_below="@+id/bBandit"
+         android:layout_toLeftOf="@+id/bWarrior"
+         android:text="Ronin" />
+
+     <Button
+         android:id="@+id/bRaider"
+         android:layout_width="80dp"
+         android:layout_height="wrap_content"
+         android:layout_alignBottom="@+id/bMage"
+         android:layout_toLeftOf="@+id/bSamurai"
+         android:text="Raider" />
+
+     <Button
+         android:id="@+id/bAssailant"
+         android:layout_width="80dp"
+         android:layout_height="wrap_content"
+         android:layout_alignLeft="@+id/bSamurai"
+         android:layout_below="@+id/bSamurai"
+         android:text="Assailant" />
+
+     <Button
+         android:id="@+id/bKnight"
+         android:layout_width="80dp"
+         android:layout_height="wrap_content"
+         android:layout_centerVertical="true"
+         android:layout_toLeftOf="@+id/bRaider"
+         android:text="Knight" />
+
+     <Button
+         android:id="@+id/bWitch"
+         android:layout_width="80dp"
+         android:layout_height="wrap_content"
+         android:layout_centerVertical="true"
+         android:layout_toRightOf="@+id/bMage"
+         android:text="Witch" />
+
+     <Button
+         android:id="@+id/bTrooper"
+         android:layout_width="80dp"
+         android:layout_height="wrap_content"
+         android:layout_alignBaseline="@+id/bKnight"
+         android:layout_alignBottom="@+id/bKnight"
+         android:layout_toRightOf="@+id/bRaider"
+         android:text="Trooper" />
+
+     <Button
+         android:id="@+id/bAntiNinja"
+         android:layout_width="80dp"
+         android:layout_height="wrap_content"
+         android:layout_below="@+id/bWitch"
+         android:layout_toLeftOf="@+id/bWitch"
+         android:text="Anti Ninja" />
+
+     <Button
+         android:id="@+id/bGuardian"
+         android:layout_width="80dp"
+         android:layout_height="wrap_content"
+         android:layout_alignBaseline="@+id/bAntiNinja"
+         android:layout_alignBottom="@+id/bAntiNinja"
+         android:layout_alignLeft="@+id/bWitch"
+         android:text="Guardian" />
+
+     <Button
+         android:id="@+id/bVoodooMaster"
+         android:layout_width="80dp"
+         android:layout_height="wrap_content"
+         android:layout_alignLeft="@+id/bTrooper"
+         android:layout_below="@+id/bTrooper"
+         android:text="Voodoo Master" />
+
+     <Button
+         android:id="@+id/bGateKeeper"
+         android:layout_width="80dp"
+         android:layout_height="wrap_content"
+         android:layout_below="@+id/bVoodooMaster"
+         android:layout_toLeftOf="@+id/bVoodooMaster"
+         android:text="Gate Keeper" />
+
+</RelativeLayout>

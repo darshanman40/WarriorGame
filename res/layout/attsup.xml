@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+   
+    <TextView
+        android:id="@+id/tvTitle4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Upgrade Attribute"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/tvTitle4"
+        android:layout_marginTop="73dp" 
+        
+        >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:id="@+id/llImgs4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+                <ImageView
+                    android:id="@+id/ivStr4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/empty_inv" />
+
+                <ImageView
+                    android:id="@+id/ivSpd4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/empty_inv" />
+
+                <ImageView
+                    android:id="@+id/ivMHp4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/empty_inv" />
+
+                <ImageView
+                    android:id="@+id/ivMMana4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/empty_inv" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/llImgs4"
+                android:orientation="vertical" >
+            <TextView
+                android:id="@+id/tvStr4"
+                android:lineSpacingExtra="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_toRightOf="@+id/linearLayout1"
+                android:text="Str" />
+            <TextView
+                android:id="@+id/tvSpd4"
+                 android:lineSpacingExtra="10dp"
+                 android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_toRightOf="@+id/linearLayout1"
+                android:text="Speed" />
+            <TextView
+                android:id="@+id/tvMaxHp4"
+                android:lineSpacingExtra="10dp"
+                 android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_toRightOf="@+id/linearLayout1"
+                android:text="Max HP" />
+            <TextView
+                android:id="@+id/tvMaxMana4"
+                android:layout_width="wrap_content"
+                 android:lineSpacingExtra="10dp"
+                 android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_toRightOf="@+id/linearLayout1"
+                android:text="Max Mana" />
+            
+            </LinearLayout>
+
+            
+        </RelativeLayout>
+
+    </FrameLayout>
+
+</RelativeLayout>

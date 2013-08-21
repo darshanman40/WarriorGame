@@ -24,6 +24,7 @@ public class WelcomeScreen extends Activity implements OnClickListener{
 	String filename;
 	int id;
 	
+	//Intent intent;
 	ItemTest it;
 	DBManager itms;
 	
@@ -113,8 +114,18 @@ public class WelcomeScreen extends Activity implements OnClickListener{
 		
 		switch(arg0.getId()){
 		case R.id.bInv:
-			i = new Intent("com.darshan.warriorgame.invstat");
-			
+			/*
+			Class urClass;
+			try {
+				//urClass = Class.forName("com.darshan.warriorgame.MyEquips");
+				urClass = Class.forName("com.darshan.warriorgame.InventoryStat");
+			i =new Intent(WelcomeScreen.this,urClass);
+			startActivity(i);
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();		
+			}*/
+			i = new Intent("com.darshan.warriorgame.inventory");
 			startActivity(i);
 			break;
 		case R.id.bBS:
@@ -131,9 +142,17 @@ public class WelcomeScreen extends Activity implements OnClickListener{
 			break;
 			
 		case R.id.bStatus:
-			Intent in = new Intent("com.darshan.warriorgame.status");
-			in.putExtra("filename", filename);
-			startActivity(in);
+			
+			i = new Intent("com.darshan.warriorgame.attsup");
+			//i.putExtra("filename", filename);
+			startActivity(i);
+			//*/
+			break;
+	
+		case R.id.bStore:
+			Intent inn = new Intent("com.darshan.warriorgame.store");
+			//inn.putExtra("filename", filename);
+			startActivity(inn);
 			break;
 		}
 		

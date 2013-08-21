@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/tvInvTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Inventory"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <ListView
+            android:id="@+id/lvMyEqps1"
+            android:layout_width="150dp"
+            android:layout_height="226dp" >
+        </ListView>
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/ivWeapon1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/ivheadGear1"
+        android:layout_below="@+id/ivheadGear1"
+        android:layout_marginRight="26dp"
+        android:src="@drawable/empty_inv" />
+
+    <ImageView
+        android:id="@+id/ivheadGear1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginRight="61dp"
+        android:layout_marginTop="86dp"
+        android:src="@drawable/empty_inv" />
+
+    <ImageView
+        android:id="@+id/ivArmour1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ivheadGear1"
+        android:layout_toLeftOf="@+id/ivShield1"
+        android:src="@drawable/empty_inv" />
+
+    <ImageView
+        android:id="@+id/ivShield1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/ivArmour1"
+        android:layout_toRightOf="@+id/ivWeapon1"
+        android:src="@drawable/empty_inv" />
+
+    <TextView
+        android:id="@+id/tvLifePot1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ivWeapon1"
+        android:layout_marginTop="31dp"
+        android:layout_toRightOf="@+id/linearLayout1"
+        android:text="Life Potion x"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/tvManaPot1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/tvLifePot1"
+        android:layout_centerVertical="true"
+        android:text="Mana Potion x"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <ImageView
+        android:id="@+id/ivManaPot1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/tvManaPot1"
+        android:src="@drawable/mana_potion" />
+
+    <ImageView
+        android:id="@+id/ivLifePot1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/tvLifePot1"
+        android:src="@drawable/life_potion" />
+
+    <Button
+        android:id="@+id/bEquip3"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:text="Equip" />
+
+    <Button
+        android:id="@+id/bSell3"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignRight="@+id/linearLayout1"
+        android:text="Sell" />
+
+    <TextView
+        android:id="@+id/tvGold3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/tvStr3"
+        android:layout_below="@+id/tvStr3"
+        android:text="Gold " />
+
+    <TextView
+        android:id="@+id/tvDetail3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/linearLayout1"
+        android:text="Details"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/tvStr3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/ivWeapon1"
+        android:layout_below="@+id/ivManaPot1"
+        android:text="Str " />
+
+</RelativeLayout>

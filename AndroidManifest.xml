@@ -149,7 +149,56 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".Store"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="com.darshan.warriorgame.store" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".MyEquips"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="com.darshan.warriorgame.inventory" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
         
-    </application>
+        <activity
+            android:name=".AttsUp"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="com.darshan.warriorgame.attsup" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".SkillUp"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="com.darshan.warriorgame.skillup" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".WeaponsStore"
+            ></activity>
+        <activity
+            android:name=".ArmourStore"
+            ></activity>
+		        <activity
+            android:name=".ShieldsStore"
+            ></activity>
+		        <activity
+            android:name=".HeadgearStore"
+            ></activity>
+		        
+        </application>
 
 </manifest>

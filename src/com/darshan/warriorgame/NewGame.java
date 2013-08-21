@@ -138,7 +138,7 @@ public class NewGame extends Activity implements OnClickListener{
 				db.close();
 				
 				//------------------------------------------------------------
-				String[] s5=it.printData("inventory");
+				String[] s5=it.printData("allItems");
 				db = new DBManager(this,s5[1],"allitems",s5[0]);
 				db.openToWrite();
 				db.dropTable();

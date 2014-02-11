@@ -1,14 +1,7 @@
 package com.darshan.warriorgame;
 
-//import android.app.Activity;
-
-
-import java.util.Hashtable;
-
-import java.util.Map;
 
 import android.app.Activity;
-//import android.app.ListActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -18,7 +11,6 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import android.widget.TextView;
-//import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 
 public class WeaponsStore extends Activity implements OnClickListener,OnItemClickListener{
@@ -80,9 +72,7 @@ public class WeaponsStore extends Activity implements OnClickListener,OnItemClic
 		@Override
 		public void onClick(View arg0) {
 			// TODO Auto-generated method stub
-			switch(arg0.getId()){
-			case R.id.bBuy:
-				
+			if(arg0.getId()==R.id.bBuy){	
 				if(selectedItm!=0){
 					boolean succ=false;
 					
@@ -91,8 +81,7 @@ public class WeaponsStore extends Activity implements OnClickListener,OnItemClic
 					if(costOfItm>sa.gold){
 						t= Toast.makeText(getApplicationContext(), "Insuffecient Gold    "+costOfItm, Toast.LENGTH_LONG);
 						t.show();
-						break;
-					}
+					}else{
 					
 					for(int i=0;i<8;i++){
 						if(sa.inv[i]==0&&succ==false){
@@ -111,13 +100,16 @@ public class WeaponsStore extends Activity implements OnClickListener,OnItemClic
 					t= Toast.makeText(getApplicationContext(), "Item purchased successfully", Toast.LENGTH_LONG);
 					t.show();
 				}
-				
+					
+			}
 				}else{
 					t= Toast.makeText(getApplicationContext(), "Item not selected", Toast.LENGTH_LONG);
 					t.show();
 				}
-				break;
+				
 			}
+			//	break;
+			//}
 			
 		}
 

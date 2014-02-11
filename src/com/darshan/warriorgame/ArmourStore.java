@@ -70,19 +70,16 @@ public class ArmourStore extends Activity implements OnClickListener,OnItemClick
 		@Override
 		public void onClick(View arg0) {
 			// TODO Auto-generated method stub
-			switch(arg0.getId()){
-			case R.id.bBuy:
+			//switch(arg0.getId()){
+			if(arg0.getId()==R.id.bBuy){
 				
 				if(selectedItm!=0){
 					boolean succ=false;
-					
-					 //String[] h=sa.getAllItms(String.valueOf(selectedItm));
-					 //= Integer.valueOf(h[11]); 
 					if(costOfItm>sa.gold){
 						t= Toast.makeText(getApplicationContext(), "Insuffecient Gold    "+costOfItm, Toast.LENGTH_LONG);
 						t.show();
-						break;
-					}
+						//break;
+					}else{
 					
 					for(int i=0;i<8;i++){
 						if(sa.inv[i]==0&&succ==false){
@@ -92,6 +89,7 @@ public class ArmourStore extends Activity implements OnClickListener,OnItemClick
 							tvPlGold.setText("Gold "+String.valueOf(sa.gold));
 							
 						}
+					}
 					}
 				if(succ!=true){
 					t= Toast.makeText(getApplicationContext(), "Inventory full", Toast.LENGTH_LONG);
@@ -106,7 +104,7 @@ public class ArmourStore extends Activity implements OnClickListener,OnItemClick
 					t= Toast.makeText(getApplicationContext(), "Item not selected", Toast.LENGTH_LONG);
 					t.show();
 				}
-				break;
+				//break;
 			}
 			
 		}

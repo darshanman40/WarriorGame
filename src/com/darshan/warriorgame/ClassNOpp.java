@@ -10,7 +10,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.Toast;
+//import android.widget.Toast;
 
 public class ClassNOpp extends Activity implements OnClickListener{
 
@@ -31,7 +31,7 @@ public class ClassNOpp extends Activity implements OnClickListener{
 		
 		filename = getIntent().getStringExtra("filename");
 		someData = getSharedPreferences(filename,0);
-		editor = someData.edit();
+		//editor = someData.edit();
 		
 		//rbnin1 = (RadioButton)findViewById(R.id.rbNinja1);
 		rgPlayer = (RadioGroup)findViewById(R.id.rg1);
@@ -44,8 +44,8 @@ public class ClassNOpp extends Activity implements OnClickListener{
 	@Override
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
-		switch(v.getId()){
-		case R.id.bFight:
+		//switch(v.getId()){
+		if(v.getId()==R.id.bFight){
 			
 			int playerId = rgPlayer.getCheckedRadioButtonId();
 			int compId = rgComp.getCheckedRadioButtonId();
@@ -69,7 +69,7 @@ public class ClassNOpp extends Activity implements OnClickListener{
 			i.putExtra("filename", filename);
 			startActivity(i);
 			
-			break;
+			//break;
 		}
 	}
 

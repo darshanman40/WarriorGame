@@ -1,18 +1,23 @@
 package com.darshan.warriorgame;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 
 
-public class Status extends Activity{
+public class Status extends Activity implements OnClickListener{
 
 	TextView tvName,tvStr,tvSpeed,tvMaxHp,tvMaxMana,tvMaxXp,tvGold;
 	//SharedPreferences someData;
 	String filename;
+	Button bSkilUp;
 	
 	SharingAtts sa;
 	@Override
@@ -29,7 +34,7 @@ public class Status extends Activity{
 		tvMaxMana = (TextView)findViewById(R.id.tvMaxMana);
 		tvMaxXp = (TextView)findViewById(R.id.tvMaxExp);
 		tvGold = (TextView)findViewById(R.id.tvGold);
-		
+		bSkilUp = (Button)findViewById(R.id.bSkillUp);
 		sa=((SharingAtts)getApplication());
 		sa.updateStat();
 		
@@ -65,8 +70,18 @@ public class Status extends Activity{
 			s=s+String.valueOf(t1[i])+" "+String.valueOf(t1[i])+"\n";
 	
 		tvGold.setText(s);
+		bSkilUp.setOnClickListener(this);
 	}
-
+	@Override
+	public void onClick(View v) {
+		// TODO Auto-generated method stub
+		if(v.getId()==R.id.bSkillUp){
+			Intent i =new Intent("com.darshan.warriorgame.skillup");
+			startActivity(i);
+			finish();
+		}
+	}
+	
 	
 	
 }

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/tvTest5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Potions Store"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/imageView1"
+        android:layout_below="@+id/imageView1"
+        android:layout_marginTop="35dp"
+        android:src="@drawable/mana_potion" />
+
+    <TextView
+        android:id="@+id/tvLPQty2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/imageView1"
+        android:layout_toRightOf="@+id/imageView1"
+        android:text="x0" />
+
+    <TextView
+        android:id="@+id/tvMPQty2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/tvLPQty2"
+        android:layout_below="@+id/imageView2"
+        android:text="x0" />
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/lvPotions"
+        android:layout_marginLeft="56dp"
+        android:layout_marginTop="20dp"
+        android:layout_toRightOf="@+id/tvTest5"
+        android:src="@drawable/life_potion" />
+
+    <ListView
+        android:id="@+id/lvPotions"
+        android:layout_width="160dp"
+        android:layout_height="184dp"
+        android:layout_below="@+id/tvTest5"
+        android:layout_toLeftOf="@+id/imageView2" >
+
+    </ListView>
+
+    <TextView
+        android:id="@+id/tvDetail4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/lvPotions"
+        android:text="Select Item"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <Button
+        android:id="@+id/bBuy4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:text="Buy" />
+
+    <TextView
+        android:id="@+id/tvGold2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvMPQty2"
+        android:layout_marginTop="15dp"
+        android:layout_toRightOf="@+id/tvTest5"
+        android:text="Gold"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+</RelativeLayout>

@@ -55,4 +55,22 @@
         android:layout_centerHorizontal="true"
         android:text="Status" />
 
+    <Button
+       
+        android:id="@+id/bCheat2"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:text="Cheat" />
+
+    <Button
+        android:id="@+id/bSave1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/bQuit"
+        android:layout_alignBottom="@+id/bQuit"
+        android:layout_alignLeft="@+id/bStatus"
+        android:text="Save" />
+
 </RelativeLayout>

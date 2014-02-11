@@ -91,9 +91,9 @@ public class CsvTest extends Activity implements OnClickListener{
 		// TODO Auto-generated method stub
 		sa=((SharingAtts)getApplication());
 		it = new ItemTest();
-		long affec=0;
-		switch(arg0.getId()){
-		case R.id.bPInv:
+		//long affec=0;
+		//switch(arg0.getId()){
+		if(arg0.getId()==R.id.bPInv){
 			//long affec=0;
 			st = it.printData("player_inv");
 			itms = new DBManager(this,st[1],"playersinv",st[0]);
@@ -116,9 +116,9 @@ public class CsvTest extends Activity implements OnClickListener{
 			*/
 			//tvCT.setText(affec+" rows are affected");
 			
-			break;
+			//break;
 			
-		case R.id.bPlayers:
+		}else if(arg0.getId()== R.id.bPlayers){
 			/*
 			st = it.printData("player_skills");
 			itms = new DBManager(this,st[1],"playerskill",st[0]);
@@ -134,9 +134,9 @@ public class CsvTest extends Activity implements OnClickListener{
 			
 			st = it.printData("players");
 			itms = new DBManager(this,st[1],"allplayer",st[0]);
-			String rows="";
+			//String rows="";
 			try{
-			Player pl =new Player(this,1);
+			//Player pl =new Player(this,1);
 			
 			//rows=pl.savePlayer(this, new String[]{"1","Osairas","Samurai","1","17","15","80","70","150","0","250"}, null, null);
 			itms.openToWrite();
@@ -159,10 +159,10 @@ public class CsvTest extends Activity implements OnClickListener{
 			/*/
 			 * 
 			 */
-			String[] pla = new String[]{"1","Osairas","Samurai","2","17","15","80","70","150","80","70","0","1000"};
-			String[] inv = new String[]{"1","0","0","0","0","0","0","0","0","101","201","301","401","10","10"};
-			String[] skills = new String[]{"1","1","1","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0"};
-			Player p =new Player(this,1);
+			//String[] pla = new String[]{"1","Osairas","Samurai","2","17","15","80","70","150","80","70","0","1000"};
+			//String[] inv = new String[]{"1","0","0","0","0","0","0","0","0","101","201","301","401","10","10"};
+			//String[] skills = new String[]{"1","1","1","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0"};
+			//Player p =new Player(this,1);
 			//s=p.savePlayer(this, pla, inv, skills);
 			//if(s.compareTo("")!=0)
 				//tvCT.setText(affec+" rows arWe affected");
@@ -179,8 +179,8 @@ public class CsvTest extends Activity implements OnClickListener{
 				s=s+newValue[i]+"\t";
 			tvCT.setText(sa.getName());
 			*/
-			break;
-		case R.id.bItems:
+			//break;
+		}else if(arg0.getId()==  R.id.bItems){
 			/*
 			st = it.printData("inventory");
 			itms = new DBManager(this,st[1],"allitems",st[0]);
@@ -283,8 +283,8 @@ public class CsvTest extends Activity implements OnClickListener{
 			tvCT.setText(s1+"\n"+s2+"\n"+s3+"\n"+s4);
 			*/
 			
-			break;
-		case R.id.bSkills:
+			//break;
+		}else if(arg0.getId()== R.id.bSkills){
 			
 			/*
 			 *
@@ -317,7 +317,7 @@ public class CsvTest extends Activity implements OnClickListener{
 				s1=s1+String.valueOf(z[i])+"\n";
 			tvCT.setText(s1);
 			*/
-			break;
+			//break;
 		}
 	}
 

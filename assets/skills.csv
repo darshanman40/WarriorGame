@@ -1,5 +1,5 @@
 CREATE TABLE IF NOT EXISTS 'allskills' ('skill_id' INTEGER PRIMARY KEY  NOT NULL  UNIQUE , 'skills' VARCHAR, 'mana' DOUBLE,'accuracy' DOUBLE, 'operation' DOUBLE, 'stat' VARCHAR, 'effect' DOUBLE, 'add_dam' DOUBLE, 'preq_skillid_1' DOUBLE, 'preq_skillid_2' DOUBLE);
-skill_id,skills,mana,accuracy,operation,stat,effect,add_dam,preq_skillid_1,preq_skillid_2
+skill_id,skill_name,mana,accuracy,operation,stat,effect,add_dam,pre_req_skill_id,pre_req_skill_id2
 1001,stab,15,1,1,ph_dam,4,4,0,0
 1011,double_strike,20,1,1,ph_dam,60,8,1001,0
 1012,speed_strike,20,2,2,speed,60,60,1001,0
@@ -14,7 +14,7 @@ skill_id,skills,mana,accuracy,operation,stat,effect,add_dam,preq_skillid_1,preq_
 2012,blast_fire,25,1,1,mag_dam,12,6,2001,0
 2021,energy_field,0,0,0,mag_dam,7,7,2011,0
 2022,charge,0,2,2,max_mana,0,25,2011,0
-2031,mana_bomb,1,1,2,max_mana,150,150,2021,0
+2031,mana_bomb,1,1,1,max_mana,150,150,2021,0
 2032,heal,15,2,2,max_hp,25,8,2022,0
 2041,shadow_strike,40,2,1,mag_dam,85,85,2031,1022
 2042,annihilate,60,1,1,mag_dam,22,11,2032,2012

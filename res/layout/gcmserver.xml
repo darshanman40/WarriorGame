@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/tvTest5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="GCM Server"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Client&apos;s Registration ID" />
+
+    <EditText
+        android:id="@+id/etCRid"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10" >
+
+        <requestFocus />
+    </EditText>
+
+    <EditText
+        android:id="@+id/etMsg1"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:ems="10" 
+        android:hint="data1"
+        />
+
+    <EditText
+        android:id="@+id/etMsg2"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:ems="10" 
+        android:hint="data2"
+        />
+
+    <Button
+        android:id="@+id/bGcmSend"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="GCM Send" />
+
+</LinearLayout>

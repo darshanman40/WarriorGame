@@ -84,8 +84,7 @@ public class NGame extends Activity implements OnClickListener{
 	@Override
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
-		switch(v.getId()){
-		case R.id.bEnter:
+	if(v.getId()==R.id.bEnter){
 			String[] m=sa.getAllItms("101");
 			String r="";
 			for(String h:m)
@@ -101,7 +100,7 @@ public class NGame extends Activity implements OnClickListener{
 			}
 			t.setText(s);
 			*/
-			break;
+			//break;
 			
 		//	int cheked = rgClass.getCheckedRadioButtonId();
 		//	RadioButton rb =(RadioButton)findViewById(cheked);

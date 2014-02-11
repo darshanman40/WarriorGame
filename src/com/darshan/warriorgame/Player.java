@@ -13,7 +13,7 @@ public class Player {
 	String name;
 	String password;
 	int id,lvl;
-	double str,speed,maxHp,maxMana,skill,maxXp,hp,mana,xp,gold; 
+	double str,speed,maxHp,maxMana,skill,maxXp,hp,mana,xp,gold,remSkilPts; 
 	Integer[] inv = new Integer[8];
 	Integer[] eqInv = new Integer[4];
 	Integer[] poInv = new Integer[2];
@@ -66,6 +66,7 @@ public class Player {
 		maxXp=150;
 		xp=0;
 		gold=250;
+		remSkilPts=0;
 		//
 		for(int i=0;i<eqInv.length;i++){
 			eqInv[i]=0;
@@ -120,7 +121,7 @@ public class Player {
 	}
 	
 	public String[] getNPlayerAtts(){
-		String[] atts= new String[14];
+		String[] atts= new String[15];
 		atts[0]= String.valueOf(id);
 		atts[1]= name;
 		atts[2]= password;
@@ -135,6 +136,7 @@ public class Player {
 		atts[11]= String.valueOf(mana);
 		atts[12]= String.valueOf(xp);
 		atts[13]= String.valueOf(gold);
+		atts[14]= String.valueOf(remSkilPts);
 				
 				return atts;
 	}
@@ -160,6 +162,29 @@ public class Player {
 		
 		return atts;
 	}
+	
+	public Integer[] newLevel(Warrior war, int attCode, Integer[] atts){
+		
+		Integer[] retobj= new Integer[10];
+			try {
+	           		Class cls = Class.forName("com.darshan.warriorgame.Warrior");
+	           		Class argType[]=new Class[3];
+	           		
+	           		argType[0]=Integer.TYPE;
+	           		argType[1]=Integer.TYPE;
+	           		argType[2]=Integer[].class;
+	           		Method meth = cls.getMethod(playerClass,argType);	
+		           
+		            retobj= (Integer[]) meth.invoke(war,lvl,attCode, atts);
+		          
+	         }
+	         //catch (Throwable e) {
+	        //    System.err.println(e);
+	         catch(Exception e){
+	        	 System.err.println(e);
+	         }
+			 return (Integer[])retobj; 
+		}
 	
 	
 /*
@@ -721,28 +746,7 @@ public class Player {
 		}
 		*/
 	
-		public Integer[] newLevel(Warrior war, int attCode, Integer[] atts){
-			
-			Integer[] retobj= new Integer[10];
-				try {
-		           		Class cls = Class.forName("com.darshan.warriorgame.Warrior");
-		           		Class argType[]=new Class[3];
-		           		
-		           		argType[0]=Integer.TYPE;
-		           		argType[1]=Integer.TYPE;
-		           		argType[2]=Integer[].class;
-		           		Method meth = cls.getMethod(playerClass,argType);	
-			           
-			            retobj= (Integer[]) meth.invoke(war,lvl,attCode, atts);
-			          
-		         }
-		         //catch (Throwable e) {
-		        //    System.err.println(e);
-		         catch(Exception e){
-		        	 System.err.println(e);
-		         }
-				 return (Integer[])retobj; 
-			}
+		
 		/*
 		public Integer[] pInv(){
 			Integer[] inve = new Integer[8];

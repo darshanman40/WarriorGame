@@ -737,11 +737,19 @@
     android:text="0" />
 
 <Button
-    android:id="@+id/bSkillUp"
+    android:id="@+id/bBoostSkill"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_alignParentBottom="true"
     android:layout_alignParentLeft="true"
     android:text="Boost Skill" />
+
+<Button
+    android:id="@+id/bContinue"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true"
+    android:layout_alignParentRight="true"
+    android:text="Continue" />
 
 </RelativeLayout>

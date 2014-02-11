@@ -3,31 +3,41 @@ package com.darshan.warriorgame;
 import java.util.Hashtable;
 
 import android.app.Activity;
+//import android.app.AlertDialog;
 import android.content.Context;
+//import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
+//import android.widget.EditText;
+import android.widget.TextView;
+//import android.widget.Toast;
 
 public class BattleStadium extends Activity implements OnClickListener{
 
 	Button tf,sm,sr,ag,ba,wa,sh,mr,ro,sma,ma,ra,as,kn,wi,tr,an,gu,vm,gk;
+	Button cheat;
 	Player pl,com;
 	Intent i;
 	DBManager db;
 	ItemTest it;
 	SharingAtts sa;
 	TextView test;
+	String cCode;
+	CheatCompiler cc;
+	
 	Hashtable<String,String[]> oppAtts,oppSkills,oppInv;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.battlestadium);
-		
+		sa = ((SharingAtts)getApplication());
+		cc = new CheatCompiler(this);
+		cCode="";
 		tf = (Button)findViewById(R.id.bThief1);
 		sm = (Button)findViewById(R.id.bSwordsman);
 		sr = (Button)findViewById(R.id.bSeer);
@@ -48,30 +58,51 @@ public class BattleStadium extends Activity implements OnClickListener{
 		gu = (Button)findViewById(R.id.bGuardian);
 		vm = (Button)findViewById(R.id.bVoodooMaster);
 		gk = (Button)findViewById(R.id.bGateKeeper);
-		
+		gk = (Button)findViewById(R.id.bGateKeeper);
+		cheat = (Button)findViewById(R.id.bcheat1);
+		test = (TextView)findViewById(R.id.tvTest);
+		cheat.setOnClickListener(this);
 		tf.setOnClickListener(this);
-		sm.setOnClickListener(this);
-		sr.setOnClickListener(this);
-		ag.setOnClickListener(this);
-		ba.setOnClickListener(this);
-		wa.setOnClickListener(this);
-		sh.setOnClickListener(this);
-		mr.setOnClickListener(this);
-		ro.setOnClickListener(this);
-		sma.setOnClickListener(this);
-		ma.setOnClickListener(this);
+		
+		if(sa.lvl>1)
+			sm.setOnClickListener(this);
+		if(sa.lvl>2)
+			sr.setOnClickListener(this);
+		if(sa.lvl>3)
+			ag.setOnClickListener(this);
+		if(sa.lvl>4)
+			ba.setOnClickListener(this);
+		if(sa.lvl>5)
+			wa.setOnClickListener(this);
+		if(sa.lvl>6)
+			sh.setOnClickListener(this);
+		if(sa.lvl>7)
+			mr.setOnClickListener(this);
+		if(sa.lvl>8)
+			ro.setOnClickListener(this);
+		if(sa.lvl>9)
+			sma.setOnClickListener(this);
+		if(sa.lvl>10)
+			ma.setOnClickListener(this);
+		if(sa.lvl>11)
 		ra.setOnClickListener(this);
+		if(sa.lvl>12)
 		as.setOnClickListener(this);
+		if(sa.lvl>13)
 		kn.setOnClickListener(this);
+		if(sa.lvl>14)
 		wi.setOnClickListener(this);
+		if(sa.lvl>15)
 		tr.setOnClickListener(this);
+		if(sa.lvl>16)
 		an.setOnClickListener(this);
+		if(sa.lvl>17)
 		gu.setOnClickListener(this);
+		if(sa.lvl>18)
 		vm.setOnClickListener(this);
+		if(sa.lvl>19)
 		gk.setOnClickListener(this);
 		
-		sa = ((SharingAtts)getApplication());
-		test = (TextView)findViewById(R.id.tvTest);
 		
 	}
 
@@ -79,23 +110,19 @@ public class BattleStadium extends Activity implements OnClickListener{
 	public void onClick(View arg0) {
 		// TODO Auto-generated method stub
 		i = new Intent("com.darshan.warriorgame.battlearena");
-		switch(arg0.getId()){
-		case R.id.bThief1:
-			
+		//switch(arg0.getId()){
+		if(arg0.getId()==R.id.bThief1){
 			setOpp(this,"1");
-			//i.putExtra("oppName", "Thief");
-		//	i.putExtra("oppClass", "Ninja");
-			//i.putExtra("oppLevel", "1");
 			startActivity(i);
-			break;
-		case R.id.bSwordsman:
+		}else if(arg0.getId()==R.id.bSwordsman){
 			setOpp(this,"2");
-		//	//i.putExtra("oppName", "Swordsman");
-		//	i.putExtra("oppClass", "Samurai");
-		//	i.putExtra("oppLevel", "1");
 			startActivity(i);
-			break;
+		}else if(arg0.getId()==R.id.bcheat1){
+		
+			
+			cc.show();
 		}
+		
 	}
 	public void setOpp(Context c,String id){
 		it = new ItemTest();
@@ -103,6 +130,33 @@ public class BattleStadium extends Activity implements OnClickListener{
 		oppSkills = new Hashtable<String,String[]>();
 		oppInv = new Hashtable<String,String[]>();
 		
+		String[] s1=it.printData("players");
+		String[] rows = s1[Integer.valueOf(id)+1].split(" ");
+		
+		Toast.makeText(getApplicationContext(), String.valueOf(rows[0]), Toast.LENGTH_SHORT).show();
+		
+		i.putExtra("oppName",rows[1]);
+		i.putExtra("oppClass", rows[3]);
+		i.putExtra("oppLevel", rows[4]);
+		
+		oppAtts.put(rows[0], rows);
+		sa.setMajOppAtts(oppAtts);
+		
+		String[] s2=it.printData("player_inv");
+		rows = null;
+		rows = s2[Integer.valueOf(id)+1].split(" ");
+		
+		oppInv.put(rows[0], rows);
+		sa.setOppInv(oppInv);
+		
+		String[] s3=it.printData("player_skills");
+		rows = null;
+		rows = s3[Integer.valueOf(id)+1].split(" ");
+		
+		oppSkills.put(rows[0], rows);
+		sa.setOppSkills(oppSkills);
+		
+		/*
 		String[] s1=it.printData("players");
 		db = new DBManager(c,s1[1],"allplayer",s1[0]);
 		db.openToRead();
@@ -134,6 +188,8 @@ public class BattleStadium extends Activity implements OnClickListener{
 		String ss3[] = s.split(" ");
 		oppSkills.put(ss3[0], ss3);
 		sa.setOppSkills(oppSkills);
+		*/
+		
 	}
 
 	

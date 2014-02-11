@@ -1,19 +1,22 @@
 package com.darshan.warriorgame;
 
 import android.app.Activity;
+//import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class SkillUp extends Activity implements OnClickListener{
 
 	ImageView PS1,PS2,PS3,PS4,PS5,PS6,PS7,PS8,PS9,MS1,MS2,MS3,MS4,MS5,MS6,MS7,MS8,MS9,MS10;
 	TextView Detail,P1,P2,P3,P4,P5,P6,P7,P8,P9,M1,M2,M3,M4,M5,M6,M7,M8,M9,M10;
 	TextView[] skilLvl;// = {P1,P2,P3,P4,P5,P6,P7,P8,P9,M1,M2,M3,M4,M5,M6,M7,M8,M9,M10};
-	Button bSkillUp;
+	Button bSkillUp,bCont;
 	SharingAtts sa;
 	int selectedSId;
 	
@@ -22,7 +25,7 @@ public class SkillUp extends Activity implements OnClickListener{
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.skillup);
-		
+		selectedSId =-1;
 		sa = ((SharingAtts)getApplication());
 		PS1 = (ImageView)findViewById(R.id.ivPhS1);
 		PS2 = (ImageView)findViewById(R.id.ivPhS2);
@@ -43,6 +46,7 @@ public class SkillUp extends Activity implements OnClickListener{
 		MS8 = (ImageView)findViewById(R.id.ivMgS8);
 		MS9 = (ImageView)findViewById(R.id.ivMgS9);
 		MS10 = (ImageView)findViewById(R.id.ivMgS10);
+		
 		P2 = (TextView)findViewById(R.id.tvPS2);
 		P3 = (TextView)findViewById(R.id.tvPS3);
 		P4 = (TextView)findViewById(R.id.tvPS4);
@@ -62,22 +66,25 @@ public class SkillUp extends Activity implements OnClickListener{
 		M10 = (TextView)findViewById(R.id.tvMS10);
 		Detail = (TextView)findViewById(R.id.tvSkillDetail);
 		
+		bSkillUp = (Button)findViewById(R.id.bBoostSkill);
+		bCont = (Button)findViewById(R.id.bContinue);
 		
-		bSkillUp = (Button)findViewById(R.id.bSkillUp);
-		
-		
+		bCont.setOnClickListener(this);
 		PS2.setOnClickListener(this);
 		MS2.setOnClickListener(this);
-		bSkillUp.setOnClickListener(this);
-		
+		if(sa.remSkilPts>0){
+			bSkillUp.setOnClickListener(this);
+		}
 		skilLvl = new TextView[]{P1,P2,P3,P4,P5,P6,P7,P8,P9,M1,M2,M3,M4,M5,M6,M7,M8,M9,M10};
-		selectedSId=0;
+		//selectedSId=0;
+		Detail.setText(String.valueOf(sa.remSkilPts));
 	}
 	
 	
 	@Override
 	public void onClick(View arg0) {
 		// TODO Auto-generated method stub
+	/*
 		switch(arg0.getId()){
 		case R.id.bSkillUp:
 			//if((selectedSId-1)>=0)
@@ -93,8 +100,33 @@ public class SkillUp extends Activity implements OnClickListener{
 			Detail.setText("Energy Shot\nRequired Mana 25\n Next lvl 49 extra magical damage");
 			break;
 		}
+		*/
+		if(arg0.getId()==R.id.bBoostSkill){
+			if(selectedSId!=-1){
+				sa.skilllvl[selectedSId]+=1;
+				sa.remSkilPts-=1;
+				if(sa.remSkilPts<1)
+					bSkillUp.setClickable(false);
+			}
+			else
+				Toast.makeText(getApplicationContext(), "Please select Skill", Toast.LENGTH_SHORT).show();
+		}else if(arg0.getId()==R.id.ivPhS2){
+			selectedSId = 1;
+			Detail.setText("Double Strike\nRequired Mana 20\n Next lvl 8% extra physical damage");
+		}else if(arg0.getId()==R.id.ivMgS2){
+			selectedSId = 10;
+			Detail.setText("Energy Shot\nRequired Mana 25\n Next lvl 49 extra magical damage");
+		}else if(arg0.getId()==R.id.bContinue){
+			finish();
+		}
+		if(selectedSId!=-1)
+			skilLvl[selectedSId].setText(sa.skilllvl[selectedSId].toString());
+		if(sa.remSkilPts<1){
+			bSkillUp.setClickable(false);
+		}
 		
-		skilLvl[selectedSId].setText(sa.skilllvl[selectedSId].toString()); 
+		Toast.makeText(getApplicationContext(),"rem Skill points= "+sa.remSkilPts, Toast.LENGTH_SHORT).show();
+		//finish();
 	}
 
 	

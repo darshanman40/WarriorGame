@@ -11,11 +11,12 @@ public class SharingAtts extends Application {
 	String playerClass;
 	String name;
 	int id,lvl;
-	double str,speed,maxHp,maxMana,maxXp,initMana,initSpeed,hp,mana,xp,gold; 
+	double str,speed,maxHp,maxMana,maxXp,initMana,initSpeed,hp,mana,xp,gold,remSkilPts; 
 	Integer[] inv;
 	Integer[] eqInv;
 	Integer[] poInv;
 	Integer[] skills = new Integer[]{1001,1011,1012,1021,1022,1031,1041,1042,1051,2001,2011,2012,2021,2022,2031,2032,2041,2042,2051};
+	Integer[] goldToWin = new Integer[]{};
 	Integer[] skilllvl;
 	Integer[] oppInv;
 	Integer[] oppSkilllvl;
@@ -59,6 +60,7 @@ public class SharingAtts extends Application {
 		mana=Double.valueOf(att[11]);
 		xp=Double.valueOf(att[12]);
 		gold=Double.valueOf(att[13]);
+		remSkilPts = Double.valueOf(att[14]);
 	}
 	
 	public void setPlaMajAtts(Integer[] att){
@@ -174,7 +176,7 @@ public class SharingAtts extends Application {
 	
 	public Integer[] getMajatt(){
 		updateStat();
-		Integer[] majAtts = new Integer[9];
+		Integer[] majAtts = new Integer[10];
 		majAtts[0]=(int)str;
 		majAtts[1]=(int)speed;
 		majAtts[2]=(int)maxHp;
@@ -184,7 +186,7 @@ public class SharingAtts extends Application {
 		majAtts[6]=(int)mana;
 		majAtts[7]=(int)xp;
 		majAtts[8]=(int)gold;
-		
+		majAtts[9]=(int)remSkilPts;
 		return majAtts;
 	}
 	
@@ -251,7 +253,7 @@ public class SharingAtts extends Application {
 	
 	public String[] getAllItms(String sid){
 		//allSkills.
-		if(!sid.equals("0"))
+		if(!sid.equals("0")||!sid.equals("0 ")||!sid.equals(" 0")||!sid.equals(" 0 "))
 			return allItms.get(sid);
 		else
 			return new String[]{"0","0","0","0","0","0","0","0","0"};
@@ -263,6 +265,18 @@ public class SharingAtts extends Application {
 	}
 	
 	public void getPlaInv(){
+		
+	}
+	
+	public String getSkillName(String id){
+		String[] detail = allSkills.get(id);
+		
+		return detail[1];
+	}
+	public String getSkilAcc(String id){
+		String[] detail = allSkills.get(id);
+		
+		return detail[3];
 		
 	}
 	
@@ -283,9 +297,9 @@ public class SharingAtts extends Application {
 		Integer[] ItemAtts = new Integer[]{0,0,0,0,0,0,0,0};
 		for(int i=0;i<4;i++){
 			String[] itmAtts=getAllItms(String.valueOf(eqInv[i]));
-			if(itmAtts[i]!=null){
-			for(int j=3;j<itmAtts.length-4;j++)
-				ItemAtts[j-3]=ItemAtts[j-3]+Integer.valueOf(itmAtts[j]);
+			if(itmAtts!=null){
+				for(int j=3;j<itmAtts.length-4;j++)
+					ItemAtts[j-3]=ItemAtts[j-3]+Integer.valueOf(itmAtts[j]);
 			}
 		}
 		maxMana = initMana+ItemAtts[6];
@@ -304,6 +318,16 @@ public class SharingAtts extends Application {
 			}
 		}
 		return ItemAtts;
+	}
+	public String processCheat(String cCode) {
+		// TODO Auto-generated method stub
+		if(cCode.equals("FeedMe")) {
+			hp=maxHp;
+			mana=maxMana;
+			return ("hp= "+hp+" mana= "+mana);
+		}
+		
+		return "Wrong Cheat Code";
 	}
 	
 	

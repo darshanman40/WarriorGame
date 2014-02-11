@@ -78,11 +78,11 @@ public class Battle{
 		
 		int damage;
 		if(id==0){
-			damage = p1MinAtts[0]-(p2MinAtts[2]/10);
-		if(damage<=0)
-			damage=1;
-		p1damage = damage;
-		p2hp=p2hp-damage;
+			damage = (p1MinAtts[0]*2)-(p2MinAtts[2]/20);
+			if(damage<=0)
+				damage=1;
+			p1damage = damage;
+			p2hp=p2hp-damage;
 		}else if(id==1){
 			newHpP1();
 		}
@@ -90,7 +90,7 @@ public class Battle{
 	}
 	
 	public void newHpP1(){
-		int damage = p2MinAtts[0]-(p1MinAtts[2]/10);
+		int damage = p2MinAtts[0]-(p1MinAtts[2]);
 		if(damage<=0)
 			damage=1;
 		p2damage = damage;
@@ -100,14 +100,14 @@ public class Battle{
 	public void stab(int id){
 		int damage;
 		if(id == 0){
-			damage =  (p1MinAtts[0])-(p2MinAtts[2]/10);
+			damage =  (p1MinAtts[0]*2)-(p2MinAtts[2]/20);
 			if(damage<=0)
 				damage=1;
 			p1damage = damage+(p1Skills[0]*4);
 			p2hp = p2hp-damage;
 			//p1mana = p1mana - 15;
 		}else if(id == 1){
-			damage =  (p2MinAtts[0])-(p1MinAtts[2]/10);
+			damage =  (p2MinAtts[0])-(p1MinAtts[2]);
 			if(damage<=0)
 				damage=1;
 			p2damage = damage+(p2Skills[0]*4);

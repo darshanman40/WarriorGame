@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteDatabase.CursorFactory;
+import android.util.Log;
 
 
 
@@ -29,7 +30,10 @@ public class DBManager {
 	 public DBManager(Context c, String colNames,String tblName,String creatTbl){
 	  context = c;
 	  cols=colNames;
-	  this.colNames=colNames.split(" ");
+	  if(colNames!=null)
+		  this.colNames=colNames.split(" ");
+	  //else
+		//  this.colNames=null;
 	  SCRIPT_CREATE_DATABASE=creatTbl;
 	  MYDATABASE_TABLE=tblName;
 	 }
@@ -94,12 +98,38 @@ public class DBManager {
 		 String[] cols = content.split(" ");
 		 ContentValues cvalues = new ContentValues();
 		 
-		 for(int i=1; i<colNames.length;i++)
+		 for(int i=1; i<colNames.length;i++){
+			 
 			 cvalues.put(colNames[i], cols[i]);
+		 }
 		 //sqLiteDatabase.up
 		 return sqLiteDatabase.update(MYDATABASE_TABLE, cvalues, where, null);
 	 }
+	 public long updateTable(String content, String where,String[] args){
+		 String[] cols = content.split(" ");
+		 ContentValues cvalues = new ContentValues();
 		 
+		 for(int i=1; i<colNames.length;i++){
+		
+			 cvalues.put(colNames[i], cols[i]);
+		 }
+			 //sqLiteDatabase.up
+		 return sqLiteDatabase.update(MYDATABASE_TABLE, cvalues, where, args);
+	 }
+		
+	 public long updateTable(String content,String[] colNames, String where){
+		 String[] cols = content.split(" ");
+		 ContentValues cvalues = new ContentValues();
+		 
+		 for(int i=0; i<colNames.length;i++){
+			 Log.d("DBM_Val", cols[i]);
+			 Log.d("DBM_ColNames", colNames[i]);
+			 cvalues.put(colNames[i], cols[i]);
+		 }
+		 Log.d("DBM_WHERE",where);
+			 //sqLiteDatabase.up
+		 return sqLiteDatabase.update(MYDATABASE_TABLE, cvalues, where, null);
+	 }
 	 //}
 	 
 	 public int deleteAll(){

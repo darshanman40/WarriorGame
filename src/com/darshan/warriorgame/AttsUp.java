@@ -17,6 +17,8 @@ public class AttsUp extends Activity implements OnClickListener{
 	Player pl;
 	Warrior war;
 	private Handler mHandler;
+	String temp;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -41,7 +43,9 @@ public class AttsUp extends Activity implements OnClickListener{
 		ivSpd.setOnClickListener(this);
 		ivMHp.setOnClickListener(this);
 		ivMMana.setOnClickListener(this);
-		String temp = tvStr.getText().toString();
+		//sa.lvl+=1;
+		//sa.remSkilPts+=1;
+		temp = tvStr.getText().toString();
 		tvStr.setText("Str "+sa.str);
 		//temp = tvSpd.getText().toString();
 		tvSpd.append(" "+sa.speed);
@@ -56,71 +60,57 @@ public class AttsUp extends Activity implements OnClickListener{
 	public void onClick(View arg0) {
 		// TODO Auto-generated method stub
 		sa.updateStat();
-		switch(arg0.getId()){
-		case R.id.ivStr4:
-			sa.lvl++;
+		if(arg0.getId()==R.id.ivStr4){
+			
 			pl= new Player(sa.playerClass, sa.lvl);
 			war = new Warrior();
 			sa.setPlaMajAtts(pl.newLevel(war, 0, sa.getPlaUpatt()));
-			
-			//String temp =tvStr.getText().toString();
-			
-			//finish();
-			break;
-			
-		case R.id.ivSpd4:
-			sa.lvl++;
+		}else if(arg0.getId()==R.id.ivSpd4){	
+		
+			//sa.lvl+=1;
 			pl= new Player(sa.playerClass, sa.lvl);
 			war = new Warrior();
 			sa.setPlaMajAtts(pl.newLevel(war, 1, sa.getMajatt()));
-			
-			//String temp =tvStr.getText().toString();
-			//tvSpd.setText("Speed "+sa.speed);
-			//finish();
-			break;
-			
-		case R.id.ivMHp4:
-			sa.lvl++;
+		}else if(arg0.getId()==R.id.ivMHp4){
+		//	sa.lvl+=1;
 			pl= new Player(sa.playerClass, sa.lvl);
 			war = new Warrior();
 			sa.setPlaMajAtts(pl.newLevel(war, 2, sa.getMajatt()));
-			
-			//String temp =tvStr.getText().toString();
-			//tvMHp.setText("Max Hp "+sa.maxHp);
-			//finish();
-			break;
-			
-		case R.id.ivMMana4:
-			sa.lvl++;
+		}else if(arg0.getId()==R.id.ivMMana4){
+			//sa.lvl+=1;
 			pl= new Player(sa.playerClass, sa.lvl);
 			war = new Warrior();
 			sa.setPlaMajAtts(pl.newLevel(war, 3, sa.getMajatt()));
 			
-			//String temp =tvStr.getText().toString();
-			//tvMMana.setText("Max Mana "+sa.maxMana);
-			//finish();
-			break;
 		}
+		ivStr.setClickable(false);
+		ivSpd.setClickable(false);
+		ivMHp.setClickable(false);;
+		ivMMana.setClickable(false);
 		
 		sa.updateStat();
 		tvStr.setText("Str "+sa.str);
 		tvSpd.setText("Speed "+sa.speed);
-		tvMHp.setText("Max Hp "+sa.maxHp);
+		tvMHp.setText("Max HP "+sa.maxHp);
 		tvMMana.setText("Max Mana "+sa.maxMana);
 		//String temp = tvTitle.getText().toString();
-		tvTitle.append("\nLevel = "+sa.lvl);
+		tvTitle.setText(temp+"\nLevel = "+sa.lvl);
+		//tvTitle.append("\nLevel = "+sa.lvl);
 		mHandler.postDelayed(new Runnable(){
 
 			@Override
 			public void run() {
 				// TODO Auto-generated method stub
-				Intent i = new Intent("com.darshan.warriorgame.skillup");
-				startActivity(i);
+				
+				if(sa.remSkilPts>0){
+					Intent i = new Intent("com.darshan.warriorgame.skillup");
+					startActivity(i);
+					finish();
+				}
 				finish();
 			}
 			
-		},5000);
-		
+		},3000);
 		
 	}
 

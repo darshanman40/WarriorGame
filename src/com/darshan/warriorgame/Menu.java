@@ -21,7 +21,7 @@ public class Menu extends ListActivity{
 	SharedPreferences filenames;
 	
 	
-	String[] classes={"NGame","New Game","Load Game","Class N Opp","BattleArena","CsvTest","WeaponsStore"};
+	String[] classes={"NGame","New Game","Load Game","CsvTest","WeaponsStore","Login","SkillRead","TableRead"};
 	//classes[4];
 	
 	

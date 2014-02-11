@@ -1,5 +1,5 @@
 CREATE TABLE IF NOT EXISTS 'allitems' ('item_id' INTEGER PRIMARY KEY  NOT NULL  UNIQUE , 'item' VARCHAR, 'str' DOUBLE, 'ph_dam' DOUBLE, 'mag_dam' DOUBLE, 'ph_def' DOUBLE, 'mag_def' DOUBLE, 'e_s_dam' DOUBLE, 's_hp' DOUBLE, 'b_mana' DOUBLE, 'speed' DOUBLE, 'cost' DOUBLE, 'selling_price' DOUBLE, 'hp_plus' DOUBLE, 'mana_plus' DOUBLE);
-item_id,item,str,ph_dam,mag_dam,ph_def,mag_def,e_s_dam,s_hp,b_mana,speed,cost,selling_price,hp_plus,mana_plus
+item_id,name,str,ph_dam,mag_dam,ph_def,mag_def,e_s_dam,s_hp,b_mana,spd,cost,s_price,hp_plus,mana_plus
 101,iron_knife,10,5,0,0,0,0,0,0,0,14,7,0,0
 102,energy_knife,10,0,5,0,0,0,0,0,0,14,7,0,0
 103,silver_knife,10,5,0,0,0,0,0,0,0,30,15,0,0
@@ -65,5 +65,5 @@ item_id,item,str,ph_dam,mag_dam,ph_def,mag_def,e_s_dam,s_hp,b_mana,speed,cost,se
 602,mana_recover,0,0,0,0,0,0,0,0,0,5,0,0,40
 603,heal_all,0,0,0,0,0,0,0,0,0,20,0,60,60
 604,restore_all,0,0,0,0,0,0,0,0,0,30,0,120,120
-605,medical_leaves,0,0,0,0,0,0,0,0,0,0,0,0,0
-607,medical_bottle,0,0,0,0,0,0,0,0,0,0,3,0,0
+701,medical_leaves,0,0,0,0,0,0,0,0,0,0,0,0,0
+702,medical_bottle,0,0,0,0,0,0,0,0,0,0,3,0,0

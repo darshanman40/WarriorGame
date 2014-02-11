@@ -89,8 +89,8 @@ public class MyEquips extends Activity implements OnClickListener,OnItemClickLis
 		@Override
 		public void onClick(View arg0) {
 			// TODO Auto-generated method stub
-			switch(arg0.getId()){
-			case R.id.ivArmour1:
+			//switch(arg0.getId()){
+			if(arg0.getId()==R.id.ivArmour1){
 				if(armour==0){
 					tvStat.setText("Empty");
 				}else{
@@ -106,9 +106,9 @@ public class MyEquips extends Activity implements OnClickListener,OnItemClickLis
 					tvStat.setText(detail);
 				}
 			
-			break;
+			//break;
 			
-			case R.id.ivheadGear1:
+			}else if(arg0.getId()==R.id.ivheadGear1){
 				if(headgear==0){
 					tvStat.setText("Empty");
 				}else{
@@ -124,9 +124,7 @@ public class MyEquips extends Activity implements OnClickListener,OnItemClickLis
 					tvStat.setText(detail);
 				}
 			
-			break;
-			
-			case R.id.ivWeapon1:
+			}else if(arg0.getId()==R.id.ivWeapon1){
 				if(weapon==0){
 					tvStat.setText("Empty");
 				}else{
@@ -141,10 +139,7 @@ public class MyEquips extends Activity implements OnClickListener,OnItemClickLis
 					}
 					tvStat.setText(detail);
 				}
-			
-			break;
-			
-			case R.id.ivShield1:
+			}else if(arg0.getId()==R.id.ivShield1){
 				if(shield==0){
 					tvStat.setText("Empty");
 				}else{
@@ -160,9 +155,7 @@ public class MyEquips extends Activity implements OnClickListener,OnItemClickLis
 					tvStat.setText(detail);
 				}
 			
-			break;
-			
-			case R.id.bEquip3:
+			}else if(arg0.getId()==R.id.bEquip3){
 				int typeEquip = selectedItm/100;
 				switch(typeEquip){
 				case 1:
@@ -278,9 +271,7 @@ public class MyEquips extends Activity implements OnClickListener,OnItemClickLis
 			
 			
 			setArrayAdapter();
-			break;
-			
-			case R.id.bSell3:
+			}else if(arg0.getId()==R.id.bSell3){
 				sa.gold = sa.gold+sellinPrice;
 				if(selectedItm == armour)
 					armour=0;
@@ -292,7 +283,7 @@ public class MyEquips extends Activity implements OnClickListener,OnItemClickLis
 					weapon=0;
 				else
 					sa.inv[listId]=0;
-				break;
+				//break;
 			}
 
 		}

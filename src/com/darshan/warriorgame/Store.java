@@ -46,11 +46,18 @@ public class Store extends TabActivity{
         Intent HeadgearsIntent = new Intent(this, HeadgearStore.class);
         Headgears.setContent(HeadgearsIntent);
         
+        //Tab for Potions
+        TabSpec Potions = tabHost.newTabSpec("Potions");
+        // setting Title and Icon for the Tab
+        Potions.setIndicator("Potions", getResources().getDrawable(R.drawable.life_potion));
+        Intent PotionsIntent = new Intent(this, PotionStore.class);
+        Potions.setContent(PotionsIntent);
         
         tabHost.addTab(weapons);
         tabHost.addTab(armour);
         tabHost.addTab(shield);
         tabHost.addTab(Headgears);
+        tabHost.addTab(Potions);
 		
 	}
 

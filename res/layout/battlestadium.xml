@@ -184,4 +184,13 @@
          android:layout_toLeftOf="@+id/bVoodooMaster"
          android:text="Gate Keeper" />
 
+     <Button
+         android:id="@+id/bcheat1"
+         android:layout_width="80dp"
+         android:layout_height="wrap_content"
+         android:layout_above="@+id/tvTest"
+         android:layout_alignParentRight="true"
+         android:layout_marginBottom="16dp"
+         android:text="Cheat" />
+
 </RelativeLayout>

@@ -70,8 +70,8 @@ public class ShieldsStore extends Activity implements OnClickListener,OnItemClic
 		@Override
 		public void onClick(View arg0) {
 			// TODO Auto-generated method stub
-			switch(arg0.getId()){
-			case R.id.bBuy:
+			//switch(arg0.getId()){
+			//case R.id.bBuy:
 				
 				if(selectedItm!=0){
 					boolean succ=false;
@@ -81,7 +81,9 @@ public class ShieldsStore extends Activity implements OnClickListener,OnItemClic
 					if(costOfItm>sa.gold){
 						t= Toast.makeText(getApplicationContext(), "Insuffecient Gold    "+costOfItm, Toast.LENGTH_LONG);
 						t.show();
-						break;
+						//break;
+						//boolean exit;
+						//goto exit;
 					}
 					
 					for(int i=0;i<8;i++){
@@ -103,13 +105,14 @@ public class ShieldsStore extends Activity implements OnClickListener,OnItemClic
 				}
 				
 				}else{
-					t= Toast.makeText(getApplicationContext(), "Item not selected", Toast.LENGTH_LONG);
+				exit:	t= Toast.makeText(getApplicationContext(), "Item not selected", Toast.LENGTH_LONG);
 					t.show();
 				}
-				break;
+				//break;
+				
 			}
 			
-		}
+		//}
 
 		@Override
 		public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,

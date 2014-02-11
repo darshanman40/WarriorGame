@@ -1,12 +1,14 @@
 package com.darshan.warriorgame;
 
 
+//import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Hashtable;
 import java.util.LinkedList;
 import java.util.List;
 
 import android.app.Activity;
+import android.content.Intent;
 //import android.content.SharedPreferences;
 //import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
@@ -17,12 +19,14 @@ import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.ImageView;
 //import android.widget.LinearLayout;
 //import android.widget.LinearLayout.LayoutParams;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.RelativeLayout.LayoutParams;
 import android.widget.ScrollView;
+import android.widget.Toast;
 //import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -32,12 +36,15 @@ public class BattleArena extends Activity implements OnClickListener{
 	
 	String t;
 	String[] skilName = new String[]{"stab","double_strike","speed_strike","speed_strike","vertical_strike","shadow_blend","inner_strength","avenger","split","execution","shurikens","energy_shot","blast_fire","energy_field","charge","mana_bomb","heal","shadow_strike","annihilate","shadow_replicate"};
+	String[] skilId = new String[]{"1001","1011","1012","1021","1022","1031","1041","1042","1051","2001","2011","2012","2021","2022","2031","2032","2041","2042","2051"};
 	ProgressBar pbCHp,pbPHp;
 	RadioGroup rgAttacks;
-	TextView tvCpClass,tvCpLevel,tvPClass,tvPLevel, tvPName, tvFStat, tvCpName ;
-	Button attack,bSkill2,bSkill1,bSkill3,bSkill4,bSkill5,bSkill6,bSkill7
+	TextView tvCpClass,tvCpLevel,tvPClass,tvPLevel, tvPName, tvFStat, tvCpName, tvLPQty, tvMPQty ;
+	ImageView bSkill2,bSkill1,bSkill3,bSkill4,bSkill5,bSkill6,bSkill7
 	,bSkill8,bSkill9,bSkill10,bSkill11,bSkill12,bSkill13,
 	bSkill14,bSkill15,bSkill16;
+	ImageView ivMPot,ivLPot;
+	Button attack;
 	ScrollView svFStat;
 	
 	RelativeLayout rl;
@@ -68,22 +75,29 @@ public class BattleArena extends Activity implements OnClickListener{
 		pbPHp = (ProgressBar)findViewById(R.id.pbPHp);
 		pbCHp = (ProgressBar)findViewById(R.id.pbComHp);
 		attack = (Button)findViewById(R.id.bAttack);
-		bSkill1 = (Button)findViewById(R.id.bSkill1);
-		bSkill2 = (Button)findViewById(R.id.bSkill2);
-		bSkill3 = (Button)findViewById(R.id.bSkill3);
-		bSkill4 = (Button)findViewById(R.id.bSkill4);
-		bSkill5 = (Button)findViewById(R.id.bSkill5);
-		bSkill6 = (Button)findViewById(R.id.bSkill6);
-		bSkill7 = (Button)findViewById(R.id.bSkill7);
-		bSkill8 = (Button)findViewById(R.id.bSkill8);
-		bSkill9 = (Button)findViewById(R.id.bSkill9);
-		bSkill10 = (Button)findViewById(R.id.bSkill10);
-		bSkill11 = (Button)findViewById(R.id.bSkill11);
-		bSkill12 = (Button)findViewById(R.id.bSkill12);
-		bSkill13 = (Button)findViewById(R.id.bSkill13);
-		bSkill14 = (Button)findViewById(R.id.bSkill14);
-		bSkill15 = (Button)findViewById(R.id.bSkill15);
-		bSkill16 = (Button)findViewById(R.id.bSkill16);
+		//bSkill1 = (Button)findViewById(R.id.bSkill1);
+		
+		ivLPot = (ImageView)findViewById(R.id.ivLPotion);
+		ivMPot = (ImageView)findViewById(R.id.ivMPotion);
+		
+		bSkill2 = (ImageView)findViewById(R.id.ivStab);
+		bSkill3 = (ImageView)findViewById(R.id.ivDouble_strike);
+		bSkill4 = (ImageView)findViewById(R.id.ivSpeed_strike);
+		bSkill5 = (ImageView)findViewById(R.id.ivShuriken);
+		bSkill6 = (ImageView)findViewById(R.id.ivBlast_fire);
+		bSkill7 = (ImageView)findViewById(R.id.ivVertical_strike);
+		bSkill8 = (ImageView)findViewById(R.id.ivCharge);
+		bSkill9 = (ImageView)findViewById(R.id.ivHeal);
+		bSkill10 = (ImageView)findViewById(R.id.ivEnergy_shot);
+		bSkill11 = (ImageView)findViewById(R.id.ivAnnihilate);
+		bSkill12 = (ImageView)findViewById(R.id.ivShadow_strike);
+		bSkill13 = (ImageView)findViewById(R.id.ivSplit);
+		bSkill14 = (ImageView)findViewById(R.id.ivAvenger);
+		bSkill15 = (ImageView)findViewById(R.id.ivMana_bomb);
+		bSkill16 = (ImageView)findViewById(R.id.ivExecution);
+		
+		tvLPQty = (TextView) findViewById(R.id.tvLPQty);
+		tvMPQty = (TextView) findViewById(R.id.tvMPQty);
 		tvCpClass = (TextView) findViewById(R.id.tvCpClass);
 		tvCpLevel = (TextView) findViewById(R.id.tvCpLevel);
 		tvPClass = (TextView) findViewById(R.id.tvPClass);
@@ -102,37 +116,79 @@ public class BattleArena extends Activity implements OnClickListener{
 		tvPClass.setText(sa.playerClass);//sa.playerClass);
 		tvPName.setText(p1name);//sa.name);
 		
-		
+		tvLPQty.setText("x"+sa.poInv[0]);
+		tvMPQty.setText("x"+sa.poInv[1]);
 		tvCpName.setText(p2name);
 		//*/
+		ivLPot.setOnClickListener(this);
+		ivMPot.setOnClickListener(this);
 		attack.setOnClickListener(this);
-		bSkill1.setOnClickListener(this);
-		bSkill2.setOnClickListener(this);
-		bSkill3.setOnClickListener(this);
-		bSkill4.setOnClickListener(this);
-		bSkill5.setOnClickListener(this);
-		bSkill6.setOnClickListener(this);
-		bSkill7.setOnClickListener(this);
-		bSkill8.setOnClickListener(this);
-		bSkill9.setOnClickListener(this);
-		bSkill10.setOnClickListener(this);
-		bSkill11.setOnClickListener(this);
-		bSkill12.setOnClickListener(this);
-		bSkill13.setOnClickListener(this);
-		bSkill14.setOnClickListener(this);
-		bSkill15.setOnClickListener(this);
-		bSkill16.setOnClickListener(this);
+		//bSkill1.setOnClickListener(this);
+		if(sa.skilllvl[0]!=0){
+			bSkill2.setImageResource(com.darshan.warriorgame.R.drawable.stab_act);
+			bSkill2.setOnClickListener(this);
+		}
+		
+		if(sa.skilllvl[1]!=0){
+			bSkill3.setImageResource(com.darshan.warriorgame.R.drawable.double_strike_act);
+			bSkill3.setOnClickListener(this);
+		}
+		
+		if(sa.skilllvl[2]!=0){
+			bSkill4.setImageResource(com.darshan.warriorgame.R.drawable.speed_strike_act);
+			bSkill4.setOnClickListener(this);
+		}
+		if(sa.skilllvl[9]!=0){
+			bSkill5.setImageResource(com.darshan.warriorgame.R.drawable.shuriken_act);
+			bSkill5.setOnClickListener(this);
+		}
+		if(sa.skilllvl[11]!=0){
+			bSkill6.setImageResource(com.darshan.warriorgame.R.drawable.blast_fire_act);
+			bSkill6.setOnClickListener(this);
+		}
+		if(sa.skilllvl[3]!=0){
+			bSkill7.setImageResource(com.darshan.warriorgame.R.drawable.vertical_strike_act);
+			bSkill7.setOnClickListener(this);
+		}
+		if(sa.skilllvl[13]!=0){
+			bSkill8.setImageResource(com.darshan.warriorgame.R.drawable.charge_act);
+			bSkill8.setOnClickListener(this);
+		}
+		if(sa.skilllvl[15]!=0){
+			bSkill9.setImageResource(com.darshan.warriorgame.R.drawable.heal_act);
+			bSkill9.setOnClickListener(this);
+		}
+		if(sa.skilllvl[10]!=0){
+			bSkill10.setImageResource(com.darshan.warriorgame.R.drawable.energy_shot_act);
+			bSkill10.setOnClickListener(this);
+		}
+		if(sa.skilllvl[17]!=0){
+			bSkill11.setImageResource(com.darshan.warriorgame.R.drawable.annihilate_act);
+			bSkill11.setOnClickListener(this);
+		}if(sa.skilllvl[16]!=0){
+			bSkill12.setImageResource(com.darshan.warriorgame.R.drawable.shadow_strike_act);
+			bSkill12.setOnClickListener(this);
+		}if(sa.skilllvl[7]!=0){
+			bSkill13.setImageResource(com.darshan.warriorgame.R.drawable.split_act);
+			bSkill13.setOnClickListener(this);
+		}if(sa.skilllvl[6]!=0){
+			bSkill14.setImageResource(com.darshan.warriorgame.R.drawable.avenger_act);
+			bSkill14.setOnClickListener(this);
+		}if(sa.skilllvl[14]!=0){
+			bSkill15.setImageResource(com.darshan.warriorgame.R.drawable.mana_bomb_act);
+			bSkill15.setOnClickListener(this);
+		}
+		if(sa.skilllvl[8]!=0){
+			bSkill16.setImageResource(com.darshan.warriorgame.R.drawable.execution_act);
+			bSkill16.setOnClickListener(this);
+		}
 		hastablesFor();
 		sa.updateStat();
 		
 		tvPLevel.setText(String.valueOf(sa.lvl)+ "\t" + b.p1hp+"/"+b.maxp1hp+"\t"+ b.p1mana+"/"+b.maxp1mana);
 		tvCpLevel.setText(getIntent().getStringExtra("oppLevel")+"\t"+b.p2hp+"/"+b.maxp2hp+"\t"+b.p2mana+"/"+b.maxp2mana);//comPl.lvl));
 		
-		createButtons();
-		
-		
-		
-		
+		//createButtons();
 		
 	}
 
@@ -142,28 +198,6 @@ public class BattleArena extends Activity implements OnClickListener{
 	    return px;
 	}
 	
-	private void createButtons() {
-		rl = (RelativeLayout)findViewById(R.id.rlSkills1);
-		for(int i=0;i<5;i++){
-			
-			Button myButton = new Button(this);
-			lp = new LayoutParams(dpToPx(100), LayoutParams.WRAP_CONTENT);
-			myButton.setText("Push Me "+i);
-			myButton.setId(i);
-			if(i!=0){
-				Button leftButton = new Button(this);
-				leftButton.setId(i-1);
-				//myButton.setPadding(leftButton.getPaddingLeft()+dpToPx(10), 0, 0, 0);
-			lp.setMargins(lp.leftMargin+leftButton.getWidth()+dpToPx(10), 0, 0, 0);
-			}else{
-				//myButton.setPadding(dpToPx(10), 0, 0, 0);
-				//lp.setMargins(100*(i+1), 0, 0, 0);
-			}
-			rl.addView(myButton, lp);
-			myButton.setOnClickListener(this);
-		}
-	}
-
 	public void hastablesFor(){
 		
 		sa = ((SharingAtts)getApplication());
@@ -188,6 +222,60 @@ public class BattleArena extends Activity implements OnClickListener{
 		pbCHp.setProgress((int)(b.maxp2hp*100/b.maxp2hp));
 		
 		initSuccStrike();
+		initForOpp();
+	}
+	
+	
+	public void AI2(){
+		try{
+		@SuppressWarnings("unused")
+		String battleDetails="";
+		skillIndex = new LinkedList<Integer>();
+		//skillIndex.add(0);
+		for(int i=0;i<b.p2Skills.length;i++){
+			if(b.p2Skills[i]>0)
+				skillIndex.add(i);
+		}
+		//List<Integer> lowAttackCodes = new ArrayList<Integer>();
+		/*
+		List<Integer> midAttackCodes = new ArrayList<Integer>();
+		List<Integer> hiAttackCodes = new ArrayList<Integer>();
+		*/
+		//lowAttackCodes.add(0);
+		/*
+		for(int i=0; i<skillIndex.size()/2;i++){
+			midAttackCodes.add(skillIndex.get(i));
+		}
+		for(int i=skillIndex.size()/2;i<skillIndex.size();i++){
+			hiAttackCodes.add(skillIndex.get(i));
+		}
+		 */
+		if(lAttackCodes.isEmpty()){	
+			initForOpp();
+			Collections.shuffle(lAttackCodes);
+			AI2();
+		}else{
+			
+			for(int i=0; i<skillIndex.size();i++){
+				
+				if(lAttackCodes.get(0)==0){
+					b.damage(0,1);
+					battleDetails="P2 used normal Attack\n";
+				}else if(lAttackCodes.get(0)==1){
+				//b.damage(midAttackCodes.get(ran), 1);
+					b.damage(1, 1);
+					battleDetails="P2 used "+skilName[0]+" Attack\n";
+				}else if(lAttackCodes.get(0)==2){
+					b.damage(2, 1);
+					battleDetails="P2 used "+skilName[1]+" Attack\n";
+				}
+			
+				lAttackCodes.remove(0);
+			}
+		}
+		}catch(Exception e){
+			Toast.makeText(this, "AttackCodes size= "+String.valueOf(lAttackCodes.size()), Toast.LENGTH_SHORT).show();
+		}
 		
 	}
 	
@@ -236,104 +324,105 @@ public class BattleArena extends Activity implements OnClickListener{
 		// TODO Auto-generated method stub
 		
 		//Will Player able to attack or not
+		
 		if(Integer.valueOf(p1SuccStrike.get(0).toString())==0){
 			appendTextAndScroll("P1 Attack Missed");
-		}else if(arg0.getId()==R.id.bSkill3 ){
+		}else if(arg0.getId()==bSkill3.getId() ){
 			b.damage(3, 0);
 			refreshScreen();
-		}else if( arg0.getId()==R.id.bSkill15){
+		}else if( arg0.getId()==bSkill15.getId()){
 			b.damage(15, 0);
 			refreshScreen();
-		}else{
-		
-		switch(arg0.getId()){
-		
-		case 0:
+		}else if( arg0.getId()==0){
 			b.damage(1,0);
-			break;
-		
-		case 1:
+		}else if( arg0.getId()==1){
 			b.damage(2,0);
-			break;
-			
-		case R.id.bAttack:
+		}else if( arg0.getId()==R.id.bAttack){
 			b.damage(0,0);
-			break;
-		
-		case R.id.bSkill1:
-			b.damage(1,0);
-			break;
-		
-		case R.id.bSkill2:
+		}else if( arg0.getId()==bSkill2.getId()){
 			b.damage(2,0);
-			break;
-		
-		case R.id.bSkill3:
+		}else if( arg0.getId()==bSkill3.getId()){
 			b.damage(3,0);
-			break;
-		
-		case R.id.bSkill4:
+		}else if( arg0.getId()==bSkill4.getId()){
 			b.damage(4,0);
-			break;
-		
-		case R.id.bSkill5:
+		}else if( arg0.getId()==bSkill5.getId()){
 			b.damage(5,0);
-			break;
-		
-		case R.id.bSkill6:
+		}else if( arg0.getId()==bSkill6.getId()){
 			b.damage(6,0);
-			break;
-		
-		case R.id.bSkill7:
+		}else if( arg0.getId()==bSkill7.getId()){
 			b.damage(7,0);
-			break;
-		
-		case R.id.bSkill8:
+		}else if( arg0.getId()== bSkill8.getId()){
 			b.damage(8,0);
-			break;
-		
-		case R.id.bSkill9:
+		}else if( arg0.getId()==bSkill9.getId()){
 			b.damage(9,0);
-			break;
-		
-		case R.id.bSkill10:
+		}else if( arg0.getId()==bSkill10.getId()){
 			b.damage(10,0);
-			break;
-		
-		case R.id.bSkill11:
+		}else if( arg0.getId()==bSkill11.getId()){
 			b.damage(11,0);
-			break;
-		
-		case R.id.bSkill12:
+		}else if( arg0.getId()==bSkill12.getId()){
 			b.damage(12,0);
-			break;
-		
-		case R.id.bSkill13:
+		}else if( arg0.getId()==bSkill13.getId()){
 			b.damage(13,0);
-			break;
-		
-		case R.id.bSkill14:
+		}else if( arg0.getId()==bSkill14.getId()){
 			b.damage(14,0);
-			break;
-		
-		case R.id.bSkill15:
+		}else if( arg0.getId()==bSkill15.getId()){
 			b.damage(15,0);
-			break;
-			
+		}else if(arg0.getId()==ivLPot.getId()){
+			if(sa.poInv[0]>0){
+			b.p1hp += 80;
+			if(b.p1hp>sa.maxHp)
+				b.p1hp=(int) sa.maxHp;
+			sa.poInv[0]-=1;
+			tvLPQty.setText("x"+sa.poInv[0]);
+			}else{
+				Toast.makeText(getApplicationContext(), "Out of Mana Potion", Toast.LENGTH_SHORT).show();
+			}
+		}else if(arg0.getId()==ivMPot.getId()){	
+			if(sa.poInv[1]>0){
+				b.p1mana += 80;
+				if(b.p1mana>sa.maxMana)
+					b.p1mana=(int)sa.maxMana;
+				sa.poInv[1]-=1;
+				tvMPQty.setText("x"+sa.poInv[1]);
+			}else{
+				Toast.makeText(getApplicationContext(), "Out of Mana Potion", Toast.LENGTH_SHORT).show();
+			}
 		}
-	}
+	//	refreshScreen();
+		
 		if(b.p2hp<0){
 			b.p2hp=0;
 		}
 		if(hpCheck(b.p2hp)){
 			appendTextAndScroll(p2name+" has been defeted");
+			
+			if(sa.lvl==Integer.valueOf(getIntent().getStringExtra("oppLevel"))){
+				//sa.remSkilPts+=1;
+				@SuppressWarnings("rawtypes")
+				Class ourClass;
+				try {
+					 ourClass = Class.forName("com.darshan.warriorgame.AttsUp");
+					 sa.lvl+=1;
+					 sa.remSkilPts+=1;
+					 Intent in = new Intent(BattleArena.this,ourClass);
+					 startActivity(in);
+					 finish();
+					 
+					 
+				} catch (ClassNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 			attack.setClickable(false);
 		}
+		
 		//machinePlayer Attack
 		if(Integer.valueOf(p2SuccStrike.get(0).toString())==0){
 			appendTextAndScroll("P2 Attack Missed");
 		}else{
-		AI(arg0);
+		//AI(arg0);
+			AI2();
 		}
 		
 		p1SuccStrike.remove(0);
@@ -350,7 +439,7 @@ public class BattleArena extends Activity implements OnClickListener{
 		tvCpLevel.setText(getIntent().getStringExtra("oppLevel")+"\t"+b.p2hp+"/"+b.maxp2hp+"\t   "+b.p2mana+"/"+b.maxp2mana);//comPl.lvl));
 		
 		String s = ("\nPlayer 1 damaged Player 2 by "+String.valueOf(b.p1damage)
-				+"\nP2 new HP = "+b.p2hp+"\ndamage = "+b.p1damage+"\nAttack code = "+t);
+				+"\nP2 new HP = "+b.p2hp+"\ndamage = "+b.p1damage+"\nAttack name = "+skilName[Integer.valueOf(0)]);
 		appendTextAndScroll(s);
 	}
 	
@@ -359,13 +448,11 @@ public class BattleArena extends Activity implements OnClickListener{
 		Integer[] ItemAtts = new Integer[]{1,1,10,10,0,0,0,0};
 		for(int i=0;i<4;i++){
 			String[] itmAtts=sa.getAllItms(String.valueOf(sa.eqInv[i]));
-			if(itmAtts[i]!=null){
+			if(itmAtts!=null){
 			for(int j=3;j<itmAtts.length-4;j++)
 				ItemAtts[j-3]=ItemAtts[j-3]+Integer.valueOf(itmAtts[j]);
 			}
 		}
-		
-		
 		return ItemAtts;
 	}
 	
@@ -373,7 +460,7 @@ public class BattleArena extends Activity implements OnClickListener{
 		Integer[] ItemAtts = new Integer[]{0,0,0,0,0,0,0,0};
 		for(int i=0;i<4;i++){
 			String[] itmAtts=sa.getAllItms(String.valueOf(sa.oppInv[i]));
-			if(itmAtts[i]!=null){
+			if(itmAtts!=null){
 			for(int j=3;j<itmAtts.length-4;j++)
 				ItemAtts[j-3]=ItemAtts[j-3]+Integer.valueOf(itmAtts[j]);
 			}
@@ -481,6 +568,50 @@ public class BattleArena extends Activity implements OnClickListener{
 		//}	
 	//}
 //	
+	/*
+	private void createButtons() {
+	//	rl = (RelativeLayout)findViewById(R.id.rlSkills1);
+		int lMargin=dpToPx(10);
+		int tMargin=dpToPx(0);
+		
+		
+		for(int j=0,i=0;i<7;i++){
+			if(sa.getSkilAcc(skilId[i]).contentEquals("0")){
+				continue;	
+			}else{
+			
+				if(i%3==0 && i>0){
+					lMargin = 0;
+					tMargin = tMargin + dpToPx(50);
+				}
+			
+			//else if(i/3==2)
+				//tMargin = dpToPx(40);
+			
+				Button myButton = new Button(this);
+				lp = new LayoutParams(dpToPx(100), LayoutParams.WRAP_CONTENT);
+			
+			//myButton.setText("Push Me "+i);
+				myButton.setText(sa.getSkillName(skilId[i]));
+				myButton.setId(j+100);
+			
+				if(i!=0){
+					lp.setMargins(lMargin, tMargin, 0, 0);
+				}else{
+					lp.setMargins(dpToPx(10), 0, 0, 0);
+				}
+			rl.addView(myButton, lp);
+			myButton.setOnClickListener(this);
+			
+			lMargin = lMargin+dpToPx(110);
+			j++;
+			}
+		}
+	}
+*/
+	
+	
+	
 	public void oldFxn(){
 		/*
 		aCode=0;

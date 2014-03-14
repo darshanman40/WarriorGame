@@ -11,6 +11,13 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+
+import com.darshan.warriorgame.Constants;
+import com.shephertz.app42.paas.sdk.android.App42API;
+import com.shephertz.app42.paas.sdk.android.App42CallBack;
+import com.shephertz.app42.paas.sdk.android.user.User;
+import com.shephertz.app42.paas.sdk.android.user.UserService;
+
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -33,22 +40,24 @@ public class LoadGame extends Activity implements OnClickListener {
 	ProgressDialog pDialog;
 	String all;
 	TextView tvTest;
-	
+	int success;
 	SharingAtts sa;
 	DBManager lin;
 	Hashtable<String,String[]> allSkills, allItems;
 	String plaAtts,skills,inv;
 	JSONArray allskills,allitms;
 	
+	UserService userService;
+	
     JSONParser jsonParser = new JSONParser();
 
     private static final String LOGIN_URL = "http://warriorsonandroid.com/warrior_online/loadgame.php";
-    private static final String ALL_DATA = "http://warriorsonandroid.com/warrior_online/skills.php";
-    private static final String TAG_SKILLS = "skills";
-    private static final String TAG_ITEMS = "items";
+    //private static final String ALL_DATA = "http://warriorsonandroid.com/warrior_online/skills.php";
+    //private static final String TAG_SKILLS = "skills";
+    //private static final String TAG_ITEMS = "items";
     
-    //  private static final String TAG_SUCCESS = "success";
-  // private static final String TAG_MESSAGE = "message";
+      private static final String TAG_SUCCESS = "success";
+      private static final String TAG_MESSAGE = "message";
 
 	
 	
@@ -57,9 +66,12 @@ public class LoadGame extends Activity implements OnClickListener {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.loadgame);
+		System.out.print("Enter username and password");
 		allSkills = new Hashtable<String,String[]>();
 		allItems = new Hashtable<String,String[]>();
 		
+		App42API.initialize(this,Constants.apiKey,Constants.secretKey);  
+		userService = App42API.buildUserService();
 		
 		lgId = (EditText)findViewById(R.id.etLogin1);
 		pass = (EditText)findViewById(R.id.etPassword);
@@ -98,66 +110,7 @@ public class LoadGame extends Activity implements OnClickListener {
 			//new LoadData().execute();
 			new LoadUser().execute();
 			
-			/*
 			
-			//----------------------------------------------
-			
-			String[] s4 = it.printData("skills");
-			itms = new DBManager(this,s4[1],"allskills",s4[0]);
-			itms.openToRead();
-			String st6 = itms.queueAll();
-			itms.close();
-			
-			String[] s5 = it.printData("inventory");
-			itms = new DBManager(this,s5[1],"allitems",s5[0]);
-			itms.openToRead();
-			String st5 =itms.queueAll();
-			itms.close();
-			
-			String[] ht1 = st5.split("\n");
-			String[] ht2 = st6.split("\n");
-			
-			for(int i=0;i<ht1.length;i++){
-				String[] s = ht1[i].split(" ");
-				allItms.put(s[0], s);
-			}
-			
-			for(int i=0;i<ht2.length;i++){
-				String[] s = ht2[i].split(" ");
-				allSkills.put(s[0], s);
-			}	
-			*/
-			
-			
-			/*
-			ItemTest it = new ItemTest();
-			String[] ss = it.printData("players");
-			lin = new DBManager(this, ss[1], "allplayer", ss[0]);
-			lin.openToRead();
-			
-			int id =lin.queueAll(login,pas);
-			lin.close();
-			sa=((SharingAtts)getApplication());
-			
-			if(id !=0){
-				Intent in = new Intent("com.darshan.warriorgame.welcome");
-				startActivity(in);
-				sa.setId(id);
-				String[] s=it.printData("players");
-				lin = new DBManager(this, s[1], "allplayer", s[0]);
-				lin.openToRead();
-				String ques=lin.queueAll(String.valueOf(sa.id));
-				lin.close();
-				sa.setPlaAtts(ques.split(" "));
-				
-			}else{
-				Toast t;
-				t = Toast.makeText(getApplicationContext(), "Login Failed", Toast.LENGTH_LONG);
-				t.show();
-			}
-				*/
-				
-			//break;
 			
 		}else if(v.getId()==R.id.bCan1){
 			
@@ -189,7 +142,7 @@ public class LoadGame extends Activity implements OnClickListener {
 		protected String doInBackground(String... args) {
 			// TODO Auto-generated method stub
 			 // Check for success tag
-           //int success;
+           
            ItemTest it = new ItemTest();
            String[] s1 = it.printData("players");
            String[] plAttsNam = s1[1].split(" ");
@@ -200,7 +153,7 @@ public class LoadGame extends Activity implements OnClickListener {
            
            String login = lgId.getText().toString();
 		   String pas = pass.getText().toString();
-           try {
+           try{
                // Building Parameters
                List<NameValuePair> params = new ArrayList<NameValuePair>();
                params.add(new BasicNameValuePair("player_name", login));
@@ -211,7 +164,8 @@ public class LoadGame extends Activity implements OnClickListener {
                //Posting user data to script
                JSONObject json = jsonParser.makeHttpRequest(
                       LOGIN_URL, "POST", params);
-               
+               success = json.getInt(TAG_SUCCESS);
+               if(success==1) {
                plaAtts = json.getString("player_id")+" ";
                plaAtts = plaAtts + json.getString("player_name")+" ";
                plaAtts = plaAtts + null+" ";
@@ -229,29 +183,14 @@ public class LoadGame extends Activity implements OnClickListener {
                for(int i=1; i<plAttsNam3.length;i++){
             	   if(json.get(plAttsNam3[i])!=null)
             		   inv = inv + String.valueOf(json.get(plAttsNam3[i]))+" ";
+            	   Log.d("inv_"+(i-1), plAttsNam3[i]+","+String.valueOf(json.get(plAttsNam3[i])));
                }
-               //if(json.toString()!=null)
+               if(json.toString()!=null)
             	   Log.d("JSON", json.getString("player_class"));
-            	   //s =json.getString("player_class");
-            	 //  s = json.toString();
-               // json success element
-               /*
-               success = json.getInt(TAG_SUCCESS);
-               if (success == 1) {
-                  String ja = json.getString("allplayer");
-            	   tvTest.setText(ja);
-                   return json.getString(TAG_MESSAGE);
-               }else{
-               	Log.d("Login Failure!", json.getString(TAG_MESSAGE));
-               	Log.d("Exception", json.getString("Exception"));
-               	return json.getString(TAG_MESSAGE);
 
-               }
-               */
                try{
             	   sa.setPlaAtts(plaAtts.split(" "));
-                   //sa.setPlaInv(intt);
-            	   sa.setAllInv(inv.split(" "));
+                   sa.setAllInv(inv.split(" "));
                    sa.setSkills(skills.split(" "));   
                }catch(Exception e){
             	   System.err.print(e.toString());
@@ -262,11 +201,15 @@ public class LoadGame extends Activity implements OnClickListener {
             	   Toast.makeText(getApplicationContext(), "NOPE", Toast.LENGTH_SHORT).show();
             	   
                }
-            	   
+               }else{
+            	   Log.d("Login Failure!", json.getString(TAG_MESSAGE));
+                  	//Log.d("Exception", json.getString("Exception"));
+                  	return json.getString(TAG_MESSAGE);
+               } 	   
            } catch (JSONException e) {
                e.printStackTrace();
            }
-
+           
            return null;
 
 		}
@@ -276,47 +219,44 @@ public class LoadGame extends Activity implements OnClickListener {
        protected void onPostExecute(String file_url) {
            // dismiss the dialog once product deleted
            pDialog.dismiss();
-           
-         //  sa.updateStat();
-           //tvTest.setText(plaAtts+"\n"+skills+"\n"+inv);
-           Integer[] inven = sa.getAllInv();
-           String plaInv = "";
-           for(int i=0; i<inven.length;i++){
-           	plaInv = plaInv + String.valueOf(inven[i])+" ";
+           final String uname;
+		final String pas;
+           if(success==1){
+        	   	uname = lgId.getText().toString();
+   				pas = pass.getText().toString(); 
+   			
+   				final ProgressDialog progressDialog = ProgressDialog.show(LoadGame.this, "", "signing in..");
+   				progressDialog.setCancelable(true);
+   				userService.authenticate(uname, pas,  new App42CallBack() {
+   				public void onSuccess(Object response){
+   					User user = (User)response;
+   					System.out.println("userName is " + user.getUserName());  
+   					System.out.println("sessionId is " + user.getSessionId());
+   					progressDialog.dismiss();
+   					
+   					Intent i = new Intent("com.darshan.warriorgame.welcome");
+   					i.putExtra("uname", uname);
+					i.putExtra("pass", pas);
+   					startActivity(i);
+   					finish();
+   				}
+   				public void onException(Exception ex){
+   					System.out.println("Exception Message : "+ex.getMessage());
+   					progressDialog.dismiss();
+   				}
+   				});
            }
-           //inven = null;
-           //ItemTest it = new ItemTest();
-           //String[] colLine = it.printData("allItems");
-           //String[] colNames = colLine[1].split(",");
-           /*
-           for(int i=2, j; i<colLine.length;i++){
-        	   j=0;
-        	   plaInv = plaInv + "\n";
-        	   for(String[] rows = sa.getAllItms(colLine[i]);j<rows.length;j++)
-        		   plaInv = plaInv + rows[j] + String.valueOf(" ");
-              }
-           //tvTest.setText(plaInv);
-           //sa.setPlaMinAtts();        
-           sa.updateStat();
-           tvTest.setText(plaInv);
-           */
-           Intent i = new Intent("com.darshan.warriorgame.welcome");
-           startActivity(i);
-           finish();
-          //if (file_url != null){
-           //	Toast.makeText(LoadGame.this, file_url, Toast.LENGTH_LONG).show();
-           //}
-
        }
 	}
 	
+	/*
 	class LoadData extends AsyncTask<String, String, String> {
 
 		 /**
        * Before starting background thread Show Progress Dialog
        * */
 		boolean failure = false;
-
+/*
       @Override
       protected void onPreExecute() {
           super.onPreExecute();
@@ -407,6 +347,7 @@ public class LoadGame extends Activity implements OnClickListener {
     }
 	
 	}
+	*/
 }
 	
 

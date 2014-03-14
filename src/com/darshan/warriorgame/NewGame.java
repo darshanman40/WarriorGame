@@ -11,7 +11,7 @@ import org.json.JSONObject;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.Context;
+
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -23,7 +23,13 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
+
+import com.darshan.warriorgame.Constants;
 import com.darshan.warriorgame.Player;
+import com.shephertz.app42.paas.sdk.android.App42API;
+import com.shephertz.app42.paas.sdk.android.App42CallBack;
+import com.shephertz.app42.paas.sdk.android.user.User;
+import com.shephertz.app42.paas.sdk.android.user.UserService;
 
 public class NewGame extends Activity implements OnClickListener{
 
@@ -34,8 +40,10 @@ public class NewGame extends Activity implements OnClickListener{
 	String[] row,row2,row3, s1,s2,s3;
 	RadioGroup rgClass;
 	Button bName, bClear;
-	EditText etName,etConPass,etPass;
+	EditText etName,etConPass,etPass, email;
 	int success;
+	
+	UserService userService;
 	
 	 private ProgressDialog pDialog;
 
@@ -58,6 +66,9 @@ public class NewGame extends Activity implements OnClickListener{
 		
 		sa=((SharingAtts)getApplication());
 		it = new ItemTest();
+		s1=it.printData("players");
+		s2=it.printData("player_inv");
+		s3=it.printData("player_skills");
 		try{
 			bName = (Button)findViewById(R.id.bAccept);
 			bClear = (Button)findViewById(R.id.bClear);
@@ -65,6 +76,11 @@ public class NewGame extends Activity implements OnClickListener{
 			etName = (EditText)findViewById(R.id.etName);
 			etPass = (EditText)findViewById(R.id.etPass1);
 			etConPass = (EditText)findViewById(R.id.etConPass1);
+			email = (EditText)findViewById(R.id.etEmail);
+			
+			App42API.initialize(this,Constants.apiKey,Constants.secretKey);  
+			userService = App42API.buildUserService();
+			
 		}catch(Exception e){
 			Toast t = Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG);
 			t.show();
@@ -95,8 +111,7 @@ public class NewGame extends Activity implements OnClickListener{
 		
 				
 				new ChkUserName().execute();
-				//		new CreateUser().execute();
-				
+
 				
 				
 			}else{
@@ -124,13 +139,14 @@ public class NewGame extends Activity implements OnClickListener{
 		}
 		
 	}
-	
+	/*
 	class CreateUser extends AsyncTask<String, String, String> {
 
 		 /**
         * Before starting background thread Show Progress Dialog
         * */
-		boolean failure = false;
+/*
+	boolean failure = false;
 
        @Override
        protected void onPreExecute() {
@@ -148,14 +164,28 @@ public class NewGame extends Activity implements OnClickListener{
 			// TODO Auto-generated method stub
 			 // Check for success tag
 
+			
            try {
                // Building Parameters
-               String[] colNames = s1[1].split(" ");
+        	   Log.d("ChkPt", "PostExec Create User");
+        	   String[] colNames = s1[1].split(" ");
         	   String[] colNames2 = s2[1].split(" ");
         	   String[] colNames3 = s3[1].split(" ");
         	   List<NameValuePair> params = new ArrayList<NameValuePair>();
         	   Log.d("Chk register info","down");
-               for(int i=0 ; i<colNames.length;i++){
+        	   params.add(new BasicNameValuePair(colNames[1],etName.getText().toString()));
+        	   params.add(new BasicNameValuePair(colNames[2],etPass.getText().toString()));
+        	   
+        	   for(int i=1;i<colNames.length;i++)
+        		   params.add(new BasicNameValuePair(colNames[i],pl.getNPlayerAtts()[i]));
+        	   for(int i=1;i<colNames2.length;i++)
+        		   params.add(new BasicNameValuePair(colNames2[i],pl.getNPlayerInv()[i-1]));
+        	   for(int i=1;i<colNames3.length;i++)
+        		   params.add(new BasicNameValuePair(colNames2[i],pl.getNPlayerSkilvls()[i-1]));
+       			
+        	   
+        	   /*
+        	   for(int i=0 ; i<colNames.length;i++){
             	   Log.d(colNames[i], row[i]);
             	   params.add(new BasicNameValuePair(colNames[i],row[i]));
                }
@@ -163,8 +193,8 @@ public class NewGame extends Activity implements OnClickListener{
             	   params.add(new BasicNameValuePair(colNames2[i],row2[i]));
                for(int i=1; i<colNames3.length ; i++)
             	   params.add(new BasicNameValuePair(colNames3[i],row3[i]));
-               
-               
+               */
+  /*             
                Log.d("request!", "starting");
 
                //Posting user data to script
@@ -209,7 +239,7 @@ public class NewGame extends Activity implements OnClickListener{
             	  db.updateTable(pId,new String[]{"player_id"}, "player_name = '"+row[1]+"'");
             	  db.close();
             	  */
-            	   
+    /*        	   
             	  Log.d("player_id",json.getString("player_id"));
             	  
                	  Log.d("User Created!", json.toString());
@@ -230,12 +260,23 @@ public class NewGame extends Activity implements OnClickListener{
 		/**
         * After completing background task Dismiss the progress dialog
         * **/
-       protected void onPostExecute(String file_url) {
+    /* 
+	protected void onPostExecute(String file_url) {
            // dismiss the dialog once product deleted
     	   pDialog.dismiss();
            if (file_url != null){
            	Toast.makeText(NewGame.this, file_url, Toast.LENGTH_LONG).show();
            }
+           
+
+			if(success==1){
+				Log.d("ChkUsername", "done");
+				finalDest();
+				//new CreateUser().execute();
+			}else{
+				Log.e("Error ","Chk user name");
+			}
+			
            /*
            if(success ==0){
         	   Intent in = new Intent("com.darshan.warriorgame.welcome");
@@ -243,8 +284,8 @@ public class NewGame extends Activity implements OnClickListener{
         	   NewGame.this.finish();
            }
            */
-       }
-    }
+      // }
+    //}
 	
 	public class ChkUserName extends AsyncTask<String, String, String>{
 
@@ -277,6 +318,54 @@ public class NewGame extends Activity implements OnClickListener{
 					// json success element
             		success = json.getInt(TAG_SUCCESS);
 			
+            	if(success==1){
+            		String[] colNames = s1[1].split(" ");
+             	   	String[] colNames2 = s2[1].split(" ");
+             	   	String[] colNames3 = s3[1].split(" ");
+             	   	params = new ArrayList<NameValuePair>();
+             	   	Log.d("Chk register info","down");
+             	   	params.add(new BasicNameValuePair(colNames[1],etName.getText().toString()));
+             	   	params.add(new BasicNameValuePair(colNames[2],etPass.getText().toString()));
+             	   
+             	   	for(int i=1;i<colNames.length;i++)
+             	   		params.add(new BasicNameValuePair(colNames[i],pl.getNPlayerAtts()[i]));
+             	   	for(int i=1;i<colNames2.length;i++)
+             	   		params.add(new BasicNameValuePair(colNames2[i],pl.getNPlayerInv()[i-1]));
+             	   	for(int i=1;i<colNames3.length;i++)
+             	   		params.add(new BasicNameValuePair(colNames3[i],pl.getNPlayerSkilvls()[i-1]));
+                    json = jsonParser.makeHttpRequest(LOGIN_URL, "POST", params);
+             	   	
+                    success = json.getInt(TAG_SUCCESS);
+                    if (success == 1) {
+                 	
+                 	   Hashtable<String,String[]> allSkills = new Hashtable<String,String[]>();
+                 	   Hashtable<String,String[]> allItems = new Hashtable<String,String[]>();
+                 	   
+                 	   ItemTest it = new ItemTest();
+            			String[] s4=it.printData("skills");
+            			
+            			
+            			for(int i=2;i<s4.length;i++){
+            				String[] sr4 = s4[i].split(" ");	
+            				allSkills.put(sr4[0], sr4);
+            			}
+            			
+            			String[] s5=it.printData("allItems");
+            			
+            			for(int i=2;i<s5.length;i++){
+            				String[] sr5 = s5[i].split(" ");
+            				allItems.put(sr5[0], sr5);
+            			}
+            			
+            			sa.setAllItms(allItems);
+            			sa.setAllSkills(allSkills);
+            			
+            		
+                    }else{
+                    	Log.e("message",json.getString(TAG_MESSAGE));
+                    }
+                  }
+                    
             	} catch (JSONException e) {
 				// TODO Auto-generated catch block
             		e.printStackTrace();
@@ -287,198 +376,50 @@ public class NewGame extends Activity implements OnClickListener{
 		protected void onPostExecute(String file_url) {
 	           // dismiss the dialog once product deleted
 	    	   pDialog.dismiss();
+	    	   //sa.setPlaAtts(att)
+	    	   
+	    	   String uname = etName.getText().toString();
+	    	   String pas = etPass.getText().toString();
+	    	   String emailId = "";
+	    	   if(email.getText().toString()!=null){
+					emailId = email.getText().toString();
+				}
+				final ProgressDialog progressDialog = ProgressDialog.show(NewGame.this, "", "registering..");
+				progressDialog.setCancelable(true);
+				userService.createUser(uname, pas,emailId, new App42CallBack() {
+					public void onSuccess(Object response) 
+					{
+						User user = (User)response;
+						System.out.println("userName is " + user.getUserName());
+						System.out.println("emailId is " + user.getEmail());
+						progressDialog.dismiss();
+					}
+					public void onException(Exception ex) 
+					{
+						System.out.println("Exception Message"+ex.getMessage());
+						progressDialog.dismiss();
+					}
+					});
+	    	   
+				Intent in = new Intent("com.darshan.warriorgame.loadgame");
+	        	startActivity(in);
+	        	finish();
+	        	
 	           if (file_url != null){
 	           		Toast.makeText(NewGame.this, file_url, Toast.LENGTH_LONG).show();
 	           }
-	           finalDest();
+	           //finalDest();
 	      }
 		
+		
 	}
-	
-	String[] createDatabase(Context c){
-		String[] playerDet=new String[3];
-		s1=it.printData("players");
-		db = new DBManager(this,s1[1],"allplayer",s1[0]);
-		db.openToWrite();
-		db.dropTable();
-		db.cretTable();
-		for(int i=2;i<s1.length;i++)
-			db.insertQuery(s1[i]);
-		//String[] plats = pl.getNPlayerAtts();
-		String pts="";
-		for(int i=0;i<pl.getNPlayerAtts().length;i++)
-			pts=pts+pl.getNPlayerAtts()[i]+" ";
-		playerDet[0] =pts; 
-		db.updateTable(pts, "player_id = "+String.valueOf(pl.id));
-		db.close();
-		
-		//----------------------------------------------------------------
-		s2=it.printData("player_inv");
-		db = new DBManager(this,s2[1],"playersinv",s2[0]);
-		db.openToWrite();
-		db.dropTable();
-		db.cretTable();
-		for(int i=2;i<s2.length;i++)
-			db.insertQuery(s2[i]);
-		//String[] plats = pl.getNPlayerAtts();
-		pts=String.valueOf(pl.id)+" ";
-		for(int i=0;i<pl.getNPlayerInv().length;i++)
-			pts=pts+pl.getNPlayerInv()[i]+" ";
-		playerDet[1] = pts;
-		db.updateTable(pts, "player_id = "+String.valueOf(pl.id));
-		db.close();
-		
-		//----------------------------------------------
-		s3=it.printData("player_skills");
-		db = new DBManager(this,s3[1],"playerskill",s3[0]);
-		db.openToWrite();
-		db.dropTable();
-		db.cretTable();
-		for(int i=2;i<s3.length;i++)
-			db.insertQuery(s3[i]);
-		//String[] plats = pl.getNPlayerAtts();
-		pts=String.valueOf(pl.id)+" ";
-		for(int i=0;i<pl.getNPlayerSkilvls().length;i++)
-			pts=pts+pl.getNPlayerSkilvls()[i]+" ";
-		playerDet[2] = pts;
-		db.updateTable(pts, "player_id = "+String.valueOf(pl.id));
-		db.close();
-		
-		//-----------------------------------------------------
-		String[] s4=it.printData("skills");
-		db = new DBManager(this,s4[1],"allskills",s4[0]);
-		db.openToWrite();
-		db.dropTable();
-		db.cretTable();
-		for(int i=2;i<s4.length;i++)
-			db.insertQuery(s4[i]);
-		db.close();
-		
-		//------------------------------------------------------------
-		String[] s5=it.printData("allItems");
-		db = new DBManager(this,s5[1],"allitems",s5[0]);
-		db.openToWrite();
-		db.dropTable();
-		db.cretTable();
-		for(int i=2;i<s5.length;i++)
-			db.insertQuery(s5[i]);
-		db.close();
-		
-		db = new DBManager(this,s1[1],"allplayer",s1[0]);
-		db.openToRead();
-		row =db.queueAll(String.valueOf(pl.id)).split(" "); 
-		db.close();
-		
-		db = new DBManager(this,s2[1],"playersinv",s2[0]);
-		db.openToRead();
-		row2 =db.queueAll(String.valueOf(pl.id)).split(" "); 
-		db.close();
-		
-		db = new DBManager(this,s3[1],"playerskill",s3[0]);
-		db.openToRead();
-		row3 =db.queueAll(String.valueOf(pl.id)).split(" "); 
-		db.close();
-		
-		
-		sa.setId(pl.id);
-		//Toast.makeText(getApplicationContext(), row[1]+" "+row[2], Toast.LENGTH_SHORT).show();
-		return playerDet;
-    }
-	
-	/*
-	public void newPlayer(){
-		it= new ItemTest();
-		//String[] st = it.printData("players");
-		//itms = new DBManager(this,st[1],"allplayer",st[0]);
-		//itms.recover(st);
-		String s,s2,s3,s4,s5,s6;
-		s="asshole";
-		s2="inv";
-		s3="pskils";
-		s4="skilid";
-		String[] st1 = it.printData("players");
-		itms = new DBManager(this,st1[1],"allplayer",st1[0]);
-		//itms.recover(st1);
-		itms.openToWrite();
-		
-		//for(int i=2;i<st1.length;i++)
-		//	itms.insertQuery(st1[i]);
-		 s = itms.queueAll(String.valueOf(id));
-		itms.close();	
-		String[] st2 = s.split(" ");
-		sa.setPlaAtts(st2);
-		try{
-		String[] st3 = it.printData("player_inv");
-		itms = new DBManager(this,st3[1],"playersinv",st3[0]);
-		//itms.recover(st3);
-		itms.openToWrite();
-		//itms.cretTable();
-		//for(int i=2;i<st3.length;i++)
-		//	itms.insertQuery(st3[i]);
-		s2 = itms.queueAll(String.valueOf(id));
-		itms.close();	
-		String[] st4 = s2.split(" ");
-		sa.setAllInv(st4);
-		
-		String[] st5 = it.printData("player_skills");
-		itms = new DBManager(this,st5[1],"playerskill",st5[0]);
-		//itms.recover(st5);
-		itms.openToWrite();
-		//itms.cretTable();
-		//for(int i=2;i<st5.length;i++)
-		//	itms.insertQuery(st5[i]);
-		s3 = itms.queueAll(String.valueOf(id));
-		itms.close();	
-		String[] st6 = s3.split(" ");
-		//sa.setAllInv(st6);
-		
-		String[] st7 = it.printData("skills");
-		itms = new DBManager(this,st7[1],"allskills",st7[0]);
-		//itms.recover(st7);
-		itms.openToWrite();
-		//itms.cretTable();
-		//for(int i=2;i<st7.length;i++)
-		//	itms.insertQuery(st7[i]);
-		s4 = itms.queueFew(new String[]{"skill_id"});
-		itms.close();	
-		s4 = s4.replace(" ", "-");
-		String[] st8 = s4.split("-");
-		//for(int i=1; i<st6.length;i++)
-		//	st6[i-1]=st6[i].trim();
-		//st6[st6.length-1]="";
-			
-		sa.setSkills(st8,st6);
-		Toast t = Toast.makeText(getApplicationContext(), "Congratz", Toast.LENGTH_LONG);
-		t.show();
-		}catch(Exception e){
-			System.err.print(e);
-			Toast t = Toast.makeText(getApplicationContext(),s3+"   "+e.toString(), Toast.LENGTH_LONG);
-			t.show();
-		}
-	}
-	/*public boolean chkUserName(String name){
-		
-		//it = new ItemTest();
-		String[] s = it.printData("players");
-		db = new DBManager(this,s[1],"allplayer",s[0]);
-		db.openToRead();
-		
-		
-		/*if(!pass.equals(anPas)){
-			return false;
-		}else{
-			return true;
-		}
-		 
-		 */
-		//return true;
-	//}
-
+/*
 	void finalDest(){
 		if(success == 1 ){
 			Toast.makeText(getApplicationContext(), "Username is Available", Toast.LENGTH_SHORT).show();
-			createDatabase(NewGame.this);
-			new CreateUser().execute();
+//			createDatabase(NewGame.this);
+			Log.d("ChkPt", "Entering Create User");
+			//new CreateUser().execute();
 			Intent in = new Intent("com.darshan.warriorgame.welcome");
         	startActivity(in);
         	finish();
@@ -488,5 +429,5 @@ public class NewGame extends Activity implements OnClickListener{
 			Toast.makeText(getApplicationContext(), "Success is null", Toast.LENGTH_SHORT).show();
 		}
 	}
-	
+	*/
 }

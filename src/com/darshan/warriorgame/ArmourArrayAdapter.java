@@ -13,6 +13,14 @@ public class ArmourArrayAdapter extends ArrayAdapter<String>{
 	Context context;
 	String[] values;
 	//Hashtable<String,String[]> allItems;
+
+	String[] armorNames ={"leather armour","snake skin","metal plates", "metal armour","demon rags","focus armour","golden armour","shadow armour"}; 
+	String[] displayNames ={"Leather Armour","Snake Skin","Metal Plates", "Metal Armour","Demon Rags","Focus Armour","Golden Armour","Shadow Armour"};
+	int[] armorsID = {
+			R.drawable.leather_armour,R.drawable.snake_skin, R.drawable.metal_plates,
+			R.drawable.metal_armour, R.drawable.demon_rags, R.drawable.focus_armour,
+			R.drawable.golden_armour, R.drawable.shadow_armour
+	};
 	public ArmourArrayAdapter(Context armourStore, String[] values) {
 		super(armourStore, R.layout.weapon_list, values);
 		this.context = armourStore;
@@ -32,6 +40,14 @@ public class ArmourArrayAdapter extends ArrayAdapter<String>{
 		 
 		System.out.println(s);
  
+		for(int i=0; i<armorNames.length;i++){
+			if(armorNames[i].equals(s)){
+				im.setImageResource(armorsID[i]);
+				tv.setText(displayNames[i]);
+				break;
+			}
+		}
+		
 		//int i=0;
 		//for(String e:allItems.keySet()){
 		//	String[] m = allItems.get(e);
@@ -41,6 +57,7 @@ public class ArmourArrayAdapter extends ArrayAdapter<String>{
 	//	}
 		
 		//
+		/*
 			tv.setText(s);
 			if (s.equals("leather armour")) {
 				im.setImageResource(R.drawable.leather_armour);
@@ -52,7 +69,7 @@ public class ArmourArrayAdapter extends ArrayAdapter<String>{
 		} else {
 		//	im.setImageResource(R.drawable.android_logo);
 		}
- 
+ */
 		return rowView;
 		
 		//return super.getView(position, convertView, parent);

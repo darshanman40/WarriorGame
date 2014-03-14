@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <RelativeLayout 
+        android:id="@+id/ph_skills"
+    android:layout_width="150dp"
+    android:layout_height="match_parent"
+    android:orientation="vertical"	
+    >
+
+    <ImageView
+        android:id="@+id/ivStab2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/stab_deact" />
+
+    <ImageView
+        android:id="@+id/ivSplit2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/ivAvenger2"
+        android:layout_toRightOf="@+id/ivStab2"
+        android:src="@drawable/split_deact" />
+
+    <ImageView
+        android:id="@+id/ivExecution2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ivSplit2"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="14dp"
+        android:src="@drawable/execution_deact" />
+
+    <ImageView
+        android:id="@+id/ivAvenger2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/ivVStrike2"
+        android:layout_marginTop="30dp"
+        android:src="@drawable/avenger_deact" />
+
+    <ImageView
+        android:id="@+id/ivVStrike2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ivDStrike2"
+        android:layout_marginTop="30dp"
+        android:layout_toLeftOf="@+id/ivSplit2"
+        android:src="@drawable/vertical_strike_deact" />
+
+    <ImageView
+        android:id="@+id/ivDStrike2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/ivAvenger2"
+        android:layout_below="@+id/ivStab2"
+        android:layout_marginTop="36dp"
+        android:src="@drawable/double_strike_deact" />
+
+    <ImageView
+        android:id="@+id/ivSStrike2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/ivDStrike2"
+        android:src="@drawable/speed_strike_deact" />
+
+    <TextView
+        android:id="@+id/tvDet5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/ivExecution2"
+        android:text="Detail" />
+
+    <Button
+        android:id="@+id/bBoostSkill2"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:text="Boost Skill" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/mg_skills"
+        android:layout_width="150dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:orientation="vertical" >
+
+        <ImageView
+            android:id="@+id/ivShuriken2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/shuriken_deact" />
+
+        <ImageView
+            android:id="@+id/ivEShot2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/ivShuriken2"
+            android:layout_marginTop="38dp"
+            android:src="@drawable/energy_shot_deact" />
+
+        <ImageView
+            android:id="@+id/ivBFire2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/ivMBomb2"
+            android:layout_alignLeft="@+id/ivCharge2"
+            android:layout_alignTop="@+id/ivEShot2"
+            android:src="@drawable/blast_fire_deact" />
+
+        <ImageView
+            android:id="@+id/ivMBomb2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/ivEShot2"
+            android:layout_marginTop="24dp"
+            android:src="@drawable/mana_bomb_deact" />
+
+        <ImageView
+            android:id="@+id/ivCharge2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/ivMBomb2"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/charge_deact" />
+
+        <ImageView
+            android:id="@+id/ivHeal2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/ivCharge2"
+            android:layout_marginTop="34dp"
+            android:src="@drawable/heal_deact" />
+
+        <ImageView
+            android:id="@+id/ivShStrike2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignTop="@+id/ivHeal2"
+            android:src="@drawable/shadow_strike_deact" />
+
+        <ImageView
+            android:id="@+id/ivAnhi2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/ivHeal2"
+            android:layout_marginTop="18dp"
+            android:src="@drawable/annihilate_deact" />
+
+        <TextView
+            android:id="@+id/tvStat5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/ivAnhi2"
+            android:text="Status" />
+
+        <Button
+            android:id="@+id/bContinue2"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:text="Continue" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

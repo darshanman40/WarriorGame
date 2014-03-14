@@ -45,13 +45,33 @@ public class HeadgearArrayAdapter extends ArrayAdapter<String>{
 			if (s.equals("banadana")) {
 				im.setImageResource(R.drawable.bandana);
 				tv.setText("Bandana");
-		} else if (s.equals("iOS")) {
-			//im.setImageResource(R.drawable.ios_logo);
-		} else if (s.equals("Blackberry")) {
-		//	im.setImageResource(R.drawable.blackberry_logo);
-		} else {
+			} else if (s.equals("focus band")) {
+				im.setImageResource(R.drawable.focus_band);
+				tv.setText("Focus Band");
+			} else if (s.equals("fire band")) {
+				im.setImageResource(R.drawable.fire_band);
+				tv.setText("Fire Band");
+			} else if (s.equals("metal band")) {
+				im.setImageResource(R.drawable.metal_band);
+				tv.setText("Metal Band");
+			} else if (s.equals("power band")) {
+				im.setImageResource(R.drawable.power_band);
+				tv.setText("Power Band");
+			} else if (s.equals("snake band")) {
+				im.setImageResource(R.drawable.snake_band);
+				tv.setText("Snake Band");
+			} else if (s.equals("demon skin")) {
+				im.setImageResource(R.drawable.demon_skin);
+				tv.setText("Demon Skin");
+			} else if (s.equals("ki band")) {
+				im.setImageResource(R.drawable.ki_band);
+				tv.setText("Ki Band");
+			} else if (s.equals("golden band")) {
+				im.setImageResource(R.drawable.golden_band);
+				tv.setText("Golden Band");
+			} else {
 		//	im.setImageResource(R.drawable.android_logo);
-		}
+			}
  
 		return rowView;
 		

@@ -1,0 +1,14 @@
+Stab. Required Mana 15. Next level 4 extra physical damage.
+Double Strike. Required Mana 20. Next level 8% extra physical damage.
+Speed Strike. Required Mana 20. Next level 60% extra speed damage.
+Vertical Strike. Required Mana 20. Next level 80% extra strength damage.
+Avenger. Required Mana 25. Next level 200% of life lost extra damage.
+Split. Required Mana 25. Next level 12% of enemy life extra damage.
+Execution. Required Mana 70. Next level 75% of enemy life extra damage.
+Shuriken. Required mana 20. Next level 22 extra magical damage.
+Energy Shot. Required mana 25. Next level 49 extra magical damage.
+Blast Fire. Required mana 25. Next level 12 extra magical damage.
+Charge. Required mana 0. Next level 25 mana.
+Heal. Required mana 15. Next level 25% max hp.
+Shadow Strike. Required mana 40. Next level 85 magical damage.
+Annihilate. Required mana 60. Next level 22 magical damage.

@@ -13,12 +13,12 @@ public class Player {
 	String name;
 	String password;
 	int id,lvl;
-	double str,speed,maxHp,maxMana,skill,maxXp,hp,mana,xp,gold,remSkilPts; 
+	double str,speed,maxHp,maxMana,skill,maxXp,hp,mana,xp,gold,remSkilPts,remAttPts; 
 	Integer[] inv = new Integer[8];
 	Integer[] eqInv = new Integer[4];
 	Integer[] poInv = new Integer[2];
-	Integer[] skills = new Integer[]{1001,1011,1012,1021,1022,1031,1041,1042,1051,2001,2011,2012,2021,2022,2031,2032,2041,2041,2051};
-	Integer[] skilllvl= new Integer[]{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+	Integer[] skills = new Integer[]{1001,1011,1012,1021,1041,1042,1051,2001,2011,2012,2022,2031,2032,2041,2042};
+	Integer[] skilllvl= new Integer[]{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 	//SharingAtts sa;
 	Integer[] minorAtts;
 	Context c;
@@ -67,6 +67,7 @@ public class Player {
 		xp=0;
 		gold=250;
 		remSkilPts=0;
+		remAttPts=0;
 		//
 		for(int i=0;i<eqInv.length;i++){
 			eqInv[i]=0;
@@ -109,7 +110,6 @@ public class Player {
 			maxHp=80;
 			maxMana=80;
 			skilllvl[0]=1;
-			skilllvl[9]=0;
 		}
 		
 		//for(int i=1;i<9;i++)
@@ -121,7 +121,7 @@ public class Player {
 	}
 	
 	public String[] getNPlayerAtts(){
-		String[] atts= new String[15];
+		String[] atts= new String[16];
 		atts[0]= String.valueOf(id);
 		atts[1]= name;
 		atts[2]= password;
@@ -137,6 +137,7 @@ public class Player {
 		atts[12]= String.valueOf(xp);
 		atts[13]= String.valueOf(gold);
 		atts[14]= String.valueOf(remSkilPts);
+		atts[15]= String.valueOf(remAttPts);
 				
 				return atts;
 	}
@@ -167,8 +168,10 @@ public class Player {
 		
 		Integer[] retobj= new Integer[10];
 			try {
-	           		Class cls = Class.forName("com.darshan.warriorgame.Warrior");
-	           		Class argType[]=new Class[3];
+	           		@SuppressWarnings("rawtypes")
+					Class cls = Class.forName("com.darshan.warriorgame.Warrior");
+	           		@SuppressWarnings("rawtypes")
+					Class argType[]=new Class[3];
 	           		
 	           		argType[0]=Integer.TYPE;
 	           		argType[1]=Integer.TYPE;

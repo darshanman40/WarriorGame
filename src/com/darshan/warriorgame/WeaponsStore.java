@@ -16,6 +16,8 @@ import android.widget.AdapterView.OnItemClickListener;
 public class WeaponsStore extends Activity implements OnClickListener,OnItemClickListener{
 
 	
+	
+
 	TextView tvStat,tvPlStr,tvPlGold; 
 	ListView lvWeapon1;//,lvWeapon2;
 	Button bBuy;
@@ -130,6 +132,13 @@ public class WeaponsStore extends Activity implements OnClickListener,OnItemClic
 			}
 			//tvStat.setText(String.valueOf(arg2)+" "+arg3);
 			tvStat.setText(detail);
+		}
+		
+		@Override
+		public void onContentChanged() {
+			// TODO Auto-generated method stub
+			super.onContentChanged();
+			
 		}
 
 	}

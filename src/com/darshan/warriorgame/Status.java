@@ -76,7 +76,7 @@ public class Status extends Activity implements OnClickListener{
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
 		if(v.getId()==R.id.bSkillUp){
-			Intent i =new Intent("com.darshan.warriorgame.skillup");
+			Intent i =new Intent("com.darshan.warriorgame.skillsup");
 			startActivity(i);
 			finish();
 		}

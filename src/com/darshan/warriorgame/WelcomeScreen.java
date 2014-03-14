@@ -16,18 +16,16 @@ import android.util.Log;
 import android.view.View.OnClickListener;
 import android.content.Intent;
 import android.os.AsyncTask;
-//import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-//import android.widget.Toast;
 
 public class WelcomeScreen extends Activity implements OnClickListener{
 	//SharedPreferences someData;
 	TextView tvWel;
-	Button bInv,bStore,bBS,bQuit,bStatus,bCheat,bSave;
+	Button bInv,bStore,bBS,bQuit,bStatus,bCheat,bSave,bChat, bloby;
 	SharingAtts sa;
 	Intent i;
 	Hashtable<String,String[]> allItms,allSkills;
@@ -61,6 +59,7 @@ public class WelcomeScreen extends Activity implements OnClickListener{
 		sg = new SaveGame(this);
 		
 		tvWel = (TextView)findViewById(R.id.tvWelcom);
+		bChat = (Button)findViewById(R.id.bChat);
 		bInv = (Button)findViewById(R.id.bInv);
 		bBS = (Button)findViewById(R.id.bBS);
 		bStore = (Button)findViewById(R.id.bStore);
@@ -68,6 +67,7 @@ public class WelcomeScreen extends Activity implements OnClickListener{
 		bStatus = (Button)findViewById(R.id.bStatus);
 		bCheat = (Button)findViewById(R.id.bCheat2);
 		bSave = (Button)findViewById(R.id.bSave1);
+		bloby = (Button)findViewById(R.id.bBattleLobby);
 		
 		bInv.setOnClickListener(this);
 		bStore.setOnClickListener(this);
@@ -75,98 +75,22 @@ public class WelcomeScreen extends Activity implements OnClickListener{
 		bQuit.setOnClickListener(this);
 		bStatus.setOnClickListener(this);
 		bCheat.setOnClickListener(this);
+		bChat.setOnClickListener(this);
 		bSave.setOnClickListener(this);
-		//bCheat.setVisibility(bCheat.VISIBLE);
+		bloby.setOnClickListener(this);
 		allItms= new Hashtable<String,String[]>();
 		allSkills= new Hashtable<String,String[]>();
 		sa=((SharingAtts)getApplication());
 		
 		id =sa.getId();
 		it= new ItemTest();
-		/*
-		String[] s1 = it.printData("players");
-		itms = new DBManager(this,s1[1],"allplayer",s1[0]);
-		itms.openToRead();
-		String st1=itms.queueAll(String.valueOf(id));
-		itms.close();
-		sa.setPlaAtts(st1.split(" "));
 		
-		String[] s2= it.printData("player_inv");
-		itms = new DBManager(this,s2[1],"playersinv",s2[0]);
-		itms.openToRead();
-		String st2 = itms.queueAll(String.valueOf(id));
-		itms.close();
-		sa.setAllInv(st2.split(" "));
-	
-		String[] s3= it.printData("player_skills");
-		itms = new DBManager(this,s3[1],"playerskill",s3[0]);
-		itms.openToRead();
-		String st3 = itms.queueAll(String.valueOf(id));
-		itms.close();
-		*/
-		/*
-		String[] s4 = it.printData("skills");
-		itms = new DBManager(this,s4[1],"allskills",s4[0]);
-		itms.openToRead();
-		//String st4=itms.queueFew(new String[]{"skill_id"});
-		String st6 = itms.queueAll();
-		itms.close();
-		//sa.setSkills(st3.split(" "));
-		
-		String[] s5 = it.printData("inventory");
-		itms = new DBManager(this,s5[1],"allitems",s5[0]);
-		itms.openToRead();
-		String st5 =itms.queueAll();
-		itms.close();
-		
-		
-		String[] ht1 = st5.split("\n");
-		String[] ht2 = st6.split("\n");
-		
-		for(int i=0;i<ht1.length;i++){
-			String[] s = ht1[i].split(" ");
-			allItms.put(s[0], s);
+		try{
+			sa.updateStat();
+		}catch(Exception e){
+			e.printStackTrace();
 		}
 		
-		for(int i=0;i<ht2.length;i++){
-			String[] s = ht2[i].split(" ");
-			allSkills.put(s[0], s);
-		}	
-		
-		sa.setAllItms(allItms);
-		sa.setAllSkills(allSkills);
-		*/
-		/*
-		String[] s4=it.printData("skills");
-		//db = new DBManager(this,s4[1],"allskills",s4[0]);
-		
-		for(int i=2;i<s4.length;i++){
-			String[] s = s4[i].split(",");
-			allSkills.put(s[0], s);
-		}
-		
-		String[] s5=it.printData("allItems");
-		//db = new DBManager(this,s4[1],"allskills",s4[0]);
-		
-		for(int i=2;i<s5.length;i++){
-			String[] s = s5[i].split(",");
-			allItms.put(s[0], s);
-		}
-		
-		sa.setAllItms(allItms);
-		sa.setAllSkills(allSkills);
-		*/
-		//------------------------------------------------------------
-		/*String[] s5=it.printData("allItems");
-		db = new DBManager(this,s5[1],"allitems",s5[0]);
-		db.openToWrite();
-		db.dropTable();
-		db.cretTable();
-		for(int i=2;i<s5.length;i++)
-			db.insertQuery(s5[i]);
-		db.close();
-		*/
-		sa.updateStat();
 		Toast.makeText(getApplicationContext(), String.valueOf(sa.getAllItms("101")), Toast.LENGTH_LONG).show();
 	}
 
@@ -191,44 +115,26 @@ public class WelcomeScreen extends Activity implements OnClickListener{
 				
 			}else if(bStore2==arg0.getId()){
 				Intent inn = new Intent("com.darshan.warriorgame.store");
-				//inn.putExtra("filename", filename);
 				startActivity(inn);
 				
 			}else if(bStatus2==arg0.getId()){
 				i = new Intent("com.darshan.warriorgame.status");
-				//i.putExtra("filename", filename);
 				startActivity(i);
 			}else if(arg0.getId()==R.id.bCheat2){
-				//Toast.makeText(getApplicationContext(), "Hello", Toast.LENGTH_SHORT).show();
 				cc.show();
 			}else if(arg0.getId()==R.id.bSave1){
-			/*
-				String playerInfo="";//String.valueOf(sa.id);
-				for(int i=0; i<sa.inv.length; i++)
-					playerInfo = playerInfo +" "+ String.valueOf(sa.inv[i]);
-				for(int i=0; i < sa.eqInv.length;i++)
-					playerInfo = playerInfo +" "+ String.valueOf(sa.eqInv[i]);
-				for(int i=0; i < sa.poInv.length;i++)
-					playerInfo = playerInfo +" "+ String.valueOf(sa.poInv[i]);
-				sg.saveInv(playerInfo, String.valueOf(sa.id));
-				Toast.makeText(getApplicationContext(), "eq= "+playerInfo,Toast.LENGTH_SHORT).show();
-				
-				playerInfo="";//String.valueOf(sa.id);
-				for(int i=0; i<sa.skilllvl.length;i++)
-					playerInfo = playerInfo +" "+ String.valueOf(sa.skilllvl[i]);
-				sg.savePlayerSkills(playerInfo, String.valueOf(sa.id));
-				Toast.makeText(getApplicationContext(), "skills= "+playerInfo,Toast.LENGTH_SHORT).show();
-				
-				playerInfo=String.valueOf(sa.lvl);
-				for(int i=0; i<sa.getMajatt().length;i++)
-					playerInfo = playerInfo + " " + sa.getMajatt()[i];
-				sg.savePlayerAtts(playerInfo, String.valueOf(sa.id));
-				*/
 				new UpdateTables().execute();
-				//Toast.makeText(getApplicationContext(), "atts= "+playerInfo,Toast.LENGTH_SHORT).show();
-				//}catch(Exception e){
-				//	Toast.makeText(getApplicationContext(), e.toString(),Toast.LENGTH_SHORT).show();
-				//}
+			}else if(arg0.getId()==R.id.bChat){
+				
+				Intent intent = new Intent(this, ChatRoom.class);
+				intent.putExtra("isWithout", true);
+				intent.putExtra("topic","sports");
+				intent.putExtra("uname", sa.name);
+				startActivity(intent);
+			
+			}else if(arg0.getId()==R.id.bBattleLobby){
+				Intent i = new Intent(WelcomeScreen.this,BattleLobby.class);
+				startActivity(i);
 			}
 		
 		}
@@ -252,41 +158,74 @@ public class WelcomeScreen extends Activity implements OnClickListener{
 		protected String doInBackground(String... arg0) {
 			// TODO Auto-generated method stub
 			List<NameValuePair> params = new ArrayList<NameValuePair>();
-			String playerInfo = "";
-			for(int i=0; i<sa.inv.length; i++)
+			//String playerInfo = "";
+			it = new ItemTest();
+			String[] playerCol = it.printData("players")[1].split(" "); 
+			
+			for(int i=0; i<sa.inv.length; i++){
 				params.add(new BasicNameValuePair("inv_"+String.valueOf(i+1),String.valueOf(sa.inv[i])));
-			//playerInfo = playerInfo + String.valueOf(sa.inv[i])+" ";
+				Log.d("Inv", "inv_"+String.valueOf(i+1)+","+String.valueOf(sa.inv[i]));
+			}
 			
-			for(int i=0; i < sa.eqInv.length;i++)
+			for(int i=0; i < sa.eqInv.length;i++){
 				params.add(new BasicNameValuePair("eq_inv_"+String.valueOf(i+1),String.valueOf(sa.eqInv[i])));
-				//playerInfo =  playerInfo + String.valueOf(sa.eqInv[i])+" ";
+				Log.d("eq_inv","eq_inv_"+String.valueOf(i+1)+","+String.valueOf(sa.eqInv[i]));
+			}
 			
-			for(int i=0; i < sa.poInv.length;i++)
+			for(int i=0; i < sa.poInv.length;i++){
 				params.add(new BasicNameValuePair("po_inv_"+String.valueOf(i+1),String.valueOf(sa.poInv[i])));
-				//playerInfo = playerInfo + String.valueOf(sa.poInv[i])+" ";
-			
+				Log.d("po_inv","po_inv_"+String.valueOf(i+1)+","+String.valueOf(sa.poInv[i]));
+			}
 			//params.add(new BasicNameValuePair("player_inv", playerInfo));
 			params.add(new BasicNameValuePair("inv_tag", "player_inv"));
 			
-			playerInfo = "";
-			for(int i=0; i<sa.skilllvl.length;i++)
-				playerInfo = playerInfo + String.valueOf(sa.skilllvl[i])+" ";
-			params.add(new BasicNameValuePair("player_skills",playerInfo));
-			params.add(new BasicNameValuePair("skills_tag","playerskill"));
-			
-			playerInfo="";
-			for(int i=0; i<sa.getMajatt().length;i++)
-				playerInfo = playerInfo + sa.getMajatt()[i] + " " ;
-			params.add(new BasicNameValuePair("allplayer",playerInfo));
-			params.add(new BasicNameValuePair("players_tag","allplayer"));
+			//playerInfo = "";
+			for(int i=0; i<sa.skills.length;i++){
+				params.add(new BasicNameValuePair(String.valueOf(sa.skills[i]), String.valueOf(sa.skilllvl[i]) ));
+				Log.wtf("skills", String.valueOf(sa.skills[i])+","+ String.valueOf(sa.skilllvl[i]));
+			}
+			params.add(new BasicNameValuePair("att_tag", "players_att"));
+			for(int i=5; i<playerCol.length;i++){
+				params.add(new BasicNameValuePair(playerCol[i],String.valueOf(sa.getMajatt()[i-5])));
+				Log.d("player_atts", playerCol[i]+","+String.valueOf(sa.getMajatt()[i-5]));
+			}
+			params.add(new BasicNameValuePair("level",String.valueOf(sa.lvl)));
+			Log.d("player_atts", "level"+","+String.valueOf(sa.lvl));
 			params.add(new BasicNameValuePair("player_id",String.valueOf(sa.id)));
+			Log.d("player_atts", "player_id"+","+String.valueOf(sa.id));
+			
+			Log.d("params_length", String.valueOf(params.size()));
 			try {	
 				JSONObject json = jsonParser.makeHttpRequest(
                     LOGIN_URL, "POST", params);
 		
-				String  success =json.getString("suceess");
-				Log.d("sucess", success);
-				
+				String success1 = json.getString("suceess1");
+				String success2 = json.getString("suceess2");
+				String success3 = json.getString("suceess3");
+				if(success1.equals("0")){
+					Log.e("success1", success1);
+					Log.e("Exception1", json.getString("Exception1"));
+					Log.e("message1",json.getString("message1"));
+				}else{
+					Log.d("sucess1", success1);
+					Log.d("message1", json.getString("message1"));
+				}
+				if(success2.equals("0")){
+					Log.e("success2", success2);
+					Log.e("Exception2", json.getString("Exception2"));
+					Log.e("message2",json.getString("message2"));
+				}else{
+					Log.d("sucess2", success2);
+					Log.d("message2", json.getString("message2"));
+				}
+				if(success3.equals("0")){
+					Log.e("success3", success3);
+					Log.e("Exception3", json.getString("Exception3"));
+					Log.e("message3",json.getString("message3"));
+				}else{
+					Log.d("sucess3", success3);
+					Log.d("message3", json.getString("message3"));
+				}
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -303,6 +242,15 @@ public class WelcomeScreen extends Activity implements OnClickListener{
 
 		
 	}
+
+	@Override
+	public void onBackPressed() {
+		// TODO Auto-generated method stub
+		super.onBackPressed();
+		
+		
+	}
+	
 	
 	}
 

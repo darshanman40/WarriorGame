@@ -35,27 +35,27 @@
 
                 <ImageView
                     android:id="@+id/ivStr4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/empty_inv" />
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:src="@drawable/str" />
 
                 <ImageView
                     android:id="@+id/ivSpd4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/empty_inv" />
+                    android:layout_width="28dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/speed" />
 
                 <ImageView
                     android:id="@+id/ivMHp4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/empty_inv" />
+                    android:layout_width="28dp"
+                    android:layout_height="27dp"
+                    android:src="@drawable/max_life" />
 
                 <ImageView
                     android:id="@+id/ivMMana4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/empty_inv" />
+                    android:layout_width="27dp"
+                    android:layout_height="27dp"
+                    android:src="@drawable/max_mana" />
             </LinearLayout>
 
             <LinearLayout
@@ -102,5 +102,13 @@
         </RelativeLayout>
 
     </FrameLayout>
+
+    <Button
+        android:id="@+id/bContinue5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:text="Continue" />
 
 </RelativeLayout>

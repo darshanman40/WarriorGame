@@ -16,6 +16,7 @@ import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 //import android.util.AttributeSet;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -35,6 +36,7 @@ import android.widget.TextView;
 public class BattleArena extends Activity implements OnClickListener{
 	
 	String t;
+	String TAG_LINE ="Line #";
 	String[] skilName = new String[]{"stab","double_strike","speed_strike","speed_strike","vertical_strike","shadow_blend","inner_strength","avenger","split","execution","shurikens","energy_shot","blast_fire","energy_field","charge","mana_bomb","heal","shadow_strike","annihilate","shadow_replicate"};
 	String[] skilId = new String[]{"1001","1011","1012","1021","1022","1031","1041","1042","1051","2001","2011","2012","2021","2022","2031","2032","2041","2042","2051"};
 	ProgressBar pbCHp,pbPHp;
@@ -138,11 +140,11 @@ public class BattleArena extends Activity implements OnClickListener{
 			bSkill4.setImageResource(com.darshan.warriorgame.R.drawable.speed_strike_act);
 			bSkill4.setOnClickListener(this);
 		}
-		if(sa.skilllvl[9]!=0){
+		if(sa.skilllvl[7]!=0){
 			bSkill5.setImageResource(com.darshan.warriorgame.R.drawable.shuriken_act);
 			bSkill5.setOnClickListener(this);
 		}
-		if(sa.skilllvl[11]!=0){
+		if(sa.skilllvl[9]!=0){
 			bSkill6.setImageResource(com.darshan.warriorgame.R.drawable.blast_fire_act);
 			bSkill6.setOnClickListener(this);
 		}
@@ -150,35 +152,35 @@ public class BattleArena extends Activity implements OnClickListener{
 			bSkill7.setImageResource(com.darshan.warriorgame.R.drawable.vertical_strike_act);
 			bSkill7.setOnClickListener(this);
 		}
-		if(sa.skilllvl[13]!=0){
+		if(sa.skilllvl[10]!=0){
 			bSkill8.setImageResource(com.darshan.warriorgame.R.drawable.charge_act);
 			bSkill8.setOnClickListener(this);
 		}
-		if(sa.skilllvl[15]!=0){
+		if(sa.skilllvl[12]!=0){
 			bSkill9.setImageResource(com.darshan.warriorgame.R.drawable.heal_act);
 			bSkill9.setOnClickListener(this);
 		}
-		if(sa.skilllvl[10]!=0){
+		if(sa.skilllvl[8]!=0){
 			bSkill10.setImageResource(com.darshan.warriorgame.R.drawable.energy_shot_act);
 			bSkill10.setOnClickListener(this);
 		}
-		if(sa.skilllvl[17]!=0){
+		if(sa.skilllvl[14]!=0){
 			bSkill11.setImageResource(com.darshan.warriorgame.R.drawable.annihilate_act);
 			bSkill11.setOnClickListener(this);
-		}if(sa.skilllvl[16]!=0){
+		}if(sa.skilllvl[13]!=0){
 			bSkill12.setImageResource(com.darshan.warriorgame.R.drawable.shadow_strike_act);
 			bSkill12.setOnClickListener(this);
-		}if(sa.skilllvl[7]!=0){
+		}if(sa.skilllvl[5]!=0){
 			bSkill13.setImageResource(com.darshan.warriorgame.R.drawable.split_act);
 			bSkill13.setOnClickListener(this);
-		}if(sa.skilllvl[6]!=0){
+		}if(sa.skilllvl[4]!=0){
 			bSkill14.setImageResource(com.darshan.warriorgame.R.drawable.avenger_act);
 			bSkill14.setOnClickListener(this);
-		}if(sa.skilllvl[14]!=0){
+		}if(sa.skilllvl[11]!=0){
 			bSkill15.setImageResource(com.darshan.warriorgame.R.drawable.mana_bomb_act);
 			bSkill15.setOnClickListener(this);
 		}
-		if(sa.skilllvl[8]!=0){
+		if(sa.skilllvl[6]!=0){
 			bSkill16.setImageResource(com.darshan.warriorgame.R.drawable.execution_act);
 			bSkill16.setOnClickListener(this);
 		}
@@ -230,12 +232,14 @@ public class BattleArena extends Activity implements OnClickListener{
 		try{
 		@SuppressWarnings("unused")
 		String battleDetails="";
-		skillIndex = new LinkedList<Integer>();
-		//skillIndex.add(0);
-		for(int i=0;i<b.p2Skills.length;i++){
-			if(b.p2Skills[i]>0)
-				skillIndex.add(i);
+		if(skillIndex==null || skillIndex.isEmpty()){
+			skillIndex = new LinkedList<Integer>(); Log.d(TAG_LINE, "236");
+			for(int i=0;i<b.p2Skills.length;i++){
+				if(b.p2Skills[i]>0)
+					skillIndex.add(b.p2Skills[i]);
+			}
 		}
+		int multiplier = skillIndex.size()/3;
 		//List<Integer> lowAttackCodes = new ArrayList<Integer>();
 		/*
 		List<Integer> midAttackCodes = new ArrayList<Integer>();
@@ -250,29 +254,32 @@ public class BattleArena extends Activity implements OnClickListener{
 			hiAttackCodes.add(skillIndex.get(i));
 		}
 		 */
-		if(lAttackCodes.isEmpty()){	
-			initForOpp();
+		if(lAttackCodes.isEmpty() || lAttackCodes==null){	
+			initForOpp(); Log.d(TAG_LINE, 257+"");
 			Collections.shuffle(lAttackCodes);
-			AI2();
-		}else{
-			
-			for(int i=0; i<skillIndex.size();i++){
-				
-				if(lAttackCodes.get(0)==0){
-					b.damage(0,1);
-					battleDetails="P2 used normal Attack\n";
-				}else if(lAttackCodes.get(0)==1){
-				//b.damage(midAttackCodes.get(ran), 1);
-					b.damage(1, 1);
-					battleDetails="P2 used "+skilName[0]+" Attack\n";
-				}else if(lAttackCodes.get(0)==2){
-					b.damage(2, 1);
-					battleDetails="P2 used "+skilName[1]+" Attack\n";
-				}
-			
-				lAttackCodes.remove(0);
-			}
 		}
+		b.damage(lAttackCodes.get(0)*multiplier, 1);
+		/*
+		
+		//	for(int i=0; i<skillIndex.size();i++){
+				Log.d("AttackCodes", lAttackCodes.get(0)+"");
+				if(lAttackCodes.get(0)==0){  
+					b.damage(0,1); Log.d(TAG_LINE, "262");
+					battleDetails="P2 used normal Attack\n";
+				}else if(lAttackCodes.get(0)==1){ 
+					b.damage(1, 1); Log.d(TAG_LINE, "265");
+					battleDetails="P2 used "+skilName[0]+" Attack\n";
+				}else if(lAttackCodes.get(0)==2){ 
+					b.damage(2, 1); Log.d(TAG_LINE, "267");
+					battleDetails="P2 used "+skilName[1]+" Attack\n";
+				}else{
+					b.damage(0,1); Log.d(TAG_LINE, "272");
+					battleDetails="P2 used normal Attack\n";
+				}
+			*/
+				lAttackCodes.remove(0);
+		//	}
+		
 		}catch(Exception e){
 			Toast.makeText(this, "AttackCodes size= "+String.valueOf(lAttackCodes.size()), Toast.LENGTH_SHORT).show();
 		}
@@ -327,46 +334,46 @@ public class BattleArena extends Activity implements OnClickListener{
 		
 		if(Integer.valueOf(p1SuccStrike.get(0).toString())==0){
 			appendTextAndScroll("P1 Attack Missed");
-		}else if(arg0.getId()==bSkill3.getId() ){
-			b.damage(3, 0);
-			refreshScreen();
-		}else if( arg0.getId()==bSkill15.getId()){
-			b.damage(15, 0);
-			refreshScreen();
-		}else if( arg0.getId()==0){
-			b.damage(1,0);
-		}else if( arg0.getId()==1){
-			b.damage(2,0);
+	//	}else if(arg0.getId()==bSkill3.getId() ){
+		//	b.damage(3, 0);
+			//refreshScreen();
+	//	}else if( arg0.getId()==bSkill15.getId()){
+		//	b.damage(15, 0);
+		//	refreshScreen();
+		//}else if( arg0.getId()==0){
+		//	b.damage(1,0);
+	//	}else if( arg0.getId()==1){
+	//		b.damage(2,0);
 		}else if( arg0.getId()==R.id.bAttack){
 			b.damage(0,0);
 		}else if( arg0.getId()==bSkill2.getId()){
-			b.damage(2,0);
+			b.damage(1,0);
 		}else if( arg0.getId()==bSkill3.getId()){
-			b.damage(3,0);
+			b.damage(2,0);
 		}else if( arg0.getId()==bSkill4.getId()){
-			b.damage(4,0);
+			b.damage(3,0);
 		}else if( arg0.getId()==bSkill5.getId()){
-			b.damage(5,0);
+			b.damage(4,0);
 		}else if( arg0.getId()==bSkill6.getId()){
-			b.damage(6,0);
+			b.damage(5,0);
 		}else if( arg0.getId()==bSkill7.getId()){
-			b.damage(7,0);
+			b.damage(6,0);
 		}else if( arg0.getId()== bSkill8.getId()){
-			b.damage(8,0);
+			b.damage(7,0);
 		}else if( arg0.getId()==bSkill9.getId()){
-			b.damage(9,0);
+			b.damage(8,0);
 		}else if( arg0.getId()==bSkill10.getId()){
-			b.damage(10,0);
+			b.damage(9,0);
 		}else if( arg0.getId()==bSkill11.getId()){
-			b.damage(11,0);
+			b.damage(10,0);
 		}else if( arg0.getId()==bSkill12.getId()){
-			b.damage(12,0);
+			b.damage(11,0);
 		}else if( arg0.getId()==bSkill13.getId()){
-			b.damage(13,0);
+			b.damage(12,0);
 		}else if( arg0.getId()==bSkill14.getId()){
-			b.damage(14,0);
+			b.damage(13,0);
 		}else if( arg0.getId()==bSkill15.getId()){
-			b.damage(15,0);
+			b.damage(14,0);
 		}else if(arg0.getId()==ivLPot.getId()){
 			if(sa.poInv[0]>0){
 			b.p1hp += 80;
@@ -404,6 +411,11 @@ public class BattleArena extends Activity implements OnClickListener{
 					 ourClass = Class.forName("com.darshan.warriorgame.AttsUp");
 					 sa.lvl+=1;
 					 sa.remSkilPts+=1;
+					 sa.remAttPts+=1;
+					 int gold = getIntent().getIntExtra("oppGold", 0); 
+					 if(gold==0)
+						 gold = Integer.valueOf(getIntent().getStringExtra("oppGold"));
+					 sa.gold+= gold;
 					 Intent in = new Intent(BattleArena.this,ourClass);
 					 startActivity(in);
 					 finish();
@@ -413,18 +425,24 @@ public class BattleArena extends Activity implements OnClickListener{
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+			}else{
+				 int gold = getIntent().getIntExtra("oppGold", 0); 
+				 if(gold==0)
+					 gold = Integer.valueOf(getIntent().getStringExtra("oppGold"));
+				 sa.gold+= (gold/2);
+				finish();
 			}
 			attack.setClickable(false);
-		}
-		
-		//machinePlayer Attack
-		if(Integer.valueOf(p2SuccStrike.get(0).toString())==0){
-			appendTextAndScroll("P2 Attack Missed");
+		//}
 		}else{
+		//machinePlayer Attack
+			if(Integer.valueOf(p2SuccStrike.get(0).toString())==0){
+				appendTextAndScroll("P2 Attack Missed"); Log.d(TAG_LINE, "424");
+			}else{
 		//AI(arg0);
-			AI2();
+				AI2(); Log.d(TAG_LINE, "427");
+			}
 		}
-		
 		p1SuccStrike.remove(0);
 		p2SuccStrike.remove(0);
 		

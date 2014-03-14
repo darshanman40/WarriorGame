@@ -18,7 +18,7 @@ import android.widget.TextView;
 
 public class BattleStadium extends Activity implements OnClickListener{
 
-	Button tf,sm,sr,ag,ba,wa,sh,mr,ro,sma,ma,ra,as,kn,wi,tr,an,gu,vm,gk;
+	Button tf,sm,sr,ag,ba,sh,mr,ro,sma,ma,ra,as,kn,wi,tr,an,gu,vm,gk;
 	Button cheat;
 	Player pl,com;
 	Intent i;
@@ -43,7 +43,7 @@ public class BattleStadium extends Activity implements OnClickListener{
 		sr = (Button)findViewById(R.id.bSeer);
 		ag = (Button)findViewById(R.id.bAgent);
 		ba = (Button)findViewById(R.id.bBandit);
-		wa = (Button)findViewById(R.id.bWarrior);
+		
 		sh = (Button)findViewById(R.id.bShaman);
 		mr = (Button)findViewById(R.id.bMercenery);
 		ro = (Button)findViewById(R.id.bRonin);
@@ -73,35 +73,33 @@ public class BattleStadium extends Activity implements OnClickListener{
 		if(sa.lvl>4)
 			ba.setOnClickListener(this);
 		if(sa.lvl>5)
-			wa.setOnClickListener(this);
-		if(sa.lvl>6)
 			sh.setOnClickListener(this);
-		if(sa.lvl>7)
+		if(sa.lvl>6)
 			mr.setOnClickListener(this);
-		if(sa.lvl>8)
+		if(sa.lvl>7)
 			ro.setOnClickListener(this);
-		if(sa.lvl>9)
+		if(sa.lvl>8)
 			sma.setOnClickListener(this);
-		if(sa.lvl>10)
+		if(sa.lvl>9)
 			ma.setOnClickListener(this);
-		if(sa.lvl>11)
+		if(sa.lvl>10)
 		ra.setOnClickListener(this);
-		if(sa.lvl>12)
+		if(sa.lvl>11)
 		as.setOnClickListener(this);
-		if(sa.lvl>13)
+		if(sa.lvl>12)
 		kn.setOnClickListener(this);
-		if(sa.lvl>14)
+		if(sa.lvl>13)
 		wi.setOnClickListener(this);
-		if(sa.lvl>15)
+		if(sa.lvl>14)
 		tr.setOnClickListener(this);
-		if(sa.lvl>16)
+		if(sa.lvl>15)
 		an.setOnClickListener(this);
-		if(sa.lvl>17)
+		if(sa.lvl>16)
 		gu.setOnClickListener(this);
-		if(sa.lvl>18)
+		if(sa.lvl>17)
 		vm.setOnClickListener(this);
-		if(sa.lvl>19)
-		gk.setOnClickListener(this);
+		if(sa.lvl>18)
+			gk.setOnClickListener(this);
 		
 		
 	}
@@ -117,12 +115,65 @@ public class BattleStadium extends Activity implements OnClickListener{
 		}else if(arg0.getId()==R.id.bSwordsman){
 			setOpp(this,"2");
 			startActivity(i);
+		}else if(arg0.getId()==R.id.bSeer){
+			setOpp(this,"3");
+			startActivity(i);
+		}else if(arg0.getId()==R.id.bAgent){
+			setOpp(this,"4");
+			startActivity(i);
+		}else if(arg0.getId()==R.id.bBandit){
+			setOpp(this,"5");
+			startActivity(i);
+		}else if(arg0.getId()==R.id.bShaman){
+			setOpp(this,"6");
+			startActivity(i);
+		}else if(arg0.getId()==R.id.bMercenery){
+			setOpp(this,"7");
+			startActivity(i);
+		}else if(arg0.getId()==R.id.bRonin){
+			setOpp(this,"8");
+			startActivity(i);
+		}else if(arg0.getId()==R.id.bSamurai){
+			setOpp(this,"9");
+			startActivity(i);
+		}else if(arg0.getId()==R.id.bMage){
+			setOpp(this,"10");
+			startActivity(i);
+		}else if(arg0.getId()==R.id.bRaider){
+			setOpp(this,"11");
+			startActivity(i);
+		}else if(arg0.getId()==R.id.bAssailant){
+			setOpp(this,"12");
+			startActivity(i);
+		}else if(arg0.getId()==R.id.bKnight){
+			setOpp(this,"13");
+			startActivity(i);
+		}else if(arg0.getId()==R.id.bWitch){
+			setOpp(this,"14");
+			startActivity(i);
+		}else if(arg0.getId()==R.id.bTrooper){
+			setOpp(this,"15");
+			startActivity(i);
+		}else if(arg0.getId()==R.id.bAntiNinja){
+			setOpp(this,"16");
+			startActivity(i);
+		}else if(arg0.getId()==R.id.bGuardian){
+			setOpp(this,"17");
+			startActivity(i);
+		}else if(arg0.getId()==R.id.bVoodooMaster){
+			setOpp(this,"18");
+			startActivity(i);
+		}else if(arg0.getId()==R.id.bGateKeeper){
+			setOpp(this,"19");
+			startActivity(i);
 		}else if(arg0.getId()==R.id.bcheat1){
-		
-			
+			sa.setContext(this);
 			cc.show();
 		}
 		
+		if(arg0.getId()!=R.id.bcheat1){
+			finish();
+		}
 	}
 	public void setOpp(Context c,String id){
 		it = new ItemTest();
@@ -138,7 +189,7 @@ public class BattleStadium extends Activity implements OnClickListener{
 		i.putExtra("oppName",rows[1]);
 		i.putExtra("oppClass", rows[3]);
 		i.putExtra("oppLevel", rows[4]);
-		
+		i.putExtra("oppGold", rows[13]);
 		oppAtts.put(rows[0], rows);
 		sa.setMajOppAtts(oppAtts);
 		

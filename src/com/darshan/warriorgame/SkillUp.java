@@ -1,52 +1,67 @@
 package com.darshan.warriorgame;
 
+
 import android.app.Activity;
-//import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class SkillUp extends Activity implements OnClickListener{
 
-	ImageView PS1,PS2,PS3,PS4,PS5,PS6,PS7,PS8,PS9,MS1,MS2,MS3,MS4,MS5,MS6,MS7,MS8,MS9,MS10;
-	TextView Detail,P1,P2,P3,P4,P5,P6,P7,P8,P9,M1,M2,M3,M4,M5,M6,M7,M8,M9,M10;
+	ImageView PS1,PS2,PS3,PS4,PS5,PS6,PS7,MS1,MS2,MS3,MS4,MS5,MS6,MS7,MS8;
+	TextView Stats, Detail,P1,P2,P3,P4,P5,P6,P7,P8,P9,M1,M2,M3,M4,M5,M6,M7,M8,M9,M10;
 	TextView[] skilLvl;// = {P1,P2,P3,P4,P5,P6,P7,P8,P9,M1,M2,M3,M4,M5,M6,M7,M8,M9,M10};
+	int[] onSkills = {R.drawable.stab_act,R.drawable.double_strike_act, R.drawable.speed_strike_act,
+				R.drawable.vertical_strike_act, R.drawable.avenger_act,R.drawable.split_act,
+				R.drawable.execution_act, R.drawable.shuriken_act, R.drawable.energy_shot_act,
+				R.drawable.blast_fire_act, R.drawable.charge_act, R.drawable.heal_act,
+				R.drawable.mana_bomb_act, R.drawable.shadow_strike_act, R.drawable.annihilate_act
+	};
+	int[] prereqSkills = {0,1001,1001,1011,1021,1021,1041,0,2001,2001,2012,2022,2011,2032,2031};
 	Button bSkillUp,bCont;
 	SharingAtts sa;
 	int selectedSId;
+	ItemTest it;
+	ImageView[] lskills;
+	String[] skillsDetails;
+	final String REMSPTS = "Remaining Skill Points";
+	final String CLVL = "Current Level";
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.skillup);
+		setContentView(R.layout.skillsup);
 		selectedSId =-1;
 		sa = ((SharingAtts)getApplication());
-		PS1 = (ImageView)findViewById(R.id.ivPhS1);
-		PS2 = (ImageView)findViewById(R.id.ivPhS2);
-		PS3 = (ImageView)findViewById(R.id.ivPhS3);
-		PS4 = (ImageView)findViewById(R.id.ivPhS4);
-		PS5 = (ImageView)findViewById(R.id.ivPhS5);
-		PS6 = (ImageView)findViewById(R.id.ivPhS6);
-		PS7 = (ImageView)findViewById(R.id.ivPhS7);
-		PS8 = (ImageView)findViewById(R.id.ivPhS8);
-		PS9 = (ImageView)findViewById(R.id.ivPhS9);
-		MS1 = (ImageView)findViewById(R.id.ivMgS1);
-		MS2 = (ImageView)findViewById(R.id.ivMgS2);
-		MS3 = (ImageView)findViewById(R.id.ivMgS3);
-		MS4 = (ImageView)findViewById(R.id.ivMgS4);
-		MS5 = (ImageView)findViewById(R.id.ivMgS5);
-		MS6 = (ImageView)findViewById(R.id.ivMgS6);
-		MS7 = (ImageView)findViewById(R.id.ivMgS7);
-		MS8 = (ImageView)findViewById(R.id.ivMgS8);
-		MS9 = (ImageView)findViewById(R.id.ivMgS9);
-		MS10 = (ImageView)findViewById(R.id.ivMgS10);
+		PS1 = (ImageView)findViewById(R.id.ivStab2);
+		PS2 = (ImageView)findViewById(R.id.ivDStrike2);
+		PS3 = (ImageView)findViewById(R.id.ivSStrike2);
+		PS4 = (ImageView)findViewById(R.id.ivVStrike2);
+		PS5 = (ImageView)findViewById(R.id.ivAvenger2);
+		PS6 = (ImageView)findViewById(R.id.ivSplit2);
+		PS7 = (ImageView)findViewById(R.id.ivExecution2);
 		
+		MS1 = (ImageView)findViewById(R.id.ivShuriken2);
+		MS2 = (ImageView)findViewById(R.id.ivEShot2);
+		MS3 = (ImageView)findViewById(R.id.ivBFire2);
+		MS4 = (ImageView)findViewById(R.id.ivCharge2);
+		MS5 = (ImageView)findViewById(R.id.ivHeal2);
+		MS6 = (ImageView)findViewById(R.id.ivMBomb2);
+		MS7 = (ImageView)findViewById(R.id.ivShStrike2);
+		MS8 = (ImageView)findViewById(R.id.ivAnhi2);
+		
+		lskills = new ImageView[]{PS1,PS2,PS3,PS4,PS5,PS6,PS7,MS1,MS2,MS3,MS4,MS5,MS6,MS7,MS8}; 
+		for(int i=0; i<lskills.length;i++){
+			lskills[i].setOnClickListener(this);
+		}
+		
+		refreshScreen();
+		/*
 		P2 = (TextView)findViewById(R.id.tvPS2);
 		P3 = (TextView)findViewById(R.id.tvPS3);
 		P4 = (TextView)findViewById(R.id.tvPS4);
@@ -64,10 +79,11 @@ public class SkillUp extends Activity implements OnClickListener{
 		M8 = (TextView)findViewById(R.id.tvMS8);
 		M9 = (TextView)findViewById(R.id.tvMS9);
 		M10 = (TextView)findViewById(R.id.tvMS10);
-		Detail = (TextView)findViewById(R.id.tvSkillDetail);
-		
-		bSkillUp = (Button)findViewById(R.id.bBoostSkill);
-		bCont = (Button)findViewById(R.id.bContinue);
+		*/
+		Detail = (TextView)findViewById(R.id.tvDet5);
+		Stats = (TextView)findViewById(R.id.tvStat5);
+		bSkillUp = (Button)findViewById(R.id.bBoostSkill2);
+		bCont = (Button)findViewById(R.id.bContinue2);
 		
 		bCont.setOnClickListener(this);
 		PS2.setOnClickListener(this);
@@ -75,16 +91,71 @@ public class SkillUp extends Activity implements OnClickListener{
 		if(sa.remSkilPts>0){
 			bSkillUp.setOnClickListener(this);
 		}
-		skilLvl = new TextView[]{P1,P2,P3,P4,P5,P6,P7,P8,P9,M1,M2,M3,M4,M5,M6,M7,M8,M9,M10};
+		//lskills = new ImageView[]{PS1,PS2,PS3,PS4,PS5,PS6,PS7,MS1,MS2,MS3,MS4,MS5,MS6,MS7,MS8};
 		//selectedSId=0;
-		Detail.setText(String.valueOf(sa.remSkilPts));
+		//Detail.setText(String.valueOf(sa.remSkilPts));
+		Detail.setText("");
+		Stats.setText(REMSPTS+" = "+sa.remSkilPts+"\n");
+		
+		it = new ItemTest();
+		
+		
+		skillsDetails = it.printData("skilldet");
+		
 	}
-	
+	void refreshScreen(){
+		for(int i=0; i<lskills.length;i++){
+			if(sa.skilllvl[i]>0)
+				lskills[i].setImageResource(onSkills[i]);
+		}
+	}
 	
 	@Override
 	public void onClick(View arg0) {
 		// TODO Auto-generated method stub
-	/*
+	
+		Stats.setText(REMSPTS+" = "+sa.remSkilPts+"\n");
+		int skillIndex = 0;
+		if(arg0.getId()==R.id.bContinue2){
+			finish();
+		}else if(arg0.getId()==R.id.bBoostSkill2){
+			int skill = prereqSkills[selectedSId];
+			for(int i=0;i <sa.skills.length;i++){
+				if(skill==sa.skills[i]){
+					skillIndex = i;
+					break;
+				}
+			}
+			
+			if(selectedSId!=-1 && sa.remSkilPts>0 && sa.skilllvl[skillIndex]>0){
+				sa.skilllvl[selectedSId]+=1;
+				sa.remSkilPts-=1;
+				if(sa.remSkilPts<1)
+					bSkillUp.setClickable(false);
+				if(selectedSId > -1){
+					Stats.setText(REMSPTS+" = "+sa.remSkilPts+"\n");
+					Stats.append(CLVL+" = "+sa.skilllvl[selectedSId]);
+				}
+			}
+			Log.d("skillIndex",skillIndex+"");
+			
+		}else{
+			for(int i=0; i<lskills.length;i++){
+				if(lskills[i].getId()==arg0.getId()){
+					selectedSId = i;
+					break;
+				}
+				
+			}
+			
+			if(selectedSId!=-1){
+				Stats.append(CLVL+" = "+sa.skilllvl[selectedSId]);
+				Detail.setText(skillsDetails[selectedSId].replace(".", "\n"));
+			}
+		}
+		refreshScreen();
+		
+		/*
 		switch(arg0.getId()){
 		case R.id.bSkillUp:
 			//if((selectedSId-1)>=0)
@@ -101,6 +172,7 @@ public class SkillUp extends Activity implements OnClickListener{
 			break;
 		}
 		*/
+		/*
 		if(arg0.getId()==R.id.bBoostSkill){
 			if(selectedSId!=-1){
 				sa.skilllvl[selectedSId]+=1;
@@ -127,6 +199,7 @@ public class SkillUp extends Activity implements OnClickListener{
 		
 		Toast.makeText(getApplicationContext(),"rem Skill points= "+sa.remSkilPts, Toast.LENGTH_SHORT).show();
 		//finish();
+	*/
 	}
 
 	

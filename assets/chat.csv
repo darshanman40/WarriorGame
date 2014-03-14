@@ -1,0 +1,2 @@
+CREATE TABLE IF NOT EXISTS 'chat' ('chat_id' INTEGER PRIMARY KEY  NOT NULL  UNIQUE , 'sender' VARCHAR, 'message' VARCHAR, 'receiver' VARCHAR, 'record_time' DATETIME DEFAULT CURRENT_TIMESTAMP);
+chat_id,sender,message,receiver,record_time

@@ -4,6 +4,7 @@ import java.util.Hashtable;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.Intent;
 
 public class SharingAtts extends Application {
 
@@ -11,11 +12,11 @@ public class SharingAtts extends Application {
 	String playerClass;
 	String name;
 	int id,lvl;
-	double str,speed,maxHp,maxMana,maxXp,initMana,initSpeed,hp,mana,xp,gold,remSkilPts; 
+	double str,speed,maxHp,maxMana,maxXp,initMana,initSpeed,hp,mana,xp,gold,remSkilPts,remAttPts; 
 	Integer[] inv;
 	Integer[] eqInv;
 	Integer[] poInv;
-	Integer[] skills = new Integer[]{1001,1011,1012,1021,1022,1031,1041,1042,1051,2001,2011,2012,2021,2022,2031,2032,2041,2042,2051};
+	Integer[] skills = new Integer[]{1001,1011,1012,1021,1041,1042,1051,2001,2011,2012,2022,2031,2032,2041,2042};
 	Integer[] goldToWin = new Integer[]{};
 	Integer[] skilllvl;
 	Integer[] oppInv;
@@ -25,6 +26,10 @@ public class SharingAtts extends Application {
 	
 	Hashtable<String,String[]> allSkills;
 	Hashtable<String,String[]> allItms;
+	
+	public void setContext(Context c){
+		this.c = c;
+	}
 	
 	public void setPlaInv(Integer[] inv){
 		this.inv=inv;
@@ -61,6 +66,7 @@ public class SharingAtts extends Application {
 		xp=Double.valueOf(att[12]);
 		gold=Double.valueOf(att[13]);
 		remSkilPts = Double.valueOf(att[14]);
+		remAttPts= Double.valueOf(att[15]);
 	}
 	
 	public void setPlaMajAtts(Integer[] att){
@@ -156,7 +162,7 @@ public class SharingAtts extends Application {
 	
 	public void setOppSkills(Hashtable<String,String[]> oppSkills){
 		String[] sm;
-		this.oppSkilllvl = new Integer[19];
+		this.oppSkilllvl = new Integer[15];
 		for(String s: oppSkills.keySet()){
 			sm = oppSkills.get(s);
 			for(int i=0; i<this.oppSkilllvl.length;i++){
@@ -176,7 +182,7 @@ public class SharingAtts extends Application {
 	
 	public Integer[] getMajatt(){
 		updateStat();
-		Integer[] majAtts = new Integer[10];
+		Integer[] majAtts = new Integer[11];
 		majAtts[0]=(int)str;
 		majAtts[1]=(int)speed;
 		majAtts[2]=(int)maxHp;
@@ -187,6 +193,7 @@ public class SharingAtts extends Application {
 		majAtts[7]=(int)xp;
 		majAtts[8]=(int)gold;
 		majAtts[9]=(int)remSkilPts;
+		majAtts[10]=(int)remAttPts;
 		return majAtts;
 	}
 	
@@ -325,6 +332,39 @@ public class SharingAtts extends Application {
 			hp=maxHp;
 			mana=maxMana;
 			return ("hp= "+hp+" mana= "+mana);
+		}else if(cCode.contains("lvlup")){
+			String[] split = cCode.split("=");
+			int new_lvl = Integer.valueOf(split[1]);
+			if(new_lvl>lvl){
+				int diff = new_lvl - lvl;
+				remSkilPts += diff; 
+				remAttPts += diff;
+				lvl = new_lvl; 
+
+				Class ourClass;
+				try {
+					 ourClass = Class.forName("com.darshan.warriorgame.AttsUp");
+					 Intent in = new Intent(c.getApplicationContext(),ourClass);
+					 in.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+					 startActivity(in);
+				//	 finish();
+					 
+					 
+				} catch (ClassNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				
+				return "level up successfully";
+			}else{
+				return "level up value must be greater than "+lvl;
+			}
+		}else if(cCode.contains("goldup")){
+			String[] split = cCode.split("=");
+			int gold = Integer.valueOf(split[1]);
+			this.gold +=  gold;
+			return "gold added successfully new gold = "+this.gold;
 		}
 		
 		return "Wrong Cheat Code";

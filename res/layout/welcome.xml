@@ -73,4 +73,21 @@
         android:layout_alignLeft="@+id/bStatus"
         android:text="Save" />
 
+    <Button
+        android:id="@+id/bChat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:text="Chat Room" />
+
+    <Button
+        android:id="@+id/bBattleLobby"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/bChat"
+        android:layout_alignBottom="@+id/bChat"
+        android:layout_alignParentRight="true"
+        android:text="Battle Lobby" />
+
 </RelativeLayout>

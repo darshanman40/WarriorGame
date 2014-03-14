@@ -9,10 +9,15 @@ package com.darshan.warriorgame;
 
 import java.util.Hashtable;
 
+
+import android.util.Log;
+
 //import com.darshan.warriorgame.Warrior;
 
 public class Battle{
 	String[] arrayNames = {"MinAtts","MajAtts","eqInv","Skills"};
+	String[] skilName = new String[]{"stab","double_strike","speed_strike","speed_strike","vertical_strike","shadow_blend","inner_strength","avenger","split","execution","shurikens","energy_shot","blast_fire","energy_field","charge","mana_bomb","heal","shadow_strike","annihilate","shadow_replicate"};
+	String[] errNames = {"p1Damage","p2Damage"};
 	
 	Integer[] p1MinAtts;
 	Integer[] p1MajAtts;
@@ -74,14 +79,72 @@ public class Battle{
 		p2mana = maxp2mana;
 	}
 	
+	public Battle(Hashtable<String,Integer[]> P1){
+		p1MinAtts = P1.get(arrayNames[0]);
+		p1MajAtts = P1.get(arrayNames[1]);
+		eqInvP1 = P1.get(arrayNames[2]);
+		p1Skills = P1.get(arrayNames[3]);
+		
+		
+		maxp1hp = p1MajAtts[2];
+		maxp1mana = p1MajAtts[3];
+		p1hp=p1MajAtts[5];
+		p1mana = p1MajAtts[6];
+	}
+	
+	public int phDamage(int id){
+		int damage=1;
+		if(id==0){
+			damage = (p1MinAtts[0]*4)-(p2MinAtts[2]/20);
+			//String formula = 
+			if(damage<=0)
+				damage=1;
+			p1damage = damage;
+			logDisplay(0,p2damage+"",null,-1);
+			p2hp=p2hp-damage;
+		}else if(id==1){
+			damage = (p2MinAtts[0]*4)-(p1MinAtts[2]/20);
+			if(damage<=0)
+				damage=1;
+			p2damage = damage;
+			logDisplay(1,p2damage+"",null,-1);
+			p1hp=p1hp-damage;
+		}
+		return damage;
+	}
+	
+	public int magDamage(int id){
+		int damage=1;
+		if(id==0){
+			damage = (p1MinAtts[1]*4)-(p2MinAtts[3]/20);
+			//String formula = 
+			if(damage<=0)
+				damage=1;
+			p1damage = damage;
+			logDisplay(0,p2damage+"",null,-1);
+			p2hp=p2hp-damage;
+		}else if(id==1){
+			damage = (p2MinAtts[1]*4)-(p1MinAtts[3]/20);
+			if(damage<=0)
+				damage=1;
+			p2damage = damage;
+			logDisplay(1,p2damage+"",null,-1);
+			p1hp=p1hp-damage;
+		}
+		return damage;
+	}
+	
+	
 	public void newHpP2(int id){
 		
 		int damage;
 		if(id==0){
-			damage = (p1MinAtts[0]*2)-(p2MinAtts[2]/20);
+			damage = (p1MinAtts[0]*4)-(p2MinAtts[2]/20);
+			//String formula = 
 			if(damage<=0)
 				damage=1;
 			p1damage = damage;
+			logDisplay(0,p2damage+"",null,-1);
 			p2hp=p2hp-damage;
 		}else if(id==1){
 			newHpP1();
@@ -90,69 +153,78 @@ public class Battle{
 	}
 	
 	public void newHpP1(){
-		int damage = p2MinAtts[0]-(p1MinAtts[2]);
+		int damage = (p2MinAtts[0]*4)-(p1MinAtts[2]/20);
 		if(damage<=0)
 			damage=1;
 		p2damage = damage;
+		logDisplay(1,p2damage+"",null,-1);
 		p1hp=p1hp-damage;
 	}
 	
 	public void stab(int id){
-		int damage;
+		int damage = phDamage(id);
 		if(id == 0){
-			damage =  (p1MinAtts[0]*2)-(p2MinAtts[2]/20);
 			if(damage<=0)
 				damage=1;
 			p1damage = damage+(p1Skills[0]*4);
 			p2hp = p2hp-damage;
 			//p1mana = p1mana - 15;
 		}else if(id == 1){
-			damage =  (p2MinAtts[0])-(p1MinAtts[2]);
 			if(damage<=0)
 				damage=1;
 			p2damage = damage+(p2Skills[0]*4);
+			logDisplay(1,p2damage+"",null,0);
 			p1hp = p1hp-damage;
 			//p2mana = p2mana - 15;
 		}
 	}
 	
 	public void doubleStrike(int id){
-		int damage;
+		int damage = phDamage(id);
+		String Tag = "damageFormula";
 		int coeff=60;
 		if(id == 0){
 			coeff = coeff+((p1Skills[1]-1)*8);
-			damage =  ((coeff*p1MinAtts[0])/100)-(p2MinAtts[2]/10);
+			
+			damage = ((coeff*damage)/100);
+			final String damage_form = "("+ coeff+"*"+p1MinAtts[0]+"/100) - ("+p2MinAtts[2]+"/80)" ;
+			Log.d(Tag,damage_form);
 			if(damage<=0)
 				damage=1;
 			p1damage = 2*damage;
+			logDisplay(0,p1damage+"",null,1);
 			p2hp = p2hp-p1damage;
 			p1mana = p1mana - 20;
 		}else if(id == 1){
 			coeff = coeff+((p2Skills[1]-1)*8);
-			damage =  ((coeff*p2MinAtts[0])/100)-(p1MinAtts[2]/10);
+			damage = ((coeff*damage)/100);
 			if(damage<=0)
 				damage=1;
 			p2damage = 2*damage;
+			logDisplay(1,p2damage+"",null,1);
 			p1hp = p1hp-p2damage;
 			//p2mana = p2mana - 20;
 		}
 	}
 	
 	public void speedStrike(int id){
-		int damage;
+		int damage = phDamage(id);
 		if(id == 0){
 			
-			damage =  ((p1MajAtts[1]*p1Skills[2]*60)/100)-(p2MinAtts[2]/10);
-			p1damage = damage;
+			damage = damage+((p1MajAtts[1]*p1Skills[2]*60)/100);
+			
 			if(damage<=0)
 				damage=1;
+			p1damage = damage;
+			logDisplay(0,p1damage+"",null,2);
 			p2hp = p2hp-p1damage;
 			p1mana = p1mana - 20;
 		}else if(id == 1){
-			damage =  ((p2MajAtts[1]*p2Skills[2]*60)/100)-(p1MinAtts[2]/10);
+			damage = damage + ((p2MajAtts[1]*p2Skills[2]*60)/100);
 			if(damage<=0)
 				damage=1;
 			p2damage = damage;
+			logDisplay(1,p2damage+"",null,2);
 			p1hp = p1hp-p2damage;
 			//p2mana = p2mana - 20;
 		
@@ -160,19 +232,22 @@ public class Battle{
 	}
 	
 	public void verticalStrike(int id){
-		int damage;
+		int damage = phDamage(id);
 		if(id == 0){
-			damage =  ((p1MajAtts[0]*p1Skills[3]*80)/100)-(p2MinAtts[2]/10);
-			p1damage = damage;
+			damage += ((p1MajAtts[0]*p1Skills[3]*80)/100);
+			
 			if(damage<=0)
 				damage=1;
+			p1damage = damage;
+			logDisplay(0,p1damage+"",null,3);
 			p2hp = p2hp-p1damage;
 			p1mana = p1mana - 20;
 		}else if(id == 1){
-			damage =  ((p2MajAtts[0]*p2Skills[3]*80)/100)-(p1MinAtts[2]/10);
+			damage +=  ((p2MajAtts[0]*p2Skills[3]*80)/100);
 			if(damage<=0)
 				damage=1;
 			p2damage = damage;
+			logDisplay(1,p2damage+"",null,3);
 			p1hp = p1hp-p2damage;
 			//p2mana = p2mana - 20;
 		
@@ -180,41 +255,45 @@ public class Battle{
 	}
 	
 	public void avenger(int id){
-		int damage;
+		int damage= phDamage(id);
 		//((p1maxhp-p1hp)*((coeff+((p1Skills[6]-1)*100))))
 		int coeff=200;
 		if(id == 0){
-			damage =  ((maxp1hp-p1hp)*((coeff+((p1Skills[6]-1)*100)))/100)-(p2MinAtts[2]/10);
+			damage +=  ((maxp1hp-p1hp)*((coeff+((p1Skills[6]-1)*100)))/100);
 			if(damage<=0)
 				damage=1;
 			p1damage = damage;
+			logDisplay(0,p1damage+"",null,4);
 			p2hp = p2hp-p1damage;
 			p1mana = p1mana - 25;
 		}else if(id == 1){
-			damage =  ((maxp2hp-p2hp)*((coeff+((p2Skills[6]-1)*100)))/100)-(p1MinAtts[2]/10);
+			damage +=  ((maxp2hp-p2hp)*((coeff+((p2Skills[6]-1)*100)))/100);
 			if(damage<=0)
 				damage=1;
 			p2damage = damage;
+			logDisplay(1,p2damage+"",null,4);
 			p1hp = p1hp-p2damage;
 			//p2mana = p2mana - 25;
 		}
 	}
 
 	public void split(int id){
-		int damage;
+		int damage = phDamage(id);
 		//((p1maxhp-p1hp)*((coeff+((p1Skills[6]-1)*100))))
 		int coeff=16;
 		if(id == 0){
-			damage =  ((p2hp)*((coeff+((p1Skills[7]-1)*2)))/100)-(p2MinAtts[2]/10);
+			damage +=  ((p2hp)*((coeff+((p1Skills[7]-1)*2)))/100);
 			if(damage<=0)
 				damage=1;
 			p1damage = damage;
+			logDisplay(0,p1damage+"",null,5);
 			p2hp = p2hp-p1damage;
 			p1mana = p1mana - 25;
 		}else if(id == 1){
-			damage =  ((p1hp)*((coeff+((p2Skills[7]-1)*2)))/100)-(p2MinAtts[2]/10);
+			damage +=  ((p1hp)*((coeff+((p2Skills[7]-1)*2)))/100);
 			if(damage<=0)
 				damage=1;
+			logDisplay(1,p2damage+"",null,5);
 			p2damage = damage;
 			p1hp = p1hp-p2damage;
 			//p2mana = p2mana - 25;
@@ -222,22 +301,24 @@ public class Battle{
 	}
 	
 	public void execution(int id){
-		int damage;
+		int damage= phDamage(id);
 		int coeff=75;
 		if(id == 0){
 			coeff = coeff+((p1Skills[8]-1)*5);
-			damage =  ((coeff*p1MinAtts[0])/100)-(p2MinAtts[2]/10);
+			damage +=  ((coeff*p1MinAtts[0])/100);
 			if(damage<=0)
 				damage=1;
 			p1damage = 4*damage;
+			logDisplay(0,p1damage+"",null,6);
 			p2hp = p2hp-p1damage;
 			p1mana = p1mana - 70;
 		}else if(id == 1){
 			coeff = coeff+((p2Skills[8]-1)*5);
-			damage =  ((coeff*p2MinAtts[0])/100)-(p1MinAtts[2]/10);
+			damage +=  ((coeff*p2MinAtts[0])/100);
 			if(damage<=0)
 				damage=1;
 			p2damage = 4*damage;
+			logDisplay(1,p2damage+"",null,6);
 			p1hp = p1hp-p2damage;
 			//p2mana = p2mana - 70;
 		}
@@ -246,17 +327,18 @@ public class Battle{
 	//------------------------------------------------------------------------------------------------------------------
 	//------------------------------------------------------------------------------------------------------------------
 	public void shurikens(int id){
-		int damage;
+		int damage = magDamage(id);
 		p1MinAtts[1]=p1MinAtts[1]+1;
 		if(id == 0){
-			damage =  ((p1MinAtts[1]+(22*p1Skills[9])))-(p2MinAtts[3]/10);
+			damage +=  ((p1MinAtts[1]+(22*p1Skills[9])));
 			if(damage<=0)
 				damage=1;
 			p1damage = damage;
+			logDisplay(0,p1damage+"",null,7);
 			p2hp = p2hp-p1damage;
 			p1mana = p1mana - 20;
 		}else if(id == 1){
-			damage =  ((p2MinAtts[1]+(22*p2Skills[9])))-(p1MinAtts[3]/10);
+			damage =  ((p2MinAtts[1]+(22*p2Skills[9])));
 			if(damage<=0)
 				damage=1;
 			p2damage = damage;
@@ -266,17 +348,18 @@ public class Battle{
 	}
 	
 	public void energyShot(int id){
-		int damage;
+		int damage = magDamage(id);
 		p1MinAtts[1]=p1MinAtts[1]+1;
 		if(id == 0){
-			damage =  ((p1MinAtts[1]+(49*p1Skills[10])))-(p2MinAtts[3]/10);
+			damage +=  ((p1MinAtts[1]+(49*p1Skills[10])));
 			if(damage<=0)
 				damage=1;
 			p1damage = damage;
+			logDisplay(0,p1damage+"",null,8);
 			p2hp = p2hp-p1damage;
 			p1mana = p1mana - 25;
 		}else if(id == 1){
-			damage =  ((p2MinAtts[1]+(49*p2Skills[10])))-(p1MinAtts[3]/10);
+			damage += ((p2MinAtts[1]+(49*p2Skills[10])));
 			if(damage<=0)
 				damage=1;
 			p2damage = damage;
@@ -286,18 +369,19 @@ public class Battle{
 	}
 	
 	public void blastFire(int id){
-		int damage;
+		int damage= magDamage(id);
 		int coeff = 12;
 		p1MinAtts[1]=p1MinAtts[1]+1;
 		if(id == 0){
-			damage =  ((coeff+p1MinAtts[1])+(6*(p1Skills[11]-1)))-(p2MinAtts[3]/10);
+			damage +=  ((coeff+p1MinAtts[1])+(6*(p1Skills[11]-1)));
 			if(damage<=0)
 				damage=1;
 			p1damage = 2*damage;
+			logDisplay(0,p1damage+"",null,9);
 			p2hp = p2hp-p1damage;
 			p1mana = p1mana - 25;
 		}else if(id == 1){
-			damage =  ((coeff+p2MinAtts[1])+(6*(p2Skills[11]-1)))-(p1MinAtts[3]/10);
+			damage +=  ((coeff+p2MinAtts[1])+(6*(p2Skills[11]-1)));
 			if(damage<=0)
 				damage=1;
 			p2damage = 2*damage;
@@ -317,12 +401,13 @@ public class Battle{
 	}
 	
 	public void manaBomb(int id){
-		int damage;
+		int damage = magDamage(id);
 		if(id == 0){
-			damage = (((p1mana-1)*150*p1Skills[14])/100) -(p2MinAtts[3]/10);
+			damage += (((p1mana-1)*150*p1Skills[14])/100);
 			if(damage<=0)
 				damage=1;
 			p1damage = damage;
+			logDisplay(0,p1damage+"",null,10);
 			p2hp = p2hp-p1damage;
 			p1mana=0;
 		}else if(id == 1){
@@ -347,17 +432,18 @@ public class Battle{
 	}
 	
 	public void shadowStrike(int id){
-		int damage;
+		int damage = magDamage(id);
 		p1MinAtts[1]=p1MinAtts[1]+1;
 		if(id == 0){
-			damage =  ((p1MinAtts[1]+(85*p1Skills[16])))-(p2MinAtts[3]/10);
+			damage +=  ((p1MinAtts[1]+(85*p1Skills[16])));
 			if(damage<=0)
 				damage=1;
 			p1damage = damage;
+			logDisplay(0,p1damage+"",null,12);
 			p2hp = p2hp-p1damage;
 			p1mana = p1mana - 40;
 		}else if(id == 1){
-			damage =  ((p2MinAtts[1]+(85*p2Skills[16])))-(p1MinAtts[3]/10);
+			damage +=  ((p2MinAtts[1]+(85*p2Skills[16])));
 			if(damage<=0)
 				damage=1;
 			p2damage = damage;
@@ -367,24 +453,51 @@ public class Battle{
 	}
 	
 	public void annihilate(int id){
-		int damage;
+		int damage = magDamage(id);
 		int coeff = 22;
 		p1MinAtts[1]=p1MinAtts[1]+1;
 		if(id == 0){
-			damage =  ((coeff+p1MinAtts[1])+(11*(p1Skills[17]-1)))-(p2MinAtts[3]/10);
+			damage +=  ((coeff+p1MinAtts[1])+(11*(p1Skills[17]-1)));
 			if(damage<=0)
 				damage=1;
 			p1damage = 3*damage;
 			p2hp = p2hp-p1damage;
 			p1mana = p1mana - 60;
 		}else if(id == 1){
-			damage =  ((coeff+p2MinAtts[1])+(11*(p2Skills[17]-1)))-(p1MinAtts[3]/10);
+			damage +=  ((coeff+p2MinAtts[1])+(11*(p2Skills[17]-1)));
 			if(damage<=0)
 				damage=1;
 			p2damage = 3*damage;
 			p1hp = p1hp-p2damage;
 			//p2mana = p2mana - 60;
 		}
+	}
+	
+	public void logDisplay(int pid, String dmg, String formula, int skilIndex){
+		
+		final String ACK = "Attack_used";
+		final String FML = "Formula";
+		
+		if(skilIndex<=skilName.length+1 && skilIndex!=-1)
+			Log.d(ACK, skilName[skilIndex]);
+		else if(skilIndex == -1)
+			Log.d(ACK, "Normal Attack");
+		else
+			Log.d(ACK, "Index out of Bound");
+		
+		if(formula!=null)
+			Log.d(FML,formula);
+		
+		if(pid<=errNames.length+1){
+			Log.d(errNames[pid], dmg);
+		}else{
+			Log.d("player id", "pid Out of bound");
+		}
+		
+		
+		
+		
+		
 	}
 	
 	//--------------------------------------------------------

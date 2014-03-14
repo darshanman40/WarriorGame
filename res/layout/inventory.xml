@@ -27,17 +27,17 @@
 
     <ImageView
         android:id="@+id/ivWeapon1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:layout_alignRight="@+id/ivheadGear1"
         android:layout_below="@+id/ivheadGear1"
         android:layout_marginRight="26dp"
+        android:layout_height="26dp"
+        android:layout_width="26dp"
         android:src="@drawable/empty_inv" />
 
     <ImageView
         android:id="@+id/ivheadGear1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="26dp"
+        android:layout_height="26dp"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:layout_marginRight="61dp"
@@ -46,16 +46,16 @@
 
     <ImageView
         android:id="@+id/ivArmour1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="26dp"
+        android:layout_height="26dp"
         android:layout_below="@+id/ivheadGear1"
         android:layout_toLeftOf="@+id/ivShield1"
         android:src="@drawable/empty_inv" />
 
     <ImageView
         android:id="@+id/ivShield1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="26dp"
+        android:layout_height="26dp"
         android:layout_alignTop="@+id/ivArmour1"
         android:layout_toRightOf="@+id/ivWeapon1"
         android:src="@drawable/empty_inv" />
@@ -69,23 +69,6 @@
         android:layout_toRightOf="@+id/linearLayout1"
         android:text="Life Potion x"
         android:textAppearance="?android:attr/textAppearanceMedium" />
-
-    <TextView
-        android:id="@+id/tvManaPot1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/tvLifePot1"
-        android:layout_centerVertical="true"
-        android:text="Mana Potion x"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-    <ImageView
-        android:id="@+id/ivManaPot1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignTop="@+id/tvManaPot1"
-        android:src="@drawable/mana_potion" />
 
     <ImageView
         android:id="@+id/ivLifePot1"
@@ -112,14 +95,6 @@
         android:text="Sell" />
 
     <TextView
-        android:id="@+id/tvGold3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/tvStr3"
-        android:layout_below="@+id/tvStr3"
-        android:text="Gold " />
-
-    <TextView
         android:id="@+id/tvDetail3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -129,11 +104,37 @@
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <TextView
-        android:id="@+id/tvStr3"
+        android:id="@+id/tvStr5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/ivWeapon1"
         android:layout_below="@+id/ivManaPot1"
         android:text="Str " />
+
+    <TextView
+        android:id="@+id/tvManaPot1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/tvLifePot1"
+        android:layout_below="@+id/ivLifePot1"
+        android:text="Mana Potion x"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <ImageView
+        android:id="@+id/ivManaPot1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/ivLifePot1"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/ivLifePot1"
+        android:src="@drawable/mana_potion" />
+
+    <TextView
+        android:id="@+id/tvGold3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/tvStr5"
+        android:layout_below="@+id/linearLayout1"
+        android:text="Gold " />
 
 </RelativeLayout>

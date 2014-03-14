@@ -21,10 +21,10 @@
 
         <ImageView
             android:id="@+id/ivPhS1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="31dp"
+            android:layout_height="31dp"
             android:layout_gravity="center"
-            android:src="@drawable/empty_inv" />
+            android:src="@drawable/stab_deact" />
 
         <ImageView
             android:id="@+id/ivVL1"
@@ -92,8 +92,9 @@
                 android:id="@+id/ivPhS2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="50dp"
-                android:src="@drawable/empty_inv" />
+                android:layout_above="@+id/ivVL5"
+                android:layout_toLeftOf="@+id/tvPS2"
+                android:src="@drawable/double_strike_deact" />
 
             <ImageView
                 android:id="@+id/ivPhS3"
@@ -102,14 +103,6 @@
                 android:layout_alignParentRight="true"
                 android:layout_alignParentTop="true"
                 android:layout_marginRight="20dp"
-                android:src="@drawable/empty_inv" />
-
-            <ImageView
-                android:id="@+id/ivPhS4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/ivVL4"
-                android:layout_marginRight="50dp"
                 android:src="@drawable/empty_inv" />
 
             <ImageView
@@ -203,9 +196,11 @@
                 android:id="@+id/ivPhS7"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/tvPS7"
                 android:layout_alignParentLeft="true"
+                android:layout_alignRight="@+id/ivPhS6"
                 android:layout_below="@+id/ivVL8"
-                android:src="@drawable/empty_inv" />
+                android:src="@drawable/avenger_deact" />
 
             <ImageView
                 android:id="@+id/ivVL10"
@@ -224,14 +219,6 @@
                 android:background="#000"
                 android:orientation="vertical" >
             </RelativeLayout>
-
-            <ImageView
-                android:id="@+id/ivPhS9"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/ivVL11"
-                android:layout_centerHorizontal="true"
-                android:src="@drawable/empty_inv" />
 
             <ImageView
                 android:id="@+id/ivVL11"
@@ -306,6 +293,24 @@
                 android:layout_above="@+id/ivVL6"
                 android:layout_alignLeft="@+id/tvPS2"
                 android:text="0" />
+
+            <ImageView
+                android:id="@+id/ivPhS4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/ivPhS5"
+                android:layout_alignParentLeft="true"
+                android:layout_alignRight="@+id/ivPhS2"
+                android:layout_below="@+id/ivVL4"
+                android:src="@drawable/vertical_strike_deact" />
+
+            <ImageView
+                android:id="@+id/ivPhS9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/ivVL11"
+                android:layout_centerHorizontal="true"
+                android:src="@drawable/execution_deact" />
 
         </RelativeLayout>
     </LinearLayout>

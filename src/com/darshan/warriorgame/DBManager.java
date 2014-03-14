@@ -19,7 +19,7 @@ public class DBManager {
 	 public String[] colNames; 
 	 public String cols;
 	 //create table MY_DATABASE (ID integer primary key, Content text not null);
-	 private String SCRIPT_CREATE_DATABASE;// =
+	 private String SCRIPT_CREATE_DATABASE;
 			 //"CREATE TABLE 'allitems' ('item_id' INTEGER PRIMARY KEY  NOT NULL  UNIQUE , 'item' VARCHAR, 'str' DOUBLE, 'ph_dam' DOUBLE, 'mag_dam' DOUBLE, 'ph_def' DOUBLE, 'mag_def' DOUBLE, 'e_s_dam' DOUBLE, 's_hp' DOUBLE, 'b_mana' DOUBLE, 'speed' DOUBLE, 'cost' DOUBLE, 'selling_price' DOUBLE, 'hp_plus' DOUBLE, 'mana_plus' DOUBLE);";
 	 
 	 private SQLiteHelper sqLiteHelper;
@@ -27,20 +27,15 @@ public class DBManager {
 
 	 private Context context;
 	 
-	 public DBManager(Context c, String colNames,String tblName,String creatTbl){
+	 public DBManager(Context c, String colNames,String tblName, String script){
 	  context = c;
 	  cols=colNames;
 	  if(colNames!=null)
 		  this.colNames=colNames.split(" ");
-	  //else
-		//  this.colNames=null;
-	  SCRIPT_CREATE_DATABASE=creatTbl;
 	  MYDATABASE_TABLE=tblName;
+	  SCRIPT_CREATE_DATABASE = script;
 	 }
-	/* public SQLiteAdapter(Context c){
-		  context = c;
-		 }
-	 */
+	
 	 public DBManager openToRead() throws android.database.SQLException {
 	  sqLiteHelper = new SQLiteHelper(context, MYDATABASE_NAME, null, MYDATABASE_VERSION);
 	  sqLiteDatabase = sqLiteHelper.getReadableDatabase();
@@ -83,6 +78,20 @@ public class DBManager {
 	 }
 	 public long insertQuery(String content){
 		  String atts[] = content.split(" "); 
+		  ContentValues contentValues = new ContentValues();
+		  try{
+		  for(int i=0; i<colNames.length;i++)
+			  contentValues.put(colNames[i], atts[i]);
+		  return sqLiteDatabase.insert(MYDATABASE_TABLE, null, contentValues);
+		 }catch(Exception e){
+			 System.err.print(e+" colName6= "+colNames[6]);
+		 }
+		  return 0;
+	 }
+	 
+	 public long insertQuery(String content, String colNames2){
+		  String atts[] = content.split(" "); 
+		  String[] colNames = colNames2.split(" ");
 		  ContentValues contentValues = new ContentValues();
 		  try{
 		  for(int i=0; i<colNames.length;i++)
@@ -141,7 +150,6 @@ public class DBManager {
 		 }
 	 public void cretTable(){
 		  sqLiteDatabase.execSQL(SCRIPT_CREATE_DATABASE);
-		  //sqLiteDatabase.execSQL(SCRIPT_CREATE_DATABASE);
 		 }
 	 
 	 public String queueFew(String[] custCNames){

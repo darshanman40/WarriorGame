@@ -1,6 +1,7 @@
 package com.darshan.warriorgame;
 
 
+import android.app.Activity;
 import android.app.TabActivity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -60,6 +61,7 @@ public class Store extends TabActivity{
         tabHost.addTab(Potions);
 		
 	}
+	
 
 	
 	

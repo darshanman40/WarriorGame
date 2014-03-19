@@ -1,5 +1,8 @@
 package com.darshan.warriorgame;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -94,8 +97,10 @@ public class DBManager {
 		  String[] colNames = colNames2.split(" ");
 		  ContentValues contentValues = new ContentValues();
 		  try{
-		  for(int i=0; i<colNames.length;i++)
+		  for(int i=0; i<colNames.length;i++){
+			  atts[i] = atts[i].replace("?*", " ");
 			  contentValues.put(colNames[i], atts[i]);
+		  }
 		  return sqLiteDatabase.insert(MYDATABASE_TABLE, null, contentValues);
 		 }catch(Exception e){
 			 System.err.print(e+" colName6= "+colNames[6]);
@@ -240,6 +245,36 @@ public class DBManager {
 			 return 0;
 		 }
 	 
+	 public String directQuery(String query, String[] colNames){
+		 
+		 String result = "";
+		 List<String> rows = new ArrayList<String>();
+		 try{
+		 Cursor cursor = sqLiteDatabase.rawQuery(query, null);
+		 //int index[] = new int[colNames.length];
+		 /*
+		 for(int i=0; i<colNames.length;i++){
+			 index[i] = cursor.getColumnIndex(colNames[i]);
+		 }
+		 */
+		 
+		 for(cursor.moveToFirst();!(cursor.isAfterLast());cursor.moveToNext()){
+			 for(int i=0;i<colNames.length;i++)
+				 result = result + "," + cursor.getString(cursor.getColumnIndex(colNames[i]));
+			 rows.add(result.replaceFirst(",", ""));
+			 result = "";//result.replaceFirst(",", "");
+			 //result+="\n";
+		 }
+		 }catch(Exception e){
+			 e.printStackTrace();
+		 }
+		 for(int i=0;i<rows.size();i++)
+			 result = result + rows.get(i)+"\n";
+		 //result = rows.toArray().toString();
+		 return result;
+	 }
+	 
+	 
 	 public String colNamesChk(){
 		 
 		 
@@ -254,7 +289,6 @@ public class DBManager {
 		 
 	 }
  public String tblNamesChk(){
-		 
 		 
 		 String res="";
 		 Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM sqlite_master WHERE type = 'table'", null);

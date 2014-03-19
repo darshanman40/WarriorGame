@@ -21,7 +21,6 @@ import com.shephertz.app42.gaming.multiplayer.client.listener.NotifyListener;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.ListActivity;
 import android.content.Context;
 import android.content.DialogInterface;
 

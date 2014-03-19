@@ -4,15 +4,21 @@ import java.util.HashMap;
 
 import com.shephertz.app42.gaming.multiplayer.client.WarpClient;
 import com.shephertz.app42.gaming.multiplayer.client.command.WarpResponseResultCode;
+import com.shephertz.app42.gaming.multiplayer.client.events.AllRoomsEvent;
+import com.shephertz.app42.gaming.multiplayer.client.events.AllUsersEvent;
 import com.shephertz.app42.gaming.multiplayer.client.events.ChatEvent;
 import com.shephertz.app42.gaming.multiplayer.client.events.ConnectEvent;
+import com.shephertz.app42.gaming.multiplayer.client.events.LiveUserInfoEvent;
 import com.shephertz.app42.gaming.multiplayer.client.events.LobbyData;
+import com.shephertz.app42.gaming.multiplayer.client.events.MatchedRoomsEvent;
 import com.shephertz.app42.gaming.multiplayer.client.events.MoveEvent;
 import com.shephertz.app42.gaming.multiplayer.client.events.RoomData;
+import com.shephertz.app42.gaming.multiplayer.client.events.RoomEvent;
 import com.shephertz.app42.gaming.multiplayer.client.events.UpdateEvent;
 import com.shephertz.app42.gaming.multiplayer.client.listener.ChatRequestListener;
 import com.shephertz.app42.gaming.multiplayer.client.listener.ConnectionRequestListener;
 import com.shephertz.app42.gaming.multiplayer.client.listener.NotifyListener;
+import com.shephertz.app42.gaming.multiplayer.client.listener.ZoneRequestListener;
 
 import android.app.Activity;
 //
@@ -26,14 +32,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class ChatActivity extends Activity implements OnClickListener,
-ConnectionRequestListener, NotifyListener, ChatRequestListener{
+ConnectionRequestListener, NotifyListener, ChatRequestListener, ZoneRequestListener{
 
 	WarpClient myGame;
+	
 	EditText text;
 	Button send;
 	TextView chat;
+	DBManager dbm;
 	String user,challenged;
 	SharingAtts sa;
+	ItemTest it;
 	String msg;
 	
 	@Override
@@ -50,6 +59,10 @@ ConnectionRequestListener, NotifyListener, ChatRequestListener{
 		user = getIntent().getStringExtra("user");
 		challenged = getIntent().getStringExtra("challenged");
 		sa = ((SharingAtts)getApplication());
+		
+		it = new ItemTest();
+		String colNames = it.printData("chat")[1];
+		dbm = new DBManager(this, colNames, "chat", it.printData("chat")[0]);
 		WarpClient.initialize(Constants.apiKey, Constants.secretKey);
 		try {
 			myGame = WarpClient.getInstance();
@@ -58,8 +71,9 @@ ConnectionRequestListener, NotifyListener, ChatRequestListener{
 			myGame.addNotificationListener(this);
 			myGame.addChatRequestListener(this);
 			chat.setText("");
-			/*
+			
 			myGame.addZoneRequestListener(this);
+			/*
 			myGame.addRoomRequestListener(this);
 			myGame.addChatRequestListener(this);
 			
@@ -72,8 +86,57 @@ ConnectionRequestListener, NotifyListener, ChatRequestListener{
 			e.printStackTrace();
 		}
 		
+		dbm.openToRead();
+		String msgs = dbm.directQuery("SELECT sender,message FROM chat WHERE ((sender LIKE '"+ sa.name+"' AND receiver LIKE '"+ challenged+ "')"+
+				" OR (sender LIKE '"+challenged+"' AND receiver LIKE '"+ sa.name+"'))"+
+				"", new String[]{ "sender","message"});
+		Log.d("special_query", "SELECT sender,message FROM chat WHERE sender LIKE '"+ sa.name+"' AND receiver LIKE '"+ challenged+ "'"+
+				" OR sender LIKE '"+challenged+"' AND receiver LIKE '"+ sa.name+"'"+
+				"");
+		String allRows = dbm.directQuery("SELECT * FROM chat", it.printData("chat")[1].split(" "));
+		//allRows.replace(" ", "->");
+		String[] all = allRows.split("\n");
+		
+		for(int i=0; i<all.length;i++){
+			all[i].replace(" ", "->");;
+			Log.d("row_"+i, all[i]);
+		}
+		dbm.close();
+		msgs = msgs.replace(",", " : ");
+		if(msgs!=null)
+			chat.setText(msgs);
+		else
+			Log.e("msgs", "msg is null");
 		
 	}
+
+	
+	
+	
+	@Override
+	public void onBackPressed() {
+		// TODO Auto-generated method stub
+		super.onBackPressed();
+		
+		removeClickList();
+		finish();
+	}
+
+
+
+
+	private void removeClickList() {
+		// TODO Auto-generated method stub
+		
+		myGame.removeChatRequestListener(this);
+		myGame.removeNotificationListener(this);
+		myGame.removeZoneRequestListener(this);
+		myGame.removeConnectionRequestListener(this);
+		
+	}
+
+
+
 
 	@Override
 	public void onClick(View v) {
@@ -92,10 +155,14 @@ ConnectionRequestListener, NotifyListener, ChatRequestListener{
 		}
 	}
 
+
+	
 	@Override
-	public void onConnectDone(ConnectEvent arg0) {
+	public void onConnectDone(ConnectEvent event) {
 		// TODO Auto-generated method stub
-		
+		if(WarpResponseResultCode.SUCCESS==event.getResult()){
+			myGame.getLiveUserInfo(challenged);
+		}
 	}
 
 	@Override
@@ -146,7 +213,8 @@ ConnectionRequestListener, NotifyListener, ChatRequestListener{
 				  DBManager dbm = new DBManager(ChatActivity.this, colNames,"chat",it.printData("chat")[0]);
 				  dbm.openToWrite();
 				  dbm.cretTable();
-				  dbm.insertQuery(sender+" "+msg+" "+sa.name, colNames.split(" ")[1]+" "+colNames.split(" ")[2]+" "+colNames.split(" ")[3]);
+				  String msg2 = msg.replace(" ", "?*");
+				  dbm.insertQuery(sender+" "+msg2+" "+sa.name, colNames.split(" ")[1]+" "+colNames.split(" ")[2]+" "+colNames.split(" ")[3]);
 				  dbm.close();
 			  }
 		});
@@ -235,6 +303,7 @@ ConnectionRequestListener, NotifyListener, ChatRequestListener{
 					  DBManager dbm = new DBManager(ChatActivity.this, colNames,"chat",it.printData("chat")[0]);
 					  dbm.openToWrite();
 					  dbm.cretTable();
+					  msg = msg.replace(" ", "?*");
 					  dbm.insertQuery(sa.name+" "+msg+" "+challenged, colNames.split(" ")[1]+" "+colNames.split(" ")[2]+" "+colNames.split(" ")[3]);
 					  dbm.close();
 		
@@ -250,6 +319,62 @@ ConnectionRequestListener, NotifyListener, ChatRequestListener{
 				  }
 			});
 		}
+	}
+
+	@Override
+	public void onCreateRoomDone(RoomEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onDeleteRoomDone(RoomEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onGetAllRoomsDone(AllRoomsEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onGetLiveUserInfoDone(final LiveUserInfoEvent event) {
+		// TODO Auto-generated method stub
+		
+		ChatActivity.this.runOnUiThread(new Runnable() {
+			  public void run() {
+		if(WarpResponseResultCode.SUCCESS==event.getResult()){
+			if(event.isLocationLobby())
+				send.setClickable(true);
+			else
+				send.setClickable(false);
+			
+			
+		}else{
+			send.setClickable(false);
+		}
+			  }
+		});
+	}
+
+	@Override
+	public void onGetMatchedRoomsDone(MatchedRoomsEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onGetOnlineUsersDone(AllUsersEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onSetCustomUserDataDone(LiveUserInfoEvent arg0) {
+		// TODO Auto-generated method stub
+		
 	}
 
 	

@@ -54,7 +54,7 @@ public class ChatRoom extends Activity implements ConnectionRequestListener,
 	DBManager dbm;
 	
 	Spinner srIDs;
-	Button chal,ref,chat,jLobby;
+	Button ref,chat,jLobby;
 	
 	ItemTest it;
 	String user,colNames;
@@ -78,7 +78,7 @@ public class ChatRoom extends Activity implements ConnectionRequestListener,
 		setContentView(R.layout.chat_room);
 		
 		user = getIntent().getExtras().getString("uname");
-		chal = (Button)findViewById(R.id.bChal);
+		//chal = (Button)findViewById(R.id.bChal);
 		chat = (Button)findViewById(R.id.bChat);
 		ref = (Button)findViewById(R.id.bRefresh);
 		jLobby = (Button)findViewById(R.id.bJLobby);
@@ -143,9 +143,11 @@ public class ChatRoom extends Activity implements ConnectionRequestListener,
 		if(v.getId()==R.id.bRefresh){
 			myGame.getOnlineUsers();
 			getPlayers();
+		/*/
 		}else if(v.getId()==chal.getId()){
 			if(srIDs.getSelectedItem().toString()!=null)
 				myGame.sendPrivateChat(srIDs.getSelectedItem().toString(), "Fight with me");
+		*/
 		}else if(v.getId()==chat.getId()){
 			if(srIDs.getSelectedItem().toString()!=null){
 				String sender = srIDs.getSelectedItem().toString();
@@ -457,14 +459,17 @@ public class ChatRoom extends Activity implements ConnectionRequestListener,
 								// if this button is clicked, just close
 								// the dialog box and do nothing
 									if(qChat.getText().toString()!=null){
-										myGame.sendPrivateChat(sender, qChat.getText().toString());
+										String msg = qChat.getText().toString();
+										myGame.sendPrivateChat(sender, msg);
 										ItemTest it = new ItemTest();
 										colNames = it.printData("chat")[1];
 										dbm = new DBManager(c, colNames,"chat",it.printData("chat")[0]);
 										dbm.openToWrite();
 										dbm.cretTable();
+										
 										Log.d("content", sa.name+" "+qChat.getText().toString()+" "+sender);
-										dbm.insertQuery(sa.name+" "+qChat.getText().toString()+" "+sender, colNames.split(" ")[1]+" "+colNames.split(" ")[2]+" "+colNames.split(" ")[3]);
+										msg = msg.replace(" ", "?*");
+										dbm.insertQuery(sa.name+" "+msg+" "+sender, colNames.split(" ")[1]+" "+colNames.split(" ")[2]+" "+colNames.split(" ")[3]);
 										dbm.close();
 										
 										
@@ -485,8 +490,9 @@ public class ChatRoom extends Activity implements ConnectionRequestListener,
 					dbm = new DBManager(c, colNames,"chat",it.printData("chat")[0]);
 					dbm.openToWrite();
 					dbm.cretTable();
-					Log.d("insertQuery 488", sender+" "+message+" "+sa.name);
-					dbm.insertQuery(sender+" "+message+" "+sa.name, colNames.split(" ")[1]+" "+colNames.split(" ")[2]+" "+colNames.split(" ")[3]);
+					String message2 = message.replace(" ", "?*");
+					Log.d("insertQuery 492", sender+" "+message2+" "+sa.name);
+					dbm.insertQuery(sender+" "+message2+" "+sa.name, colNames.split(" ")[1]+" "+colNames.split(" ")[2]+" "+colNames.split(" ")[3]);
 					dbm.close();
 				}
 				

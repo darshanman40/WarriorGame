@@ -19,9 +19,9 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:layout_toLeftOf="@+id/button1"
-        android:ems="10" 
-        android:hint="Type Text">
+        android:layout_toLeftOf="@+id/bSend"
+        android:ems="10"
+        android:hint="Type Text" >
 
         <requestFocus />
     </EditText>

@@ -17,24 +17,17 @@
         android:text="Get Online Players" />
 
     <Button
-        android:id="@+id/bChal"
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Challenge" />
-
-    <Button
         android:id="@+id/bChat"
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Start Chat" />
+        android:text="Start Conversation" />
 
     <Button
         android:id="@+id/bJLobby"
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Join Lobby" />
+        android:text="Chat History" />
 
 </LinearLayout>
